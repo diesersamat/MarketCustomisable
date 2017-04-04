@@ -14,7 +14,7 @@ buildscript {
 
 allprojects {
   ext {
-    androidApplicationId = 'com.fernanependocejas.android10.sample.presentation'
+    androidApplicationId = 'com.fernandocejas.android10.sample.presentation'
     androidVersionCode = 1
     androidVersionName = "1.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
