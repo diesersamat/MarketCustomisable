@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+def CUSTOMISABLE_APPLICATION_ID = "replace"
+
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
 
