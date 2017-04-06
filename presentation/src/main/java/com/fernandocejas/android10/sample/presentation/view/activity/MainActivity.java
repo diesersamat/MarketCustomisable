@@ -26,7 +26,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        id.setText(BuildConfig.APPLICATION_ID);
+        id.setText(BuildConfig.CUSTOMISABLE_APPLICATION_ID);
     }
 
     /**
