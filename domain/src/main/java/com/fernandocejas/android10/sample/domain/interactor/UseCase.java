@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Fernando Cejas Open Source Project
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +18,7 @@ package com.fernandocejas.android10.sample.domain.interactor;
 import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
 import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
 import com.fernandocejas.arrow.checks.Preconditions;
+
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -34,51 +35,51 @@ import io.reactivex.schedulers.Schedulers;
  */
 public abstract class UseCase<T, Params> {
 
-  private final ThreadExecutor threadExecutor;
-  private final PostExecutionThread postExecutionThread;
-  private final CompositeDisposable disposables;
+    private final ThreadExecutor threadExecutor;
+    private final PostExecutionThread postExecutionThread;
+    private final CompositeDisposable disposables;
 
-  UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    this.threadExecutor = threadExecutor;
-    this.postExecutionThread = postExecutionThread;
-    this.disposables = new CompositeDisposable();
-  }
-
-  /**
-   * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
-   */
-  abstract Observable<T> buildUseCaseObservable(Params params);
-
-  /**
-   * Executes the current use case.
-   *
-   * @param observer {@link DisposableObserver} which will be listening to the observable build
-   * by {@link #buildUseCaseObservable(Params)} ()} method.
-   * @param params Parameters (Optional) used to build/execute this use case.
-   */
-  public void execute(DisposableObserver<T> observer, Params params) {
-    Preconditions.checkNotNull(observer);
-    final Observable<T> observable = this.buildUseCaseObservable(params)
-        .subscribeOn(Schedulers.from(threadExecutor))
-        .observeOn(postExecutionThread.getScheduler());
-    addDisposable(observable.subscribeWith(observer));
-  }
-
-  /**
-   * Dispose from current {@link CompositeDisposable}.
-   */
-  public void dispose() {
-    if (!disposables.isDisposed()) {
-      disposables.dispose();
+    UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        this.threadExecutor = threadExecutor;
+        this.postExecutionThread = postExecutionThread;
+        this.disposables = new CompositeDisposable();
     }
-  }
 
-  /**
-   * Dispose from current {@link CompositeDisposable}.
-   */
-  private void addDisposable(Disposable disposable) {
-    Preconditions.checkNotNull(disposable);
-    Preconditions.checkNotNull(disposables);
-    disposables.add(disposable);
-  }
+    /**
+     * Executes the current use case.
+     *
+     * @param observer {@link DisposableObserver} which will be listening to the observable build
+     * by {@link #buildUseCaseObservable(Params)} ()} method.
+     * @param params Parameters (Optional) used to build/execute this use case.
+     */
+    public void execute(DisposableObserver<T> observer, Params params) {
+        Preconditions.checkNotNull(observer);
+        final Observable<T> observable = this.buildUseCaseObservable(params)
+                .subscribeOn(Schedulers.from(threadExecutor))
+                .observeOn(postExecutionThread.getScheduler());
+        addDisposable(observable.subscribeWith(observer));
+    }
+
+    /**
+     * Dispose from current {@link CompositeDisposable}.
+     */
+    public void dispose() {
+        if (!disposables.isDisposed()) {
+            disposables.dispose();
+        }
+    }
+
+    /**
+     * Dispose from current {@link CompositeDisposable}.
+     */
+    private void addDisposable(Disposable disposable) {
+        Preconditions.checkNotNull(disposable);
+        Preconditions.checkNotNull(disposables);
+        disposables.add(disposable);
+    }
+
+    /**
+     * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
+     */
+    abstract Observable<T> buildUseCaseObservable(Params params);
 }

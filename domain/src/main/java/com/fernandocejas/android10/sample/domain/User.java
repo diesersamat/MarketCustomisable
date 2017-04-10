@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2015 Fernando Cejas Open Source Project
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,59 +20,57 @@ package com.fernandocejas.android10.sample.domain;
  */
 public class User {
 
-  private final int userId;
+    private final int userId;
+    private String coverUrl;
+    private String fullName;
+    private String email;
+    private String description;
+    private int followers;
+    public User(int userId) {
+        this.userId = userId;
+    }
 
-  public User(int userId) {
-    this.userId = userId;
-  }
+    public int getUserId() {
+        return userId;
+    }
 
-  private String coverUrl;
-  private String fullName;
-  private String email;
-  private String description;
-  private int followers;
+    public String getCoverUrl() {
+        return coverUrl;
+    }
 
-  public int getUserId() {
-    return userId;
-  }
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
 
-  public String getCoverUrl() {
-    return coverUrl;
-  }
+    public String getFullName() {
+        return fullName;
+    }
 
-  public void setCoverUrl(String coverUrl) {
-    this.coverUrl = coverUrl;
-  }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-  public String getFullName() {
-    return fullName;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public int getFollowers() {
+        return followers;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public int getFollowers() {
-    return followers;
-  }
-
-  public void setFollowers(int followers) {
-    this.followers = followers;
-  }
+    public void setFollowers(int followers) {
+        this.followers = followers;
+    }
 }
