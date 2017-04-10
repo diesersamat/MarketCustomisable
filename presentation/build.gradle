@@ -54,11 +54,21 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
+        release {
+            storeFile file('../buildsystem/keystore.jks')
+            storePassword 'Mother62'
+            keyAlias 'diesersamat'
+            keyPassword 'Mother62'
+        }
     }
 
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
         }
     }
     buildToolsVersion '25.0.2'
