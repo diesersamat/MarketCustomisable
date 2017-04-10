@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.fernandocejas.android10.sample.presentation.BuildConfig;
 import com.fernandocejas.android10.sample.presentation.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -16,9 +16,9 @@ import butterknife.OnClick;
  */
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.btn_LoadData)
+    @BindView(R.id.btn_LoadData)
     Button btn_LoadData;
-    @Bind(R.id.id)
+    @BindView(R.id.id)
     TextView id;
 
     @Override

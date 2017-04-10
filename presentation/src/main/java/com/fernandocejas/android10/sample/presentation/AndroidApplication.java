@@ -22,6 +22,8 @@ import com.fernandocejas.android10.sample.presentation.internal.di.components.Da
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
 
+import butterknife.ButterKnife;
+
 /**
  * Android Main Application
  */
@@ -32,6 +34,7 @@ public class AndroidApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ButterKnife.setDebug(true);
         this.initializeInjector();
         this.initializeLeakDetection();
     }

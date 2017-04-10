@@ -17,14 +17,15 @@ package com.fernandocejas.android10.sample.data.net;
 
 import android.support.annotation.Nullable;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Api Connection class used to retrieve data from the cloud.
@@ -64,11 +65,11 @@ class ApiConnection implements Callable<String> {
     }
 
     private OkHttpClient createClient() {
-        final OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setReadTimeout(10000, TimeUnit.MILLISECONDS);
-        okHttpClient.setConnectTimeout(15000, TimeUnit.MILLISECONDS);
-
-        return okHttpClient;
+        OkHttpClient.Builder b = new OkHttpClient.Builder();
+        b.readTimeout(10, TimeUnit.SECONDS);
+        b.connectTimeout(15, TimeUnit.SECONDS);
+        b.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        return b.build();
     }
 
     static ApiConnection createGET(String url) throws MalformedURLException {
