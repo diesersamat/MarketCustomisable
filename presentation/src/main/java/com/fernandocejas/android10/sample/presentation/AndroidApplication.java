@@ -24,9 +24,6 @@ import com.squareup.leakcanary.LeakCanary;
 
 import butterknife.ButterKnife;
 
-/**
- * Android Main Application
- */
 public class AndroidApplication extends Application {
 
     private ApplicationComponent applicationComponent;

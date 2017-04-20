@@ -21,6 +21,7 @@ ext {
     javaxInjectVersion = '1'
     gsonVersion = '2.3'
     okHttpVersion = '3.6.0'
+    constraintVersion = '1.0.0-alpha6'
 
     //Testing
     robolectricVersion = '3.1.1'
@@ -40,6 +41,9 @@ ext {
             butterKnife          : "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterKnifeAnnotation: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             recyclerView         : "com.android.support:recyclerview-v7:${supportVersion}",
+            appCompat            : "com.android.support:appcompat-v7:${supportVersion}",
+            design               : "com.android.support:design:${supportVersion}",
+            constraintLayout     : "com.android.support.constraint:constraint-layout:${constraintVersion}",
             rxJava               : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             rxAndroid            : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
     ]

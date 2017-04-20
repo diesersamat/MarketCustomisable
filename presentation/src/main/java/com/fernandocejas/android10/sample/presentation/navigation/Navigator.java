@@ -18,8 +18,7 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 import android.content.Context;
 import android.content.Intent;
 
-import com.fernandocejas.android10.sample.presentation.view.activity.UserDetailsActivity;
-import com.fernandocejas.android10.sample.presentation.view.activity.UserListActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,27 +34,18 @@ public class Navigator {
         //empty
     }
 
-    /**
-     * Goes to the user list screen.
-     *
-     * @param context A Context needed to open the destiny activity.
-     */
-    public void navigateToUserList(Context context) {
+    public void navigateToCart(Context context) {
         if (context != null) {
-            Intent intentToLaunch = UserListActivity.getCallingIntent(context);
+            Intent intentToLaunch = CartAndCheckoutActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }
 
-    /**
-     * Goes to the user details screen.
-     *
-     * @param context A Context needed to open the destiny activity.
-     */
-    public void navigateToUserDetails(Context context, int userId) {
-        if (context != null) {
-            Intent intentToLaunch = UserDetailsActivity.getCallingIntent(context, userId);
-            context.startActivity(intentToLaunch);
-        }
+    public void navigateToSearchProducts(Context context) {
+        //// TODO: 14/04/2017
+    }
+
+    public void navigateToWishList(Context context) {
+        // TODO: 14/04/2017
     }
 }
