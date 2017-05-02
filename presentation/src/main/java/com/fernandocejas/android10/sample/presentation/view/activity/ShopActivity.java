@@ -92,12 +92,15 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
                 switchFragment(categoryModel);
             }
         });
-
-
+        
+        //// TODO: 02/05/2017 демо значения
         List<CategoryModel> categoryModels = new ArrayList<>();
-        categoryModels.add(new CategoryModel("Hui", 2));
-        categoryModels.add(new CategoryModel("Sell", 3));
+        categoryModels.add(new CategoryModel("Automobile", 2));
+        categoryModels.add(new CategoryModel("Phones", 3));
+        categoryModels.add(new CategoryModel("Display", 4));
+        categoryModels.add(new CategoryModel("Mega", 5));
         setCategoriesListToNavList(categoryModels);
+        //// TODO: 02/05/2017 демо значения
     }
 
     @Override
