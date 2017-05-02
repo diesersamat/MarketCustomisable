@@ -27,10 +27,6 @@ public class CartFragment extends BaseFragment {
     @BindView(R.id.proceed_to_checkout_button)
     Button proceedToCheckoutButton;
 
-    public CartFragment() {
-        // Required empty public constructor
-    }
-
     public static CartFragment newInstance() {
         return new CartFragment();
     }

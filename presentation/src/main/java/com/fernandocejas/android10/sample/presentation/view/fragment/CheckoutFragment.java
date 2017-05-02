@@ -34,10 +34,6 @@ public class CheckoutFragment extends BaseFragment {
     @BindView(R.id.place_order)
     Button placeOrder;
 
-    public CheckoutFragment() {
-        // Required empty public constructor
-    }
-
     public static CheckoutFragment newInstance() {
         return new CheckoutFragment();
     }

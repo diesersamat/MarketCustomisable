@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerUserComponent;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CheckoutFragment;
@@ -20,7 +19,6 @@ import butterknife.ButterKnife;
 public class CartAndCheckoutActivity extends BaseActivity implements CartAndCheckoutView {
 
     private static final String CART_TAG = "CART_TAG";
-
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -83,9 +81,9 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
 
     @Override
     protected void additionalCreateOperations() {
-        DaggerUserComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .build();
+//        DaggerUserComponent.builder()
+//                .applicationComponent(getApplicationComponent())
+//                .activityModule(getActivityModule())
+//                .build();
     }
 }

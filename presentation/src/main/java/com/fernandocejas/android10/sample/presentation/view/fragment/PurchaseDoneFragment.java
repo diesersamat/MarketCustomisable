@@ -11,11 +11,6 @@ import butterknife.ButterKnife;
 
 public class PurchaseDoneFragment extends BaseFragment {
 
-
-    public PurchaseDoneFragment() {
-        // Required empty public constructor
-    }
-
     public static CheckoutFragment newInstance() {
         return new CheckoutFragment();
     }
