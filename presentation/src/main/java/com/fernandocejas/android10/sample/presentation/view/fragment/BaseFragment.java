@@ -5,8 +5,13 @@
  */
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
+
+import com.fernandocejas.android10.sample.presentation.AndroidApplication;
+import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
 
 
 /**
@@ -18,6 +23,12 @@ public abstract class BaseFragment extends Fragment {
         return BaseFragment.class.getName();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        additionalCreateOperations();
+    }
+
     /**
      * Shows a {@link android.widget.Toast} message.
      *
@@ -25,6 +36,14 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void showToastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    protected ApplicationComponent getApplicationComponent() {
+        return ((AndroidApplication) getActivity().getApplication()).getApplicationComponent();
+    }
+
+    protected void additionalCreateOperations() {
+        this.getApplicationComponent().inject(this);
     }
 
 }

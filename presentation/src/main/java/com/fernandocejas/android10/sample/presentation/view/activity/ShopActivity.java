@@ -124,6 +124,6 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     private void setCategoriesListToNavList(List<CategoryModel> categoryModels) {
-        navDrawerListAdapter.setCategoriesList(categoryModels);
+        navDrawerListAdapter.setList(categoryModels);
     }
 }

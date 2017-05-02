@@ -23,6 +23,7 @@ import com.fernandocejas.android10.sample.domain.repository.UserRepository;
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
 import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
 import com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity;
+import com.fernandocejas.android10.sample.presentation.view.fragment.BaseFragment;
 
 import javax.inject.Singleton;
 
@@ -35,6 +36,8 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
+
+    void inject(BaseFragment baseActivity);
 
     //Exposed to sub-graphs.
     Context context();
