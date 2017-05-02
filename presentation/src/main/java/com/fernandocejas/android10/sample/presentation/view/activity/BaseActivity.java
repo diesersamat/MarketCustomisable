@@ -23,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getApplicationComponent().inject(this);
+        additionalCreateOperations();
     }
 
     /**
@@ -43,6 +43,10 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected ApplicationComponent getApplicationComponent() {
         return ((AndroidApplication) getApplication()).getApplicationComponent();
+    }
+
+    protected void additionalCreateOperations() {
+        this.getApplicationComponent().inject(this);
     }
 
     /**

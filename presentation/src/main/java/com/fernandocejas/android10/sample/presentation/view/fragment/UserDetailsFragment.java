@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.internal.di.components.UserComponent;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.presenter.UserDetailsPresenter;
 import com.fernandocejas.android10.sample.presentation.view.UserDetailsView;
@@ -63,12 +62,6 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
         arguments.putInt(PARAM_USER_ID, userId);
         userDetailsFragment.setArguments(arguments);
         return userDetailsFragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.getComponent(UserComponent.class).inject(this);
     }
 
     @Override

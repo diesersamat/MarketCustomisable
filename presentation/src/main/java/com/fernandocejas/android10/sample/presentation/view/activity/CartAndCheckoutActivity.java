@@ -76,13 +76,13 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Your Cart");
-        this.initializeInjector();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, CartFragment.newInstance(), CartFragment.getFragmentTag()).commit();
 
     }
 
-    private void initializeInjector() {
+    @Override
+    protected void additionalCreateOperations() {
         DaggerUserComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())

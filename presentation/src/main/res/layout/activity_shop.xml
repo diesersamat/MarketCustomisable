@@ -38,8 +38,30 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/main_nav_header"
-        app:menu="@menu/drawer_left_menu"/>
+        android:fitsSystemWindows="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/drawer_header_height"
+            android:background="?attr/colorPrimaryDark"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/nav_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/drawer_header_height"
+            android:background="@android:color/white"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"/>
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
