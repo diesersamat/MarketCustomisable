@@ -115,6 +115,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     private void switchFragment(CategoryModel categoryModel) {
+        toolbar.setTitle(categoryModel.getName());
         String tag = String.valueOf(categoryModel.getId());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, ProductCategoryFragment.newInstance(categoryModel), tag)

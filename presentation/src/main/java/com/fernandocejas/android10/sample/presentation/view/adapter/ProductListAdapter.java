@@ -3,6 +3,7 @@ package com.fernandocejas.android10.sample.presentation.view.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
@@ -25,7 +26,10 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
     @Override
     public void onBindViewHolder(ProductViewHolder holder, final int position) {
         final ProductDescriptionModel productDescriptionModel = this.list.get(position);
-        holder.textViewTitle.setText(productDescriptionModel.getTitle());
+        holder.productPrice.setText(String.format("%s%s",
+                productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
+        holder.productTitle.setText(productDescriptionModel.getTitle());
+        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +46,7 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
 
     @Override
     protected int getItemLayout() {
-        return R.layout.row_drawer_item;
+        return R.layout.product_list_item;
     }
 
     @Override
@@ -55,8 +59,12 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.photo_product)
+        ImageView photo;
         @BindView(R.id.title)
-        TextView textViewTitle;
+        TextView productTitle;
+        @BindView(R.id.price)
+        TextView productPrice;
 
         ProductViewHolder(View itemView) {
             super(itemView);

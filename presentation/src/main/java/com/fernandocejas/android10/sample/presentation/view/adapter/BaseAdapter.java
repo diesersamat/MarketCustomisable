@@ -6,17 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
 import java.util.Collections;
 import java.util.List;
 
 abstract class BaseAdapter<T extends RecyclerView.ViewHolder, H> extends RecyclerView.Adapter<T> {
 
+    protected final RequestManager requestManager;
     private final LayoutInflater layoutInflater;
     protected List<H> list;
 
     BaseAdapter(Context context) {
         this.layoutInflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        requestManager = Glide.with(context);
         this.list = Collections.emptyList();
     }
 

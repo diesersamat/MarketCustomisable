@@ -87,6 +87,8 @@ dependencies {
     compile presentationDependencies.butterKnife
     apt presentationDependencies.butterKnifeAnnotation
     compile presentationDependencies.recyclerView
+    compile presentationDependencies.cardView
+    compile presentationDependencies.glide
     compile presentationDependencies.design
     compile presentationDependencies.appCompat
     compile presentationDependencies.rxJava
@@ -100,5 +102,4 @@ dependencies {
 
     //Development
     compile developmentDependencies.leakCanary
-    compile 'com.ncapdevi:frag-nav:2.0.0'
 }

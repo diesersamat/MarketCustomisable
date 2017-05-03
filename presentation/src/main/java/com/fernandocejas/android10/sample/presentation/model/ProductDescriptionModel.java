@@ -18,11 +18,10 @@ public class ProductDescriptionModel implements Parcelable {
     private String title;
     private String linkToImage;
     private int id;
-    private int price;
+    private double price;
     private String currency;
 
-    public ProductDescriptionModel(String title, String linkToImage, int id, int price, String currency) {
-
+    public ProductDescriptionModel(String title, String linkToImage, int id, double price, String currency) {
         this.title = title;
         this.linkToImage = linkToImage;
         this.id = id;
@@ -34,7 +33,7 @@ public class ProductDescriptionModel implements Parcelable {
         this.title = in.readString();
         this.linkToImage = in.readString();
         this.id = in.readInt();
-        this.price = in.readInt();
+        this.price = in.readDouble();
         this.currency = in.readString();
     }
 
@@ -62,11 +61,11 @@ public class ProductDescriptionModel implements Parcelable {
         this.id = id;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -88,7 +87,7 @@ public class ProductDescriptionModel implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.linkToImage);
         dest.writeInt(this.id);
-        dest.writeInt(this.price);
+        dest.writeDouble(this.price);
         dest.writeString(this.currency);
     }
 }

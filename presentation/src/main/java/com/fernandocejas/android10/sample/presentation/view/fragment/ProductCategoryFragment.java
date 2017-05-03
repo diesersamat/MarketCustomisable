@@ -15,6 +15,9 @@ import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionM
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.ProductListAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -51,6 +54,51 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
                 openProductDescription(productDescriptionModel);
             }
         });
+
+        //// TODO: 02/05/2017 демо значения
+        List<ProductDescriptionModel> productList = new ArrayList<>();
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 3", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_1321.jpg", 2, 113.43, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 4", "https://www.iphones.ru/wp-content/uploads/2017/05/IMG_2734-760x426.jpg", 3, 143.3, "HUF"));
+        productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
+        setProductList(productList);
+        //// TODO: 02/05/2017 демо значения
         return view;
     }
 
@@ -64,7 +112,11 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
                 .inject(this);
     }
 
+    private void setProductList(List<ProductDescriptionModel> productList) {
+        productListAdapter.setList(productList);
+    }
+
     private void openProductDescription(ProductDescriptionModel productDescriptionModel) {
-        //// TODO: 02/05/2017
+        navigator.navigateToProductDescription(getContext(), productDescriptionModel.getId());
     }
 }

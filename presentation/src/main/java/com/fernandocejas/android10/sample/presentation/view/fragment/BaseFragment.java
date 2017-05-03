@@ -12,12 +12,18 @@ import android.widget.Toast;
 
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
+import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
+
+import javax.inject.Inject;
 
 
 /**
  * Base {@link android.app.Fragment} class for every fragment in this application.
  */
 public abstract class BaseFragment extends Fragment {
+
+    @Inject
+    Navigator navigator;
 
     public static String getFragmentTag() {
         return BaseFragment.class.getName();
