@@ -101,6 +101,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         categoryModels.add(new CategoryModel("Mega", 5));
         setCategoriesListToNavList(categoryModels);
         switchFragment(categoryModels.get(0));
+        navDrawerListAdapter.setSelectedCategoryId(categoryModels.get(0).getId());
         //// TODO: 02/05/2017 демо значения
     }
 

@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,12 +48,26 @@ public class ProductFragment extends BaseFragment {
         return productFragment;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.product_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_shopping_cart) {
+            navigator.navigateToCart(getContext());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         ButterKnife.bind(this, view);
+        setHasOptionsMenu(true);
 
         productId = getArguments().getInt(ProductActivity.PRODUCT_ID, Integer.MIN_VALUE);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
