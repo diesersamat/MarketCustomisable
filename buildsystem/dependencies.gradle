@@ -21,6 +21,7 @@ ext {
     javaxInjectVersion = '1'
     gsonVersion = '2.3'
     okHttpVersion = '3.6.0'
+    retrofitVersion = '2.3.0'
     constraintVersion = '1.0.0-alpha6'
     glideVersion = '3.7.0'
 
@@ -48,6 +49,7 @@ ext {
             rxJava               : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             rxAndroid            : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             glide            : "com.github.bumptech.glide:glide:${glideVersion}",
+            retrofit            : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
     ]
 
     presentationTestDependencies = [

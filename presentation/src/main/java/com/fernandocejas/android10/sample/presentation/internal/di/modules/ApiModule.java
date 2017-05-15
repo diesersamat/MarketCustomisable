@@ -1,0 +1,56 @@
+package com.fernandocejas.android10.sample.presentation.internal.di.modules;
+
+import com.fernandocejas.android10.sample.presentation.BuildConfig;
+import com.fernandocejas.android10.sample.presentation.navigation.ApiInterface;
+import com.google.gson.Gson;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+@Module
+public class ApiModule {
+
+    private static final String API_ROOT = BuildConfig.API_URL;
+
+    private static OkHttpClient buildSslHttpClient(boolean addHeader) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+
+        if (addHeader) {
+            builder.addInterceptor(chain -> {
+                Request build = chain.request().newBuilder()
+                        .addHeader("applicationId", BuildConfig.CUSTOMISABLE_APPLICATION_ID)
+                        .build();
+                return chain.proceed(build);
+            });
+        }
+
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    ApiInterface provideApi(Gson gson) {
+        final OkHttpClient okHttpClient = buildSslHttpClient(true);
+
+        return new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(API_ROOT)
+                .client(okHttpClient)
+                .build()
+                .create(ApiInterface.class);
+    }
+}

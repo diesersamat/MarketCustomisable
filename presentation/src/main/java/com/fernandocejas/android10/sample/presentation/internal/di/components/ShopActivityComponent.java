@@ -19,7 +19,6 @@ public interface ShopActivityComponent {
         @BindsInstance
         Builder view(ShopActivityView view);
 
-
         ShopActivityComponent build();
     }
 }

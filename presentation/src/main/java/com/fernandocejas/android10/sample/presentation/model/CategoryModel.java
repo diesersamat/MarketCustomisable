@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class CategoryModel implements Parcelable {
-    public static final Parcelable.Creator<CategoryModel> CREATOR = new Parcelable.Creator<CategoryModel>() {
+    public static final Creator<CategoryModel> CREATOR = new Creator<CategoryModel>() {
         @Override
         public CategoryModel createFromParcel(Parcel source) {
             return new CategoryModel(source);
@@ -17,6 +17,7 @@ public class CategoryModel implements Parcelable {
     };
     private String name;
     private int id;
+    private int parentId;
 
     public CategoryModel(String name, int id) {
         this.name = name;
@@ -26,6 +27,15 @@ public class CategoryModel implements Parcelable {
     protected CategoryModel(Parcel in) {
         this.name = in.readString();
         this.id = in.readInt();
+        this.parentId = in.readInt();
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {
@@ -54,5 +64,6 @@ public class CategoryModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeInt(this.id);
+        dest.writeInt(this.parentId);
     }
 }

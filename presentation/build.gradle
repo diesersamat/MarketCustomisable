@@ -1,8 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
 
 def CUSTOMISABLE_APPLICATION_ID_VAR = "CUSTOMISABLE_APPLICATION_ID"
 def CUSTOMISABLE_APPLICATION_ID = "\"replace\""
+
+def API_URL = "API_URL"
+def PROD_API_URL = "\"http://webapplication120170408081622.azurewebsites.net/api/\""
+
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -21,11 +27,13 @@ android {
         testApplicationId globalConfiguration.getAt("testApplicationId")
 
         buildConfigField "String", CUSTOMISABLE_APPLICATION_ID_VAR, CUSTOMISABLE_APPLICATION_ID
+        buildConfigField "String", API_URL, PROD_API_URL
+
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {
@@ -93,12 +101,18 @@ dependencies {
     compile presentationDependencies.appCompat
     compile presentationDependencies.rxJava
     compile presentationDependencies.rxAndroid
+    compile presentationDependencies.retrofit
 
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
     androidTestCompile presentationTestDependencies.dexmakerMockito
     androidTestCompile presentationTestDependencies.espresso
     androidTestCompile presentationTestDependencies.testingSupportLib
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
     //Development
     compile developmentDependencies.leakCanary

@@ -17,10 +17,9 @@ package com.fernandocejas.android10.sample.presentation.internal.di.components;
 
 import android.content.Context;
 
-import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
+import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApiModule;
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
+import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
 import com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity;
 import com.fernandocejas.android10.sample.presentation.view.fragment.BaseFragment;
@@ -33,7 +32,7 @@ import dagger.Component;
  * A component whose lifetime is the life of the application.
  */
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
-@Component(modules = ApplicationModule.class)
+@Component(modules = {ApplicationModule.class, ApiModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
 
@@ -42,11 +41,8 @@ public interface ApplicationComponent {
     //Exposed to sub-graphs.
     Context context();
 
-    ThreadExecutor threadExecutor();
-
-    PostExecutionThread postExecutionThread();
-
-    UserRepository userRepository();
-
     Navigator navigator();
+
+    Interactor getInteractor();
+
 }

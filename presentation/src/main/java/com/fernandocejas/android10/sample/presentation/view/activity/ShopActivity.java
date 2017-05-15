@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerShopActivityComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.presenter.ShopPresenter;
 import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.NavDrawerListAdapter;
 import com.fernandocejas.android10.sample.presentation.view.fragment.ProductCategoryFragment;
@@ -42,6 +43,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     @Inject
     NavDrawerListAdapter navDrawerListAdapter;
+    @Inject
+    ShopPresenter presenter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

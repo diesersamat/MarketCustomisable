@@ -5,36 +5,37 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cart_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/total_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:text="123 200 РУБ."
-                android:textSize="22sp"/>
-
-            <Button
-                android:id="@+id/proceed_to_checkout_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Proceed to checkout"/>
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/total_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="123 200 РУБ."
+        android:textSize="22sp"/>
+
+    <Button
+        android:id="@+id/proceed_to_checkout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Proceed to checkout"/>
 </LinearLayout>
