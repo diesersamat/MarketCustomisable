@@ -21,7 +21,7 @@ import com.fernandocejas.android10.sample.data.net.RestApi;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import rx.Observable;
 
 /**
  * {@link UserDataStore} implementation based on connections to the api (Cloud).

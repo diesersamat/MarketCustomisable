@@ -17,7 +17,7 @@ package com.fernandocejas.android10.sample.data.cache;
 
 import com.fernandocejas.android10.sample.data.entity.UserEntity;
 
-import io.reactivex.Observable;
+import rx.Observable;
 
 /**
  * An interface representing a user Cache.

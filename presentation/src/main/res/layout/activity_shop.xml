@@ -42,17 +42,18 @@
         android:fitsSystemWindows="true">
 
         <LinearLayout
+            android:id="@+id/title_bcg"
             android:layout_width="match_parent"
             android:layout_height="@dimen/drawer_header_height"
-            android:background="?attr/colorPrimaryDark"
             android:gravity="bottom"
             android:orientation="vertical"
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/shop_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Username"/>
+                android:text="Shop"/>
 
         </LinearLayout>
 

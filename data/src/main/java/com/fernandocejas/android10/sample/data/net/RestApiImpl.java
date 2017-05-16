@@ -26,7 +26,8 @@ import com.fernandocejas.android10.sample.data.exception.NetworkConnectionExcept
 import java.net.MalformedURLException;
 import java.util.List;
 
-import io.reactivex.Observable;
+import rx.Observable;
+
 
 /**
  * {@link RestApi} implementation for retrieving data from the network.
@@ -59,7 +60,6 @@ public class RestApiImpl implements RestApi {
                     if (responseUserEntities != null) {
                         emitter.onNext(userEntityJsonMapper.transformUserEntityCollection(
                                 responseUserEntities));
-                        emitter.onComplete();
                     } else {
                         emitter.onError(new NetworkConnectionException());
                     }
@@ -80,7 +80,6 @@ public class RestApiImpl implements RestApi {
                     String responseUserDetails = getUserDetailsFromApi(userId);
                     if (responseUserDetails != null) {
                         emitter.onNext(userEntityJsonMapper.transformUserEntity(responseUserDetails));
-                        emitter.onComplete();
                     } else {
                         emitter.onError(new NetworkConnectionException());
                     }

@@ -1,98 +1,69 @@
 package com.fernandocejas.android10.sample.presentation.presenter;
 
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import com.fernandocejas.android10.sample.domain.User;
+import com.fernandocejas.android10.sample.presentation.BuildConfig;
+import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
-import com.fernandocejas.android10.sample.presentation.view.UserDetailsView;
+import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity.ACCENT_COLOR;
+import static com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity.PRIMARY_COLOR;
+
 public class ShopPresenter extends BasePresenter {
 
-    private UserDetailsView viewDetailsView;
+    private final ShopActivityView view;
+
 
     @Inject
-    public ShopPresenter(Interactor interactor) {
+    public ShopPresenter(Interactor interactor, ShopActivityView view) {
         super(interactor);
-    }
-
-    public void setView(@NonNull UserDetailsView view) {
-        this.viewDetailsView = view;
+        this.view = view;
     }
 
     @Override
     public void resume() {
+        Observable.zip(getInteractor().getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID),
+                getInteractor().getCategoriesList(), (shopModel, categoryModels) -> {
+                    shopModel.setCategoryModels(categoryModels);
+                    return shopModel;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ShopModel>() {
+                    @Override
+                    public void onNext(ShopModel shopModel) {
+                        view.onLoaded(shopModel);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                });
+
     }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void destroy() {
-//        this.getUserDetailsUseCase.dispose();
-        this.viewDetailsView = null;
+
     }
-
-    /**
-     * Initializes the presenter by showing/hiding proper views
-     * and retrieving user details.
-     */
-    public void initialize(int userId) {
-        this.hideViewRetry();
-        this.showViewLoading();
-//        this.getUserDetails(userId);
-    }
-
-    private void getShopDetails(int shopId) {
-//        getInteractor().getShopDetails()
-    }
-
-    private void showViewLoading() {
-        this.viewDetailsView.showLoading();
-    }
-
-    private void hideViewLoading() {
-        this.viewDetailsView.hideLoading();
-    }
-
-    private void showViewRetry() {
-        this.viewDetailsView.showRetry();
-    }
-
-    private void hideViewRetry() {
-        this.viewDetailsView.hideRetry();
-    }
-
-//    private void showErrorMessage(ErrorBundle errorBundle) {
-//        String errorMessage = ErrorMessageFactory.create(this.viewDetailsView.context(),
-//                errorBundle.getException());
-//        this.viewDetailsView.showError(errorMessage);
-//    }
-
-    private void showUserDetailsInView(User user) {
-//        final UserModel userModel = this.userModelDataMapper.transform(user);
-//        this.viewDetailsView.renderUser(userModel);
-    }
-
-//    private final class UserDetailsObserver extends DefaultObserver<User> {
-//
-//        @Override
-//        public void onComplete() {
-//            UserDetailsPresenter.this.hideViewLoading();
-//        }
-//
-//        @Override
-//        public void onError(Throwable e) {
-//            UserDetailsPresenter.this.hideViewLoading();
-//            UserDetailsPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-//            UserDetailsPresenter.this.showViewRetry();
-//        }
-//
-//        @Override
-//        public void onNext(User user) {
-//            UserDetailsPresenter.this.showUserDetailsInView(user);
-//        }
-//    }
 }

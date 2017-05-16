@@ -19,7 +19,7 @@ import com.fernandocejas.android10.sample.data.entity.UserEntity;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import rx.Observable;
 
 /**
  * Interface that represents a data store from where data is retrieved.

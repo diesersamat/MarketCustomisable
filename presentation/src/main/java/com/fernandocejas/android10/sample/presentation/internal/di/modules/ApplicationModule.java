@@ -48,7 +48,7 @@ public class ApplicationModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
                 .create();
     }
 }

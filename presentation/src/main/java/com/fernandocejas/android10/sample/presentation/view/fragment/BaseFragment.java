@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
+import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
 
 import javax.inject.Inject;
@@ -22,6 +23,8 @@ import javax.inject.Inject;
  */
 public abstract class BaseFragment extends Fragment {
 
+    @Inject
+    Interactor interactor;
     @Inject
     Navigator navigator;
 
@@ -50,6 +53,10 @@ public abstract class BaseFragment extends Fragment {
 
     protected void additionalCreateOperations() {
         this.getApplicationComponent().inject(this);
+    }
+
+    protected Interactor getInteractor() {
+        return interactor;
     }
 
 }

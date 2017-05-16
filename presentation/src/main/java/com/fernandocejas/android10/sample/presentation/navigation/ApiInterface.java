@@ -8,7 +8,7 @@ import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.Observable;
+import rx.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -16,10 +16,10 @@ import retrofit2.http.Path;
 public interface ApiInterface {
 
     @GET("Applications/{appId}")
-    Observable<ShopModel> getShopInfo(@Path("appId") int appId);
+    Observable<ShopModel> getShopInfo(@Path("appId") String appId);
 
     @GET("products/categories")
-    Observable<List<CategoryModel>> getCategoriesList(@Path("appId") int appId);
+    Observable<List<CategoryModel>> getCategoriesList();
 
     @GET("products/categories/{categoryId}")
     Observable<List<ProductDescriptionModel>> getProductsByCategory(@Path("categoryId") int categoryId);

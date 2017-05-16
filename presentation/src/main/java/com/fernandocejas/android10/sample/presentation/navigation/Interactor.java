@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import rx.Observable;
 
 public class Interactor {
 
@@ -21,12 +21,12 @@ public class Interactor {
         this.apiInterface = apiInterface;
     }
 
-    public Observable<ShopModel> getShopInfo(int appId) {
+    public Observable<ShopModel> getShopInfo(String appId) {
         return apiInterface.getShopInfo(appId);
     }
 
-    public Observable<List<CategoryModel>> getCategoriesList(int appId) {
-        return apiInterface.getCategoriesList(appId);
+    public Observable<List<CategoryModel>> getCategoriesList() {
+        return apiInterface.getCategoriesList();
     }
 
 

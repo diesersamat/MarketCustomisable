@@ -28,14 +28,11 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
         final ProductDescriptionModel productDescriptionModel = this.list.get(position);
         holder.productPrice.setText(String.format("%s%s",
                 productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
-        holder.productTitle.setText(productDescriptionModel.getTitle());
+        holder.productTitle.setText(productDescriptionModel.getName());
         requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (CartListAdapter.this.onItemClickListener != null) {
-                    CartListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (CartListAdapter.this.onItemClickListener != null) {
+                CartListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
     }

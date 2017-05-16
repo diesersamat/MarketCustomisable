@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 
@@ -16,11 +17,15 @@ import butterknife.ButterKnife;
 
 public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductViewHolder, ProductDescriptionModel> {
 
+    private int accentColor;
+    private int primaryColor;
     private ProductListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
     ProductListAdapter(Context context) {
         super(context);
+        Aesthetic.get().accentColor().subscribe(integer -> accentColor = integer);
+        Aesthetic.get().primaryColor().subscribe(integer -> primaryColor = integer);
     }
 
     @Override
@@ -28,14 +33,13 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
         final ProductDescriptionModel productDescriptionModel = this.list.get(position);
         holder.productPrice.setText(String.format("%s%s",
                 productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
-        holder.productTitle.setText(productDescriptionModel.getTitle());
+        holder.productTitle.setText(productDescriptionModel.getName());
+        holder.productTitle.setTextColor(accentColor);
+        holder.productPrice.setTextColor(accentColor);
         requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ProductListAdapter.this.onItemClickListener != null) {
-                    ProductListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (ProductListAdapter.this.onItemClickListener != null) {
+                ProductListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
     }

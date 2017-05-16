@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.fragment.ProductFragment;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends BaseActivity {
 
     public final static String PRODUCT_ID = "PRODUCT_ID";
 

@@ -2,6 +2,7 @@ package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
 import com.bumptech.glide.Glide;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.model.ProductModel;
@@ -37,6 +39,11 @@ public class ProductFragment extends BaseFragment {
     Button priceButton;
     @BindView(R.id.description)
     TextView description;
+
+    @BindView(R.id.title_card)
+    CardView titleCard;
+    @BindView(R.id.desc_card)
+    CardView descCard;
 
     private int productId;
 
@@ -151,6 +158,9 @@ public class ProductFragment extends BaseFragment {
         productModel.setPrice(2249);
         setProductInfo(productModel);
         //// TODO: 02/05/2017 демо значения
+
+        Aesthetic.get().primaryColor().subscribe(integer -> titleCard.setCardBackgroundColor(integer));
+        Aesthetic.get().primaryColor().subscribe(integer -> descCard.setCardBackgroundColor(integer));
         return view;
     }
 

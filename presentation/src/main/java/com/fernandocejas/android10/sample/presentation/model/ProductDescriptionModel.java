@@ -15,14 +15,17 @@ public class ProductDescriptionModel implements Parcelable {
             return new ProductDescriptionModel[size];
         }
     };
-    private String title;
+    private String name;
     private String linkToImage;
     private int id;
+    private int count;
     private double price;
+    private double salePrice;
+    private String saleId;
     private String currency;
 
     public ProductDescriptionModel(String title, String linkToImage, int id, double price, String currency) {
-        this.title = title;
+        this.name = title;
         this.linkToImage = linkToImage;
         this.id = id;
         this.price = price;
@@ -30,19 +33,19 @@ public class ProductDescriptionModel implements Parcelable {
     }
 
     protected ProductDescriptionModel(Parcel in) {
-        this.title = in.readString();
+        this.name = in.readString();
         this.linkToImage = in.readString();
         this.id = in.readInt();
         this.price = in.readDouble();
         this.currency = in.readString();
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLinkToImage() {
@@ -84,7 +87,7 @@ public class ProductDescriptionModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.title);
+        dest.writeString(this.name);
         dest.writeString(this.linkToImage);
         dest.writeInt(this.id);
         dest.writeDouble(this.price);

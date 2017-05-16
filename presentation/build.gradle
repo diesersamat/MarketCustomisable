@@ -4,7 +4,8 @@ apply plugin: 'me.tatarka.retrolambda'
 
 
 def CUSTOMISABLE_APPLICATION_ID_VAR = "CUSTOMISABLE_APPLICATION_ID"
-def CUSTOMISABLE_APPLICATION_ID = "\"replace\""
+//def CUSTOMISABLE_APPLICATION_ID = "\"replace\""
+def CUSTOMISABLE_APPLICATION_ID = "\"DE672A74683A7616B5242362E58F7408\""
 
 def API_URL = "API_URL"
 def PROD_API_URL = "\"http://webapplication120170408081622.azurewebsites.net/api/\""
@@ -112,7 +113,8 @@ dependencies {
 
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'com.afollestad:aesthetic:0.0.5'
 
     //Development
     compile developmentDependencies.leakCanary

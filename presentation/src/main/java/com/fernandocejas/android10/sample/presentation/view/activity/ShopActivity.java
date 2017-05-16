@@ -1,7 +1,8 @@
 package com.fernandocejas.android10.sample.presentation.view.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,17 +11,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerShopActivityComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.presenter.ShopPresenter;
 import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.NavDrawerListAdapter;
 import com.fernandocejas.android10.sample.presentation.view.fragment.ProductCategoryFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,6 +44,10 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     DrawerLayout drawerLayout;
     @BindView(R.id.nav_list)
     RecyclerView navList;
+    @BindView(R.id.shop_title)
+    TextView title;
+    @BindView(R.id.title_bcg)
+    View titleBcg;
 
     @Inject
     NavDrawerListAdapter navDrawerListAdapter;
@@ -72,6 +80,23 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     @Override
+    public void onLoaded(ShopModel shopModel) {
+        setCategoriesListToNavList(shopModel.getCategoryModels());
+        switchFragment(shopModel.getCategoryModels().get(0));
+        navDrawerListAdapter.setSelectedCategoryId(shopModel.getCategoryModels().get(0).getId());
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ACCENT_COLOR, shopModel.getAccentColor());
+        editor.putString(PRIMARY_COLOR, shopModel.getPrimaryColor());
+        editor.apply();
+
+        title.setText(shopModel.getName());
+
+        Aesthetic.get().accentColor().subscribe(integer -> titleBcg.setBackgroundColor(integer));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
@@ -81,32 +106,12 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
-        leftDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return false;
-            }
-        });
         navList.setLayoutManager(new LinearLayoutManager(this));
         navList.setAdapter(navDrawerListAdapter);
-        navDrawerListAdapter.setOnItemClickListener(new NavDrawerListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(CategoryModel categoryModel) {
-                switchFragment(categoryModel);
-            }
-        });
-
-        //// TODO: 02/05/2017 демо значения
-        List<CategoryModel> categoryModels = new ArrayList<>();
-        categoryModels.add(new CategoryModel("Automobile", 2));
-        categoryModels.add(new CategoryModel("Phones", 3));
-        categoryModels.add(new CategoryModel("Display", 4));
-        categoryModels.add(new CategoryModel("Mega", 5));
-        setCategoriesListToNavList(categoryModels);
-        switchFragment(categoryModels.get(0));
-        navDrawerListAdapter.setSelectedCategoryId(categoryModels.get(0).getId());
-        //// TODO: 02/05/2017 демо значения
+        navDrawerListAdapter.setOnItemClickListener(this::switchFragment);
+        presenter.resume();
     }
+
 
     @Override
     protected void additionalCreateOperations() {
