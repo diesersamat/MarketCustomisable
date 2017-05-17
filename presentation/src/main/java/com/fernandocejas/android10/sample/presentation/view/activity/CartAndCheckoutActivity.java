@@ -3,6 +3,7 @@ package com.fernandocejas.android10.sample.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
@@ -10,6 +11,7 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CheckoutFragment;
+import com.fernandocejas.android10.sample.presentation.view.fragment.PaymentFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseDoneFragment;
 
 import butterknife.BindView;
@@ -46,12 +48,21 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     }
 
     @Override
+    public void navigateToPayment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, PaymentFragment.newInstance(), PaymentFragment.getFragmentTag())
+                .addToBackStack(PaymentFragment.getFragmentTag())
+                .commit();
+        getSupportActionBar().setTitle("Payment");
+    }
+
+    @Override
     public void navigateToPurchaseDone() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, PurchaseDoneFragment.newInstance(), PurchaseDoneFragment.getFragmentTag())
-                .addToBackStack(PurchaseDoneFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle("Purchase done");
+        getSupportActionBar().setTitle("Purchase Done!");
     }
 
     @Override

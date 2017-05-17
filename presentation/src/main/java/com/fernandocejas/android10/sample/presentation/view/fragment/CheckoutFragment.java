@@ -48,7 +48,7 @@ public class CheckoutFragment extends BaseFragment {
 
     @OnClick(R.id.place_order)
     void onPlaceOrderClick() {
-        ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseDone();
+        ((CartAndCheckoutActivity) getActivity()).navigateToPayment();
     }
 
 }

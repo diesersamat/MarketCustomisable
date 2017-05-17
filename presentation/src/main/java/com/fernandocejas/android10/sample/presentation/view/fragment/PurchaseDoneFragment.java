@@ -11,8 +11,9 @@ import butterknife.ButterKnife;
 
 public class PurchaseDoneFragment extends BaseFragment {
 
-    public static CheckoutFragment newInstance() {
-        return new CheckoutFragment();
+
+    public static PurchaseDoneFragment newInstance() {
+        return new PurchaseDoneFragment();
     }
 
     @Override

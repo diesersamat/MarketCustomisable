@@ -115,6 +115,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
     compile 'com.afollestad:aesthetic:0.0.5'
+    compile 'com.yandex.money.api:yandex-money-sdk-android:4.0.0'
+
 
     //Development
     compile developmentDependencies.leakCanary
