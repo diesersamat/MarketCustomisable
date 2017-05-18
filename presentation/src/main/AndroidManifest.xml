@@ -11,14 +11,17 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".view.activity.CartAndCheckoutActivity">
-        </activity>
-        <activity android:name=".view.activity.ProductActivity">
-        </activity>
-        <activity android:name=".view.activity.ShopActivity">
+        <activity
+            android:name=".view.activity.CartAndCheckoutActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.ProductActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.ShopActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
