@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,10 +22,11 @@ public class NavDrawerListAdapter extends BaseAdapter<NavDrawerListAdapter.NavDr
     private int selectedCategoryId;
 
     @Inject
-    NavDrawerListAdapter(Context context) {
+    NavDrawerListAdapter(Context context, @Named("accentColor") int accentColor,
+                         @Named("primaryColor") int primaryColor) {
         super(context);
-        Aesthetic.get().primaryColor().subscribe(integer -> selectedBackgroundColor = integer);
-        Aesthetic.get().accentColor().subscribe(integer -> unSelectedBackgroundColor = integer);
+        unSelectedBackgroundColor = accentColor;
+        selectedBackgroundColor = primaryColor;
     }
 
     @Override

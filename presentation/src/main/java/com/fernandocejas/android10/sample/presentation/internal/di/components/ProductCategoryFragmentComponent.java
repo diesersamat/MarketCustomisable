@@ -4,6 +4,8 @@ import com.fernandocejas.android10.sample.presentation.internal.di.PerFragment;
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.ProductCategoryFragment;
 
+import javax.inject.Named;
+
 import dagger.BindsInstance;
 import dagger.Component;
 
@@ -19,6 +21,11 @@ public interface ProductCategoryFragmentComponent {
         @BindsInstance
         Builder view(ProductCategoryView view);
 
+        @BindsInstance
+        Builder primaryColor(@Named("primaryColor") int primaryColor);
+
+        @BindsInstance
+        Builder accentColor(@Named("accentColor") int accentColor);
 
         ProductCategoryFragmentComponent build();
     }

@@ -74,6 +74,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     public void onResume() {
         super.onResume();
         // Set title
+        proceedToCheckoutButton.setBackgroundColor(((CartAndCheckoutView) getActivity()).getAccentColor());
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.your_cart);
 

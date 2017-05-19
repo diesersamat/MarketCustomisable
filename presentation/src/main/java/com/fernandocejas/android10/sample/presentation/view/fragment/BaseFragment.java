@@ -9,6 +9,7 @@ import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
+import com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -22,6 +23,15 @@ public abstract class BaseFragment extends Fragment {
     Interactor interactor;
     @Inject
     Navigator navigator;
+
+    public int getPrimaryColor() {
+        return ((BaseActivity) getActivity()).getPrimaryColor();
+    }
+
+    public int getAccentColor() {
+        return ((BaseActivity) getActivity()).getAccentColor();
+    }
+
 
     public static String getFragmentTag() {
         return BaseFragment.class.getName();

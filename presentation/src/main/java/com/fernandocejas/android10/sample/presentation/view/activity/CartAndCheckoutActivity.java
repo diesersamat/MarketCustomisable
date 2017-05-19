@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
-import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
@@ -26,8 +25,6 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     Toolbar toolbar;
     @BindView(R.id.container)
     FrameLayout container;
-    private int primaryColor;
-    private int accentColor;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, CartAndCheckoutActivity.class);
@@ -68,16 +65,6 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     }
 
     @Override
-    public int getAccentColor() {
-        return accentColor;
-    }
-
-    @Override
-    public int getPrimaryColor() {
-        return primaryColor;
-    }
-
-    @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager()
@@ -91,8 +78,6 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Aesthetic.get().primaryColor().subscribe(integer -> primaryColor = integer);
-        Aesthetic.get().accentColor().subscribe(integer -> accentColor = integer);
         setContentView(R.layout.activity_cart_and_checkout);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);

@@ -4,6 +4,8 @@ import com.fernandocejas.android10.sample.presentation.internal.di.PerFragment;
 import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
 import com.fernandocejas.android10.sample.presentation.view.activity.ShopActivity;
 
+import javax.inject.Named;
+
 import dagger.BindsInstance;
 import dagger.Component;
 
@@ -18,6 +20,13 @@ public interface ShopActivityComponent {
 
         @BindsInstance
         Builder view(ShopActivityView view);
+
+
+        @BindsInstance
+        Builder primaryColor(@Named("primaryColor") int primaryColor);
+
+        @BindsInstance
+        Builder accentColor(@Named("accentColor") int accentColor);
 
         ShopActivityComponent build();
     }

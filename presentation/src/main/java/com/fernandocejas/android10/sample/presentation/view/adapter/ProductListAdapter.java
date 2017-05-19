@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,10 +22,11 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
     private ProductListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
-    ProductListAdapter(Context context) {
+    ProductListAdapter(Context context, @Named("accentColor") int accentColor,
+                       @Named("primaryColor") int primaryColor) {
         super(context);
-        Aesthetic.get().accentColor().subscribe(integer -> accentColor = integer);
-        Aesthetic.get().primaryColor().subscribe(integer -> primaryColor = integer);
+        this.accentColor = accentColor;
+        this.primaryColor = primaryColor;
     }
 
     @Override

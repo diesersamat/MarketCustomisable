@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
 
 import butterknife.BindView;
@@ -43,7 +42,6 @@ public class CheckoutFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout, container, false);
         ButterKnife.bind(this, view);
-        placeOrder.setBackgroundColor(((CartAndCheckoutView) getActivity()).getAccentColor());
         return view;
     }
 
@@ -51,8 +49,9 @@ public class CheckoutFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         // Set title
-        ((AppCompatActivity)getActivity()).getSupportActionBar()
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.checkout);
+        placeOrder.setBackgroundColor(getAccentColor());
     }
 
     @OnClick(R.id.place_order)

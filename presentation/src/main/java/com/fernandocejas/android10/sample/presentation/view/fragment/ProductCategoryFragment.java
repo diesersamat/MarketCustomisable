@@ -63,6 +63,8 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
         DaggerProductCategoryFragmentComponent
                 .builder()
                 .view(this)
+                .accentColor(getAccentColor())
+                .primaryColor(getPrimaryColor())
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);

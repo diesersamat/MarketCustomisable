@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerShopActivityComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
@@ -95,7 +94,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
         title.setText(shopModel.getName());
 
-        Aesthetic.get().accentColor().subscribe(integer -> titleBcg.setBackgroundColor(integer));
+        titleBcg.setBackgroundColor(getAccentColor());
     }
 
     @Override
@@ -124,6 +123,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         DaggerShopActivityComponent
                 .builder()
                 .view(this)
+                .accentColor(getAccentColor())
+                .primaryColor(getPrimaryColor())
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);
