@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 
 public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductViewHolder, ProductDescriptionModel> {
 
-    private int accentColor;
-    private int primaryColor;
+    private final int accentColor;
+    private final int primaryColor;
     private ProductListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
@@ -35,14 +35,14 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
         holder.productPrice.setText(String.format("%s%s",
                 productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
         holder.productTitle.setText(productDescriptionModel.getName());
-        holder.productTitle.setTextColor(accentColor);
-        holder.productPrice.setTextColor(accentColor);
         requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
         holder.itemView.setOnClickListener(v -> {
             if (ProductListAdapter.this.onItemClickListener != null) {
                 ProductListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
+
+        holder.itemView.setBackgroundColor(primaryColor);
     }
 
     public void setOnItemClickListener(ProductListAdapter.OnItemClickListener onItemClickListener) {

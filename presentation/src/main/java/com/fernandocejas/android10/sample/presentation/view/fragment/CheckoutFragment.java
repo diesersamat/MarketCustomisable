@@ -51,7 +51,7 @@ public class CheckoutFragment extends BaseFragment {
         // Set title
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.checkout);
-        placeOrder.setBackgroundColor(getAccentColor());
+        placeOrder.setBackgroundColor(getPrimaryColor());
     }
 
     @OnClick(R.id.place_order)

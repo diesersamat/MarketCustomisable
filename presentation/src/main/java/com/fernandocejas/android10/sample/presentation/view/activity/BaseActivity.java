@@ -2,10 +2,13 @@ package com.fernandocejas.android10.sample.presentation.view.activity;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.R;
@@ -51,6 +54,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             this.accentColor = Color.parseColor(accentColor);
         } else {
             this.accentColor = getResources().getColor(R.color.md_yellow);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getPrimaryColor());
         }
         additionalCreateOperations();
 

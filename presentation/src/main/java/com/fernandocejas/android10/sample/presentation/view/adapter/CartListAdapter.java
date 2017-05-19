@@ -10,17 +10,23 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHolder, ProductDescriptionModel> {
 
+    private final int accentColor;
+    private final int primaryColor;
     private CartListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
-    CartListAdapter(Context context) {
+    CartListAdapter(Context context, @Named("accentColor") int accentColor,
+                    @Named("primaryColor") int primaryColor) {
         super(context);
+        this.accentColor = accentColor;
+        this.primaryColor = primaryColor;
     }
 
     @Override
@@ -35,6 +41,7 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
                 CartListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
+        holder.itemView.setBackgroundColor(primaryColor);
     }
 
     public void setOnItemClickListener(CartListAdapter.OnItemClickListener onItemClickListener) {

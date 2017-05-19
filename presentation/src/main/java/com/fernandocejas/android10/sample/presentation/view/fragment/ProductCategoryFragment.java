@@ -15,7 +15,6 @@ import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionM
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.ProductListAdapter;
-import com.yandex.money.api.util.logging.Log;
 
 import java.util.List;
 
@@ -85,7 +84,7 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(e.getLocalizedMessage());
+                        e.printStackTrace();
                     }
                 });
 

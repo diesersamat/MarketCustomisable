@@ -2,6 +2,7 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
 
@@ -34,7 +35,6 @@ public class Interactor {
     }
 
     public Observable<List<CategoryModel>> getCategoriesList() {
-//        return apiInterface.getCategoriesList();
         return Observable.defer(dataStoreCache::getCategoriesList)
                 .switchIfEmpty(apiInterface.getCategoriesList()
                         .doOnNext(dataStoreCache::saveCategoriesList))
@@ -56,10 +56,18 @@ public class Interactor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-//    public Observable<ProductModel> getProductInfo(int productId) {
-//
-//    }
-//
+    public Observable<ProductWrapperModel> getProductInfo(int productId) {
+        return Observable.defer(() -> dataStoreCache.getProductInfo(productId))
+                .switchIfEmpty(apiInterface.getProductInfo(productId)
+                        .map(productWrapperModel -> {
+                            productWrapperModel.setId(productId);
+                            return productWrapperModel;
+                        })
+                        .doOnNext(dataStoreCache::saveProductInfo))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 //
 //    public Observable<OrderModel> postOrder() {
 //

@@ -3,9 +3,9 @@ package com.fernandocejas.android10.sample.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import io.realm.annotations.PrimaryKey;
+import io.realm.RealmObject;
 
-public class ProductModel implements Parcelable {
+public class ProductModel extends RealmObject implements Parcelable {
 
     public static final Parcelable.Creator<ProductModel> CREATOR = new Parcelable.Creator<ProductModel>() {
         @Override
@@ -18,13 +18,13 @@ public class ProductModel implements Parcelable {
             return new ProductModel[size];
         }
     };
-    @PrimaryKey
+    private String currency;
     private int id;
+    private int count;
     private String photos;
     private boolean isInStock;
     private double price;
-    private String currency;
-    private String title;
+    private String name;
     private String description;
 
     public ProductModel() {
@@ -35,8 +35,7 @@ public class ProductModel implements Parcelable {
         this.photos = in.readString();
         this.isInStock = in.readByte() != 0;
         this.price = in.readDouble();
-        this.currency = in.readString();
-        this.title = in.readString();
+        this.name = in.readString();
         this.description = in.readString();
     }
 
@@ -76,16 +75,13 @@ public class ProductModel implements Parcelable {
         return currency;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+
+    public String getName() {
+        return name;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -108,7 +104,7 @@ public class ProductModel implements Parcelable {
         dest.writeByte(this.isInStock ? (byte) 1 : (byte) 0);
         dest.writeDouble(this.price);
         dest.writeString(this.currency);
-        dest.writeString(this.title);
+        dest.writeString(this.name);
         dest.writeString(this.description);
     }
 }

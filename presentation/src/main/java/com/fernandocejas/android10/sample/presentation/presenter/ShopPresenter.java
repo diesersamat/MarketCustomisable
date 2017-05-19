@@ -37,7 +37,7 @@ public class ShopPresenter extends BasePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(e.getLocalizedMessage());
+                        e.printStackTrace();
                         view.onError();
                     }
 

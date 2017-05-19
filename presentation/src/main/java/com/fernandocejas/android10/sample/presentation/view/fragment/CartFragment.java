@@ -34,6 +34,8 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
 
     @BindView(R.id.cart_recyclerview)
     RecyclerView cartRecyclerview;
+    @BindView(R.id.bcg)
+    View background;
     @BindView(R.id.total_textview)
     TextView totalTextview;
     @BindView(R.id.total_cardview)
@@ -65,19 +67,17 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         setProductList(productList);
         //// TODO: 02/05/2017 демо значения
 
-
-        totalCardView.setCardBackgroundColor(((CartAndCheckoutView) getActivity()).getPrimaryColor());
+        background.setBackgroundColor(getAccentColor());
+        totalCardView.setCardBackgroundColor(getPrimaryColor());
+        proceedToCheckoutButton.setBackgroundColor(getPrimaryColor());
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Set title
-        proceedToCheckoutButton.setBackgroundColor(((CartAndCheckoutView) getActivity()).getAccentColor());
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.your_cart);
-
     }
 
     @Override
@@ -85,6 +85,8 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         DaggerCartFragmentComponent
                 .builder()
                 .view(this)
+                .accentColor(getAccentColor())
+                .primaryColor(getPrimaryColor())
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);

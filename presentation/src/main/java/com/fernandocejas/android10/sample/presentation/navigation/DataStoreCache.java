@@ -2,6 +2,7 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 
 import java.util.List;
@@ -59,6 +60,18 @@ public class DataStoreCache {
         } else {
             return Observable.just(arrayListOfUnmanagedObjects);
         }
+    }
+
+    public Observable<ProductWrapperModel> getProductInfo(int productId) {
+        RealmResults<ProductWrapperModel> all = getRealm()
+                .where(ProductWrapperModel.class)
+                .equalTo("id", productId).findAll();
+        return Observable.from(getRealm().copyFromRealm(all));
+    }
+
+    public void saveProductInfo(ProductWrapperModel productModel) {
+        getRealm().executeTransaction(realm ->
+                realm.insertOrUpdate(productModel));
     }
 
     private Realm getRealm() {

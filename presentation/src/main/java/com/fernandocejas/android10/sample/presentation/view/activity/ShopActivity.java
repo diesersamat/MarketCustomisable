@@ -116,6 +116,9 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         navList.setAdapter(navDrawerListAdapter);
         navDrawerListAdapter.setOnItemClickListener(this::switchFragment);
         presenter.resume();
+
+        content.setBackgroundColor(getAccentColor());
+        toolbar.setBackgroundColor(getPrimaryColor());
     }
 
     @Override
