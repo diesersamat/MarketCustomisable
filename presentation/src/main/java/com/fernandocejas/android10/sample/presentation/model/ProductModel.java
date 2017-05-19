@@ -3,6 +3,8 @@ package com.fernandocejas.android10.sample.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.annotations.PrimaryKey;
+
 public class ProductModel implements Parcelable {
 
     public static final Parcelable.Creator<ProductModel> CREATOR = new Parcelable.Creator<ProductModel>() {
@@ -16,6 +18,7 @@ public class ProductModel implements Parcelable {
             return new ProductModel[size];
         }
     };
+    @PrimaryKey
     private int id;
     private String photos;
     private boolean isInStock;

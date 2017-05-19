@@ -1,22 +1,15 @@
 package com.fernandocejas.android10.sample.presentation.presenter;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.fernandocejas.android10.sample.presentation.BuildConfig;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
+import com.yandex.money.api.util.logging.Log;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-import static com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity.ACCENT_COLOR;
-import static com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity.PRIMARY_COLOR;
 
 public class ShopPresenter extends BasePresenter {
 
@@ -36,8 +29,6 @@ public class ShopPresenter extends BasePresenter {
                     shopModel.setCategoryModels(categoryModels);
                     return shopModel;
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ShopModel>() {
                     @Override
                     public void onNext(ShopModel shopModel) {
@@ -46,7 +37,7 @@ public class ShopPresenter extends BasePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(e.getLocalizedMessage());
                     }
 
                     @Override

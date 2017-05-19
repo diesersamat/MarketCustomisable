@@ -45,6 +45,7 @@ public class ProductFragment extends BaseFragment {
     @BindView(R.id.desc_card)
     CardView descCard;
 
+    private int primaryColor;
     private int productId;
 
     public static ProductFragment newInstance(int productId) {
@@ -159,9 +160,15 @@ public class ProductFragment extends BaseFragment {
         setProductInfo(productModel);
         //// TODO: 02/05/2017 демо значения
 
-        Aesthetic.get().primaryColor().subscribe(integer -> titleCard.setCardBackgroundColor(integer));
-        Aesthetic.get().primaryColor().subscribe(integer -> descCard.setCardBackgroundColor(integer));
+        Aesthetic.get().primaryColor().subscribe(integer -> primaryColor = integer);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        titleCard.setCardBackgroundColor(primaryColor);
+        descCard.setCardBackgroundColor(primaryColor);
     }
 
     private void setProductInfo(ProductModel productInfo) {

@@ -44,7 +44,7 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
                 .replace(R.id.container, CheckoutFragment.newInstance(), CheckoutFragment.getFragmentTag())
                 .addToBackStack(CheckoutFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle("Checkout");
+        getSupportActionBar().setTitle(R.string.checkout);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
                 .replace(R.id.container, PaymentFragment.newInstance(), PaymentFragment.getFragmentTag())
                 .addToBackStack(PaymentFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle("Payment");
+        getSupportActionBar().setTitle(R.string.payment);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, PurchaseDoneFragment.newInstance(), PurchaseDoneFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle("Purchase Done!");
+        getSupportActionBar().setTitle(R.string.purchase_done);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Your Cart");
+        getSupportActionBar().setTitle(R.string.your_cart);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, CartFragment.newInstance(), CartFragment.getFragmentTag()).commit();
 

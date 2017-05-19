@@ -3,7 +3,10 @@ package com.fernandocejas.android10.sample.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class CategoryModel implements Parcelable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class CategoryModel extends RealmObject implements Parcelable {
     public static final Creator<CategoryModel> CREATOR = new Creator<CategoryModel>() {
         @Override
         public CategoryModel createFromParcel(Parcel source) {
@@ -16,8 +19,12 @@ public class CategoryModel implements Parcelable {
         }
     };
     private String name;
+    @PrimaryKey
     private int id;
     private int parentId;
+
+    public CategoryModel() {
+    }
 
     public CategoryModel(String name, int id) {
         this.name = name;

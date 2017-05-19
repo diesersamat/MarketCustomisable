@@ -1,25 +1,17 @@
 package com.fernandocejas.android10.sample.presentation.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
 
-public class ShopModel implements Parcelable {
-    public static final Creator<ShopModel> CREATOR = new Creator<ShopModel>() {
-        @Override
-        public ShopModel createFromParcel(Parcel source) {
-            return new ShopModel(source);
-        }
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-        @Override
-        public ShopModel[] newArray(int size) {
-            return new ShopModel[size];
-        }
-    };
-    List<CategoryModel> categoryModels;
+public class ShopModel extends RealmObject {
+
+    RealmList<CategoryModel> categoryModels;
     String primaryColor;
     String accentColor;
+    @PrimaryKey
     String id;
     int themeId;
     boolean isDarkTheme;
@@ -28,15 +20,6 @@ public class ShopModel implements Parcelable {
     public ShopModel() {
     }
 
-    protected ShopModel(Parcel in) {
-        this.categoryModels = in.createTypedArrayList(CategoryModel.CREATOR);
-        this.primaryColor = in.readString();
-        this.accentColor = in.readString();
-        this.id = in.readString();
-        this.themeId = in.readInt();
-        this.isDarkTheme = in.readByte() != 0;
-        this.name = in.readString();
-    }
 
     public String getName() {
         return name;
@@ -51,7 +34,8 @@ public class ShopModel implements Parcelable {
     }
 
     public void setCategoryModels(List<CategoryModel> categoryModels) {
-        this.categoryModels = categoryModels;
+        this.categoryModels = new RealmList<>();
+        this.categoryModels.addAll(categoryModels);
     }
 
     public String getPrimaryColor() {
@@ -94,19 +78,4 @@ public class ShopModel implements Parcelable {
         isDarkTheme = darkTheme;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.categoryModels);
-        dest.writeString(this.primaryColor);
-        dest.writeString(this.accentColor);
-        dest.writeString(this.id);
-        dest.writeInt(this.themeId);
-        dest.writeByte(this.isDarkTheme ? (byte) 1 : (byte) 0);
-        dest.writeString(this.name);
-    }
 }

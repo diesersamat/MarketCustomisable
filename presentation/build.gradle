@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'realm-android'
 
 
 def CUSTOMISABLE_APPLICATION_ID_VAR = "CUSTOMISABLE_APPLICATION_ID"
@@ -10,6 +11,11 @@ def CUSTOMISABLE_APPLICATION_ID = "\"DE672A74683A7616B5242362E58F7408\""
 def API_URL = "API_URL"
 def PROD_API_URL = "\"http://webapplication120170408081622.azurewebsites.net/api/\""
 
+repositories {
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
+}
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -116,8 +122,10 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
     compile 'com.afollestad:aesthetic:0.0.5'
     compile 'com.yandex.money.api:yandex-money-sdk-android:4.0.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 
-
-    //Development
-    compile developmentDependencies.leakCanary
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.uphyca:stetho_realm:2.0.0'
 }

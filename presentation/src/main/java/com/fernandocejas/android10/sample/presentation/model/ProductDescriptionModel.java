@@ -3,7 +3,10 @@ package com.fernandocejas.android10.sample.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ProductDescriptionModel implements Parcelable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class ProductDescriptionModel extends RealmObject implements Parcelable {
     public static final Parcelable.Creator<ProductDescriptionModel> CREATOR = new Parcelable.Creator<ProductDescriptionModel>() {
         @Override
         public ProductDescriptionModel createFromParcel(Parcel source) {
@@ -17,12 +20,17 @@ public class ProductDescriptionModel implements Parcelable {
     };
     private String name;
     private String linkToImage;
+    @PrimaryKey
     private int id;
     private int count;
     private double price;
     private double salePrice;
     private String saleId;
     private String currency;
+    private int categoryId;
+
+    public ProductDescriptionModel() {
+    }
 
     public ProductDescriptionModel(String title, String linkToImage, int id, double price, String currency) {
         this.name = title;
@@ -92,5 +100,13 @@ public class ProductDescriptionModel implements Parcelable {
         dest.writeInt(this.id);
         dest.writeDouble(this.price);
         dest.writeString(this.currency);
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -15,6 +15,7 @@ import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionM
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.ProductListAdapter;
+import com.yandex.money.api.util.logging.Log;
 
 import java.util.List;
 
@@ -23,8 +24,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class ProductCategoryFragment extends BaseFragment implements ProductCategoryView {
     private final static String CATEGORY_MODEL = "CATEGORY_MODEL";
@@ -52,12 +51,7 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
         ButterKnife.bind(this, view);
         productsList.setLayoutManager(new GridLayoutManager(getContext(), COLUMN_COUNT));
         productsList.setAdapter(productListAdapter);
-        productListAdapter.setOnItemClickListener(new ProductListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(ProductDescriptionModel productDescriptionModel) {
-                openProductDescription(productDescriptionModel);
-            }
-        });
+        productListAdapter.setOnItemClickListener(this::openProductDescription);
         categoryModel = getArguments().getParcelable(CATEGORY_MODEL);
 
         load();
@@ -76,8 +70,6 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
 
     private void load() {
         getInteractor().getCategoryListOfProducts(categoryModel.getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<ProductDescriptionModel>>() {
                     @Override
                     public void onNext(List<ProductDescriptionModel> shopModel) {
@@ -91,7 +83,7 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(e.getLocalizedMessage());
                     }
                 });
 

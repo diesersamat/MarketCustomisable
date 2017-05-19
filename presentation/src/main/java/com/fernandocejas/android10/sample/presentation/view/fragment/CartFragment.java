@@ -48,12 +48,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         ButterKnife.bind(this, view);
         cartRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         cartRecyclerview.setAdapter(productListAdapter);
-        productListAdapter.setOnItemClickListener(new CartListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(ProductDescriptionModel productDescriptionModel) {
-                openProductDescription(productDescriptionModel);
-            }
-        });
+        productListAdapter.setOnItemClickListener(this::openProductDescription);
 
         List<ProductDescriptionModel> productList = new ArrayList<>();
         productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
