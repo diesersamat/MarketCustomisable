@@ -6,4 +6,9 @@ public interface CartAndCheckoutView {
     void navigateToPayment();
 
     void navigateToPurchaseDone();
+
+    int getAccentColor();
+
+    int getPrimaryColor();
+
 }

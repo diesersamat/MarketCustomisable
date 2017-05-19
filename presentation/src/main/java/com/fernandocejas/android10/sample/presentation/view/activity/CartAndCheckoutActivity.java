@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
+import com.afollestad.aesthetic.Aesthetic;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
@@ -25,7 +26,8 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     Toolbar toolbar;
     @BindView(R.id.container)
     FrameLayout container;
-
+    private int primaryColor;
+    private int accentColor;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, CartAndCheckoutActivity.class);
@@ -41,34 +43,46 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     @Override
     public void navigateToCheckout() {
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(R.id.container, CheckoutFragment.newInstance(), CheckoutFragment.getFragmentTag())
                 .addToBackStack(CheckoutFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle(R.string.checkout);
     }
 
     @Override
     public void navigateToPayment() {
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(R.id.container, PaymentFragment.newInstance(), PaymentFragment.getFragmentTag())
                 .addToBackStack(PaymentFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle(R.string.payment);
     }
 
     @Override
     public void navigateToPurchaseDone() {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(R.id.container, PurchaseDoneFragment.newInstance(), PurchaseDoneFragment.getFragmentTag())
                 .commit();
-        getSupportActionBar().setTitle(R.string.purchase_done);
+    }
+
+    @Override
+    public int getAccentColor() {
+        return accentColor;
+    }
+
+    @Override
+    public int getPrimaryColor() {
+        return primaryColor;
     }
 
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager()
+                    .popBackStack();
+
         } else {
             super.onBackPressed();
         }
@@ -77,12 +91,14 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Aesthetic.get().primaryColor().subscribe(integer -> primaryColor = integer);
+        Aesthetic.get().accentColor().subscribe(integer -> accentColor = integer);
         setContentView(R.layout.activity_cart_and_checkout);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.your_cart);
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(R.id.container, CartFragment.newInstance(), CartFragment.getFragmentTag()).commit();
 
     }

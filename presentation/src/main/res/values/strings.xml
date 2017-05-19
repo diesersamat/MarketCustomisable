@@ -6,4 +6,17 @@
     <string name="payment">Payment</string>
     <string name="purchase_done">Purchase Done!</string>
     <string name="your_cart">Your Cart</string>
+    <string name="shop">Shop</string>
+    <string name="proceed_to_checkout">Proceed to checkout</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="place_order">Place order</string>
+    <string name="add_to_wishlist">Add to wishlist</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="purchase_done_2">Purchase done!</string>
+    <string name="error_while_loading_your_data_please_try_again">Error while loading your data. Please, try again!</string>
+    <string name="try_again">Try again</string>
 </resources>

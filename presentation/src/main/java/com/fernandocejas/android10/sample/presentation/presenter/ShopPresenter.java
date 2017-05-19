@@ -38,6 +38,7 @@ public class ShopPresenter extends BasePresenter {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(e.getLocalizedMessage());
+                        view.onError();
                     }
 
                     @Override
@@ -45,7 +46,6 @@ public class ShopPresenter extends BasePresenter {
 
                     }
                 });
-
     }
 
     @Override

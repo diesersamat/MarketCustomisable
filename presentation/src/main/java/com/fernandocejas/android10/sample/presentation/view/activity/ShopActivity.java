@@ -31,6 +31,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ShopActivity extends BaseActivity implements ShopActivityView {
 
@@ -48,7 +49,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     TextView title;
     @BindView(R.id.title_bcg)
     View titleBcg;
-
+    @BindView(R.id.error_view)
+    View errorView;
     @Inject
     NavDrawerListAdapter navDrawerListAdapter;
     @Inject
@@ -97,6 +99,11 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     @Override
+    public void onError() {
+        errorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
@@ -111,7 +118,6 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         navDrawerListAdapter.setOnItemClickListener(this::switchFragment);
         presenter.resume();
     }
-
 
     @Override
     protected void additionalCreateOperations() {
@@ -135,5 +141,11 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     private void setCategoriesListToNavList(List<CategoryModel> categoryModels) {
         navDrawerListAdapter.setList(categoryModels);
+    }
+
+    @OnClick(R.id.try_again_button)
+    void onTryAgain() {
+        errorView.setVisibility(View.GONE);
+        presenter.resume();
     }
 }

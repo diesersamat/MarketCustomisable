@@ -1,6 +1,8 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +36,8 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     RecyclerView cartRecyclerview;
     @BindView(R.id.total_textview)
     TextView totalTextview;
+    @BindView(R.id.total_cardview)
+    CardView totalCardView;
     @BindView(R.id.proceed_to_checkout_button)
     Button proceedToCheckoutButton;
 
@@ -50,6 +54,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         cartRecyclerview.setAdapter(productListAdapter);
         productListAdapter.setOnItemClickListener(this::openProductDescription);
 
+        //// TODO: 02/05/2017 демо значения
         List<ProductDescriptionModel> productList = new ArrayList<>();
         productList.add(new ProductDescriptionModel("Brand 1", "https://www.iphones.ru/wp-content/uploads/2017/05/%D1%8B%D1%80%D1%89%D0%BA%D0%B5123-200x150.jpg", 0, 1213, "HUF"));
         productList.add(new ProductDescriptionModel("Brand 2", "https://www.iphones.ru/wp-content/uploads/2017/05/201293_t7PkulYGZf_chet-200x132.jpg", 1, 113, "HUF"));
@@ -59,7 +64,19 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         productList.add(new ProductDescriptionModel("Brand 5", "https://www.iphones.ru/wp-content/uploads/2017/05/Hotmob-LINE-e1411960477590-200x127.jpg", 4, 121.3, "HUF"));
         setProductList(productList);
         //// TODO: 02/05/2017 демо значения
+
+
+        totalCardView.setCardBackgroundColor(((CartAndCheckoutView) getActivity()).getPrimaryColor());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(R.string.your_cart);
+
     }
 
     @Override

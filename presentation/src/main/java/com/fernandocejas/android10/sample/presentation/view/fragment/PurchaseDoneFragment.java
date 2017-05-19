@@ -1,6 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,5 +23,13 @@ public class PurchaseDoneFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_purchase_done, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(R.string.purchase_done);
     }
 }

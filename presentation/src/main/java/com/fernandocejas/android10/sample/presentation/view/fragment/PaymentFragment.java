@@ -2,6 +2,7 @@ package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,14 @@ public class PaymentFragment extends BaseFragment {
 
     public static PaymentFragment newInstance() {
         return new PaymentFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        ((AppCompatActivity)getActivity()).getSupportActionBar()
+                .setTitle(R.string.payment);
     }
 
     @Override

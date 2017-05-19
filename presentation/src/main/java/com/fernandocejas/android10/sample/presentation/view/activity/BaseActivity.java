@@ -26,6 +26,7 @@ public abstract class BaseActivity extends AestheticActivity {
     @Inject
     Navigator navigator;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

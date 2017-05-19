@@ -4,4 +4,6 @@ import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 
 public interface ShopActivityView {
     void onLoaded(ShopModel shopModel);
+
+    void onError();
 }

@@ -26,7 +26,7 @@
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name"/>
+                    android:hint="@string/name"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -36,23 +36,10 @@
                 app:cardUseCompatPadding="true">
 
                 <EditText
-                    android:id="@+id/address_1"
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address Line 1"/>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardUseCompatPadding="true">
-
-                <EditText
-                    android:id="@+id/address_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address Line 2"/>
+                    android:hint="@string/address"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -65,7 +52,7 @@
                     android:id="@+id/city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City"/>
+                    android:hint="@string/city"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -78,7 +65,7 @@
                     android:id="@+id/postal_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Postal Code"
+                    android:hint="@string/postal_code"
                     android:inputType="number"/>
             </android.support.v7.widget.CardView>
 
@@ -92,7 +79,7 @@
                     android:id="@+id/phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number"
+                    android:hint="@string/phone_number"
                     android:inputType="phone"/>
             </android.support.v7.widget.CardView>
 
@@ -120,6 +107,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="Place order"/>
+        android:text="@string/place_order"/>
 
 </LinearLayout>
