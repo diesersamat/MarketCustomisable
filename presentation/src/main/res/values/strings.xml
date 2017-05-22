@@ -19,4 +19,7 @@
     <string name="error_while_loading_your_data_please_try_again">Error while loading your data. Please, try again!</string>
     <string name="try_again">Try again</string>
     <string name="total">Total:</string>
+    <string name="shopping_cart">Shopping cart</string>
+    <string name="my_orders">My orders</string>
+    <string name="search">Search</string>
 </resources>

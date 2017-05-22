@@ -72,7 +72,7 @@ public class ProductModel extends RealmObject implements Parcelable {
     }
 
     public String getCurrency() {
-        return " RUB";
+        return "RUB";
     }
 
 

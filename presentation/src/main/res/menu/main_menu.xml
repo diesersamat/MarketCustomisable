@@ -3,22 +3,25 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_white_24dp"
         android:name="Search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search"
         app:showAsAction="ifRoom">
     </item>
 
     <item
         android:id="@+id/action_shopping_cart"
-        android:icon="@drawable/ic_shopping_cart_white_24dp"
         android:name="Shopping cart"
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
+        android:title="@string/shopping_cart"
         app:showAsAction="ifRoom">
     </item>
 
     <item
         android:id="@+id/action_wish_list"
+        android:name="My orders"
         android:icon="@drawable/ic_assignment_white_24dp"
-        android:name="Wish list"
+        android:title="@string/my_orders"
         app:showAsAction="ifRoom">
     </item>
 

@@ -23,6 +23,10 @@ import com.fernandocejas.android10.sample.presentation.presenter.ProductPresente
 import com.fernandocejas.android10.sample.presentation.view.ProductView;
 import com.fernandocejas.android10.sample.presentation.view.activity.ProductActivity;
 
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -118,7 +122,12 @@ public class ProductFragment extends BaseFragment implements ProductView {
 //        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
         Glide.with(this).load("https://unsplash.it/200/").into(productImage);
         title.setText(productInfo.getName());
-        priceButton.setText(String.format("%s%s", productInfo.getPrice(), productInfo.getCurrency()));
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        format.setCurrency(Currency.getInstance(productInfo.getCurrency()));
+        String result = format.format(productInfo.getPrice());
+        priceButton.setText(result);
+
         description.setText(productInfo.getDescription());
     }
 

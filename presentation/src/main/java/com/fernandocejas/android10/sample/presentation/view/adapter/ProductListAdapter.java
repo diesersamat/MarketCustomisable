@@ -9,6 +9,10 @@ import android.widget.TextView;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,8 +38,11 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
     @Override
     public void onBindViewHolder(ProductViewHolder holder, final int position) {
         final ProductDescriptionModel productDescriptionModel = this.list.get(position);
-        holder.productPrice.setText(String.format("%s%s",
-                productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        format.setCurrency(Currency.getInstance(productDescriptionModel.getCurrency()));
+        String result = format.format(productDescriptionModel.getPrice());
+        holder.productPrice.setText(result);
         holder.productTitle.setText(productDescriptionModel.getName());
 //        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
         requestManager.load("http://lorempixel.com/400/400/").into(holder.photo);
