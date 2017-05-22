@@ -93,8 +93,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         editor.apply();
 
         title.setText(shopModel.getName());
-
-        titleBcg.setBackgroundColor(getAccentColor());
+        title.setTextColor(getTextColor());
+        titleBcg.setBackgroundColor(getPrimaryColor());
     }
 
     @Override
@@ -117,8 +117,9 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         navDrawerListAdapter.setOnItemClickListener(this::switchFragment);
         presenter.resume();
 
-        content.setBackgroundColor(getAccentColor());
-        toolbar.setBackgroundColor(getPrimaryColor());
+        content.setBackgroundColor(getBackgroundColor());
+        toolbar.setBackgroundColor(getAccentColor());
+        toolbar.setTitleTextColor(getTextColor());
     }
 
     @Override
@@ -127,7 +128,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
                 .builder()
                 .view(this)
                 .accentColor(getAccentColor())
-                .primaryColor(getPrimaryColor())
+                .backgroundColor(getBackgroundColor())
+                .textColor(getTextColor())
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);

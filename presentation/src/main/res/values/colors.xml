@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="item_background">#0050ff</color>
-    <color name="item_background_unselected">#FFF</color>
-    <color name="md_indigo">#45b186</color>
-    <color name="md_yellow">#f1f1c6</color>
-    <color name="black">#000</color>
+    <color name="primary_default">#45b186</color>
+    <color name="accent_default">#f1f1c6</color>
+    <color name="background_default">#f7f7f3</color>
+    <color name="text_default">#000</color>
 </resources>

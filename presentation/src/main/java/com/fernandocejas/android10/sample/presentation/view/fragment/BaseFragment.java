@@ -28,6 +28,18 @@ public abstract class BaseFragment extends Fragment {
         return ((BaseActivity) getActivity()).getPrimaryColor();
     }
 
+    public int getBackgroundColor() {
+        return ((BaseActivity) getActivity()).getBackgroundColor();
+    }
+
+    public int getTextColor() {
+        return ((BaseActivity) getActivity()).getTextColor();
+    }
+
+    public boolean isDarkIcons() {
+        return ((BaseActivity) getActivity()).isDarkIcons();
+    }
+
     public int getAccentColor() {
         return ((BaseActivity) getActivity()).getAccentColor();
     }

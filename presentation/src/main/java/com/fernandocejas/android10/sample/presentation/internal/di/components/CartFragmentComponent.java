@@ -26,6 +26,11 @@ public interface CartFragmentComponent {
         @BindsInstance
         Builder primaryColor(@Named("primaryColor") int primaryColor);
 
+
+        @BindsInstance
+        Builder textColor(@Named("textColor") int textColor);
+
+
         @BindsInstance
         Builder accentColor(@Named("accentColor") int accentColor);
 

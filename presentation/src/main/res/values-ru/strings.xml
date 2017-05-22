@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android Clean Architecture</string>
+    <string name="add_to_cart">Добавить в корзину</string>
+    <string name="address">Адрес</string>
+    <string name="add_to_wishlist">Добавить в список желаний</string>
+    <string name="checkout">Заказ</string>
+    <string name="city">Город</string>
+    <string name="error_while_loading_your_data_please_try_again">Произошла ошибка при загрузке данных. Попробуйте еще раз.</string>
+    <string name="name">Имя</string>
+    <string name="payment">Оплата</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="place_order">Оставить заказ</string>
+    <string name="postal_code">Индекс</string>
+    <string name="proceed_to_checkout">Перейти к заказу</string>
+    <string name="purchase_done">Покупка успешна!</string>
+    <string name="shop">Магазин</string>
+    <string name="total">Итого:</string>
+    <string name="try_again">Повторить</string>
+    <string name="your_cart">Корзина</string>
+</resources>

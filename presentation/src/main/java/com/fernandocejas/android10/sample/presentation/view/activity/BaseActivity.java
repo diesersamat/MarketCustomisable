@@ -24,11 +24,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public static final String PRIMARY_COLOR = "PRIMARY_COLOR";
     public static final String ACCENT_COLOR = "ACCENT_COLOR";
+    public static final String BACKGROUND_COLOR = "BACKGROUND_COLOR";
+    public static final String TEXT_COLOR = "TEXT_COLOR";
+    public static final String IS_DARK_ICONS = "IS_DARK_ICONS";
 
     @Inject
     Navigator navigator;
     private int primaryColor;
     private int accentColor;
+    private int backgroundColor;
+    private int textColor;
+    private boolean isDarkIcons;
+
+    public boolean isDarkIcons() {
+        return isDarkIcons;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
 
     public int getPrimaryColor() {
         return primaryColor;
@@ -44,17 +62,34 @@ public abstract class BaseActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String primaryColor = preferences.getString(PRIMARY_COLOR, "");
         String accentColor = preferences.getString(ACCENT_COLOR, "");
+        String backgroundColor = preferences.getString(BACKGROUND_COLOR, "");
+        String textColor = preferences.getString(TEXT_COLOR, "");
+        isDarkIcons = preferences.getBoolean(IS_DARK_ICONS, false);
+
         if (!TextUtils.isEmpty(primaryColor)) {
             this.primaryColor = Color.parseColor(primaryColor);
         } else {
-            this.primaryColor = getResources().getColor(R.color.md_indigo);
+            this.primaryColor = getResources().getColor(R.color.primary_default);
         }
 
         if (!TextUtils.isEmpty(accentColor)) {
             this.accentColor = Color.parseColor(accentColor);
         } else {
-            this.accentColor = getResources().getColor(R.color.md_yellow);
+            this.accentColor = getResources().getColor(R.color.accent_default);
         }
+
+        if (!TextUtils.isEmpty(accentColor)) {
+            this.backgroundColor = Color.parseColor(backgroundColor);
+        } else {
+            this.backgroundColor = getResources().getColor(R.color.background_default);
+        }
+
+        if (!TextUtils.isEmpty(accentColor)) {
+            this.textColor = Color.parseColor(textColor);
+        } else {
+            this.textColor = getResources().getColor(R.color.text_default);
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

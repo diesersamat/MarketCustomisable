@@ -19,14 +19,16 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
 
     private final int accentColor;
     private final int primaryColor;
+    private final int textColor;
     private CartListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
     CartListAdapter(Context context, @Named("accentColor") int accentColor,
-                    @Named("primaryColor") int primaryColor) {
+                    @Named("primaryColor") int primaryColor, @Named("textColor") int textColor) {
         super(context);
         this.accentColor = accentColor;
         this.primaryColor = primaryColor;
+        this.textColor = textColor;
     }
 
     @Override
@@ -41,7 +43,10 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
                 CartListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
-        holder.itemView.setBackgroundColor(primaryColor);
+        holder.itemView.setBackgroundColor(accentColor);
+        holder.productPrice.setTextColor(textColor);
+        holder.productTitle.setTextColor(textColor);
+        holder.count.setTextColor(textColor);
     }
 
     public void setOnItemClickListener(CartListAdapter.OnItemClickListener onItemClickListener) {
@@ -69,6 +74,12 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
         TextView productTitle;
         @BindView(R.id.price)
         TextView productPrice;
+        @BindView(R.id.count)
+        TextView count;
+        @BindView(R.id.remove_button)
+        ImageView addButton;
+        @BindView(R.id.add_button)
+        ImageView removeButton;
 
         ProductViewHolder(View itemView) {
             super(itemView);

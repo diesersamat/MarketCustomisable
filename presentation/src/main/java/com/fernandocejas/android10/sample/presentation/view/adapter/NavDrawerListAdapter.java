@@ -17,26 +17,29 @@ import butterknife.ButterKnife;
 public class NavDrawerListAdapter extends BaseAdapter<NavDrawerListAdapter.NavDrawerViewHolder, CategoryModel> {
 
     private int accentColor;
-    private int primaryColor;
+    private int backgroundColor;
     private NavDrawerListAdapter.OnItemClickListener onItemClickListener;
     private int selectedCategoryId;
+    private int textColor;
 
     @Inject
     NavDrawerListAdapter(Context context, @Named("accentColor") int accentColor,
-                         @Named("primaryColor") int primaryColor) {
+                         @Named("backgroundColor") int backgroundColor, @Named("textColor") int textColor) {
         super(context);
         this.accentColor = accentColor;
-        this.primaryColor = primaryColor;
+        this.backgroundColor = backgroundColor;
+        this.textColor = textColor;
     }
 
     @Override
     public void onBindViewHolder(final NavDrawerListAdapter.NavDrawerViewHolder holder, final int position) {
         final CategoryModel categoryModel = this.list.get(position);
         if (selectedCategoryId == categoryModel.getId()) {
-            holder.itemView.setBackgroundColor(primaryColor);
-        } else {
             holder.itemView.setBackgroundColor(accentColor);
+        } else {
+            holder.itemView.setBackgroundColor(backgroundColor);
         }
+        holder.textViewTitle.setTextColor(textColor);
         holder.textViewTitle.setText(categoryModel.getName());
         holder.itemView.setOnClickListener(v -> {
             if (NavDrawerListAdapter.this.onItemClickListener != null) {

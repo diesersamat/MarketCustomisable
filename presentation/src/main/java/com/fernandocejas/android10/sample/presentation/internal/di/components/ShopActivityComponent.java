@@ -23,7 +23,9 @@ public interface ShopActivityComponent {
 
 
         @BindsInstance
-        Builder primaryColor(@Named("primaryColor") int primaryColor);
+        Builder backgroundColor(@Named("backgroundColor") int backgroundColor);
+        @BindsInstance
+        Builder textColor(@Named("textColor") int textColor);
 
         @BindsInstance
         Builder accentColor(@Named("accentColor") int accentColor);

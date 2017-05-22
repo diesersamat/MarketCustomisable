@@ -82,7 +82,7 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setBackgroundColor(getPrimaryColor());
+        toolbar.setBackgroundColor(getAccentColor());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, CartFragment.newInstance(), CartFragment.getFragmentTag()).commit();
 

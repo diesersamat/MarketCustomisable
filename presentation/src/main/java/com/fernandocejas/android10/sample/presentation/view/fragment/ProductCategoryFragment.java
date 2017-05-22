@@ -12,7 +12,6 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerProductCategoryFragmentComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
-import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.ProductListAdapter;
 
@@ -64,6 +63,7 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
                 .view(this)
                 .accentColor(getAccentColor())
                 .primaryColor(getPrimaryColor())
+                .textColor(getTextColor())
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);
@@ -87,10 +87,6 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
                         e.printStackTrace();
                     }
                 });
-
-    }
-
-    private void onLoaded(ShopModel shopModel) {
 
     }
 

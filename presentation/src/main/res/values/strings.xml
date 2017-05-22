@@ -16,7 +16,7 @@
     <string name="place_order">Place order</string>
     <string name="add_to_wishlist">Add to wishlist</string>
     <string name="add_to_cart">Add to cart</string>
-    <string name="purchase_done_2">Purchase done!</string>
     <string name="error_while_loading_your_data_please_try_again">Error while loading your data. Please, try again!</string>
     <string name="try_again">Try again</string>
+    <string name="total">Total:</string>
 </resources>

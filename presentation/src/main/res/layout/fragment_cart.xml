@@ -1,9 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/bcg"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:id="@+id/bcg"
               android:orientation="vertical">
 
     <ScrollView
@@ -20,34 +18,59 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cart_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"/>
         </LinearLayout>
     </ScrollView>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/total_cardview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="10dp">
+    <FrameLayout
+        android:id="@+id/final_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/total_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textSize="22sp"
-            tools:text="123 200 РУБ."/>
-    </android.support.v7.widget.CardView>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:src="@drawable/shadow"/>
 
-    <Button
-        android:id="@+id/proceed_to_checkout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/proceed_to_checkout"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/total_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/total_sum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="123 200 РУБ."
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/proceed_to_checkout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/proceed_to_checkout"/>
+
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

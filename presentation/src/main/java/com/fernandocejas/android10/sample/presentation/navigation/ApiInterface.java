@@ -2,7 +2,6 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
-import com.fernandocejas.android10.sample.presentation.model.ProductModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;

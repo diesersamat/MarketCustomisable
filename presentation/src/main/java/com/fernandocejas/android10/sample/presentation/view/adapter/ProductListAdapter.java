@@ -19,14 +19,16 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
 
     private final int accentColor;
     private final int primaryColor;
+    private final int textColor;
     private ProductListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
     ProductListAdapter(Context context, @Named("accentColor") int accentColor,
-                       @Named("primaryColor") int primaryColor) {
+                       @Named("primaryColor") int primaryColor, @Named("textColor") int textColor) {
         super(context);
         this.accentColor = accentColor;
         this.primaryColor = primaryColor;
+        this.textColor = textColor;
     }
 
     @Override
@@ -35,14 +37,17 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
         holder.productPrice.setText(String.format("%s%s",
                 productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
         holder.productTitle.setText(productDescriptionModel.getName());
-        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
+//        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
+        requestManager.load("http://lorempixel.com/400/400/").into(holder.photo);
         holder.itemView.setOnClickListener(v -> {
             if (ProductListAdapter.this.onItemClickListener != null) {
                 ProductListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
 
-        holder.itemView.setBackgroundColor(primaryColor);
+        holder.itemView.setBackgroundColor(accentColor);
+        holder.productTitle.setTextColor(textColor);
+        holder.productPrice.setTextColor(textColor);
     }
 
     public void setOnItemClickListener(ProductListAdapter.OnItemClickListener onItemClickListener) {

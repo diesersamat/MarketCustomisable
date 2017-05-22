@@ -89,11 +89,17 @@ public class ProductFragment extends BaseFragment implements ProductView {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
-        background.setBackgroundColor(getAccentColor());
-        addToWishlist.getBackground().setColorFilter(getPrimaryColor(), PorterDuff.Mode.MULTIPLY);
-        addToCart.getBackground().setColorFilter(getPrimaryColor(), PorterDuff.Mode.MULTIPLY);
-        priceButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
-        toolbar.setBackgroundColor(getPrimaryColor());
+        background.setBackgroundColor(getBackgroundColor());
+        addToWishlist.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
+        addToCart.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
+        priceButton.getBackground().setColorFilter(getPrimaryColor(), PorterDuff.Mode.MULTIPLY);
+        toolbar.setBackgroundColor(getAccentColor());
+
+        title.setTextColor(getTextColor());
+        priceButton.setTextColor(getTextColor());
+        description.setTextColor(getTextColor());
+        addToCart.setTextColor(getTextColor());
+        addToWishlist.setTextColor(getTextColor());
 
         return view;
     }
@@ -102,14 +108,15 @@ public class ProductFragment extends BaseFragment implements ProductView {
     public void onResume() {
         super.onResume();
         presenter.resume();
-        titleCard.setCardBackgroundColor(getPrimaryColor());
-        descCard.setCardBackgroundColor(getPrimaryColor());
+        titleCard.setCardBackgroundColor(getAccentColor());
+        descCard.setCardBackgroundColor(getAccentColor());
     }
 
     @Override
     public void onLoaded(ProductModel productInfo) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(productInfo.getName());
-        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
+//        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
+        Glide.with(this).load("https://unsplash.it/200/").into(productImage);
         title.setText(productInfo.getName());
         priceButton.setText(String.format("%s%s", productInfo.getPrice(), productInfo.getCurrency()));
         description.setText(productInfo.getDescription());
