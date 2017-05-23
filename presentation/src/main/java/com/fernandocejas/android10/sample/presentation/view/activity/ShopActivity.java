@@ -1,6 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.view.activity;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -9,11 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
@@ -36,6 +37,8 @@ import butterknife.OnClick;
 
 public class ShopActivity extends BaseActivity implements ShopActivityView {
 
+    @BindView(R.id.counter)
+    public TextView counter;
     @BindView(R.id.container)
     FrameLayout content;
     @BindView(R.id.nav_view)
@@ -48,6 +51,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     RecyclerView navList;
     @BindView(R.id.shop_title)
     TextView title;
+    @BindView(R.id.title)
+    TextView titleToolbar;
     @BindView(R.id.title_bcg)
     View titleBcg;
     @BindView(R.id.error_view)
@@ -63,30 +68,12 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     @Inject
     ShopPresenter presenter;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.action_search:
-                navigator.navigateToSearchProducts(this);
-                return true;
-            case R.id.action_shopping_cart:
-                navigator.navigateToCart(this);
-                return true;
-            case R.id.action_wish_list:
-                navigator.navigateToOrders(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    @BindView(R.id.action_search)
+    ImageView actionSearch;
+    @BindView(R.id.action_shopping_cart)
+    ImageView actionShoppingCart;
+    @BindView(R.id.action_orders)
+    ImageView actionWishList;
 
     @Override
     public void onLoaded(ShopModel shopModel) {
@@ -112,6 +99,25 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void updateCartNumber() {
+        counter.setText("" + interactor.getItemsNumberFromCart());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCartNumber();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
@@ -119,7 +125,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+        titleToolbar.setText("");
 
         navList.setLayoutManager(new LinearLayoutManager(this));
         navList.setAdapter(navDrawerListAdapter);
@@ -127,9 +133,10 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         presenter.resume();
         content.setBackgroundColor(getBackgroundColor());
         toolbar.setBackgroundColor(getAccentColor());
-        signInButton.setBackgroundColor(getAccentColor());
-        signOutButton.setBackgroundColor(getAccentColor());
-        toolbar.setTitleTextColor(getTextColor());
+        signInButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
+        signOutButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
+        titleToolbar.setTextColor(getTextColor());
+        counter.setTextColor(getTextColor());
         updateUserInfo();
     }
 
@@ -162,7 +169,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     private void switchFragment(CategoryModel categoryModel) {
-        toolbar.setTitle(categoryModel.getName());
+        titleToolbar.setText(categoryModel.getName());
         String tag = String.valueOf(categoryModel.getId());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, ProductCategoryFragment.newInstance(categoryModel), tag)
@@ -173,6 +180,21 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     private void setCategoriesListToNavList(List<CategoryModel> categoryModels) {
         navDrawerListAdapter.setList(categoryModels);
+    }
+
+    @OnClick(R.id.action_search)
+    void OnActionSearch() {
+        navigator.navigateToSearchProducts(this);
+    }
+
+    @OnClick(R.id.action_shopping_cart)
+    void OnActionShoppingCart() {
+        navigator.navigateToCart(this);
+    }
+
+    @OnClick(R.id.action_orders)
+    void OnActionWishList() {
+        navigator.navigateToOrders(this);
     }
 
     @OnClick(R.id.sign_out_button)

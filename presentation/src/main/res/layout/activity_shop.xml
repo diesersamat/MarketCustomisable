@@ -22,7 +22,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <ImageView
+                        android:id="@+id/action_search"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/ic_search_white_24dp"/>
+
+                    <ImageView
+                        android:id="@+id/action_shopping_cart"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/ic_shopping_cart_white_24dp"/>
+
+                    <TextView
+                        android:id="@+id/counter"
+                        android:layout_width="16dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-10dp"
+                        android:textStyle="bold"
+                        tools:text="2"/>
+
+                    <ImageView
+                        android:id="@+id/action_orders"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/ic_assignment_white_24dp"/>
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -57,6 +103,15 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <TextView
+                android:id="@+id/shop_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="@string/shop"/>
+
             <Button
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
@@ -84,14 +139,6 @@
                     android:textSize="12sp"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/shop_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="@string/shop"/>
 
         </LinearLayout>
 

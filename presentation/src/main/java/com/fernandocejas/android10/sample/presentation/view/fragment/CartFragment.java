@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerCartFragmentComponent;
 import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
+import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.CartFragmentView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.CartListAdapter;
@@ -137,6 +138,9 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     private void setProductList(List<CartItemModel> productList) {
         if (productList.isEmpty()) {
             showEmpty();
+            proceedToCheckoutButton.setVisibility(View.INVISIBLE);
+        } else {
+            proceedToCheckoutButton.setVisibility(View.VISIBLE);
         }
 
         int summ = 0;
@@ -161,6 +165,11 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
 
     @OnClick(R.id.proceed_to_checkout_button)
     void proceedToCheckout() {
-        ((CartAndCheckoutView) getActivity()).navigateToCheckout();
+        UserModel userInfoSync = getInteractor().getUserInfoSync();
+        if (userInfoSync == null) {
+            navigator.navigateToLogin(getContext());
+        } else {
+            ((CartAndCheckoutView) getActivity()).navigateToCheckout();
+        }
     }
 }

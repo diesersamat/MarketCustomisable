@@ -1,5 +1,6 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +13,9 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerProductCategoryFragmentComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.view.CircleAnimationUtil;
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
+import com.fernandocejas.android10.sample.presentation.view.activity.ShopActivity;
 import com.fernandocejas.android10.sample.presentation.view.adapter.ProductListAdapter;
 
 import java.util.List;
@@ -49,7 +52,42 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
         ButterKnife.bind(this, view);
         productsList.setLayoutManager(new GridLayoutManager(getContext(), COLUMN_COUNT));
         productsList.setAdapter(productListAdapter);
-        productListAdapter.setOnItemClickListener(this::openProductDescription);
+        productListAdapter.setOnItemClickListener(new ProductListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(ProductDescriptionModel categoryModel) {
+                openProductDescription(categoryModel);
+            }
+
+            @Override
+            public void onCartClicked(View addToCart, ProductDescriptionModel productDescriptionModel) {
+                interactor.addProductToCart(productDescriptionModel);
+                new CircleAnimationUtil().attachActivity(getActivity())
+                        .setTargetView(addToCart)
+                        .setMoveDuration(500)
+                        .setDestView(((ShopActivity) getActivity()).counter)
+                        .setAnimationListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                ((ShopActivity) getActivity()).updateCartNumber();
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        }).startAnimation();
+            }
+        });
         categoryModel = getArguments().getParcelable(CATEGORY_MODEL);
 
         load();

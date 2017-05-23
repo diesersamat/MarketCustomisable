@@ -113,6 +113,10 @@ public class Interactor {
         return Observable.defer(dataStoreCache::getItemsFromCart);
     }
 
+    public List<CartItemModel> getItemsFromCartSync() {
+        return dataStoreCache.getItemsFromCartSync();
+    }
+
 
 //
 //    public Observable<OrderModel> postOrder() {
@@ -145,6 +149,19 @@ public class Interactor {
 
     public void signOut() {
         dataStoreCache.signOut();
+    }
+
+    public int getItemsNumberFromCart() {
+        List<CartItemModel> itemsFromCartSync = dataStoreCache.getItemsFromCartSync();
+        if (itemsFromCartSync == null || itemsFromCartSync.isEmpty()) {
+            return 0;
+        } else {
+            int count = 0;
+            for (CartItemModel itemModel : itemsFromCartSync) {
+                count += itemModel.getCount();
+            }
+            return count;
+        }
     }
 
     private String md5(String s) {

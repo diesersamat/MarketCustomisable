@@ -47,8 +47,14 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
 //        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
         requestManager.load("http://lorempixel.com/400/400/").into(holder.photo);
         holder.itemView.setOnClickListener(v -> {
-            if (ProductListAdapter.this.onItemClickListener != null) {
-                ProductListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
+            if (this.onItemClickListener != null) {
+                this.onItemClickListener.onItemClicked(productDescriptionModel);
+            }
+        });
+
+        holder.addToCart.setOnClickListener(v -> {
+            if (this.onItemClickListener != null) {
+                this.onItemClickListener.onCartClicked(holder.addToCart, productDescriptionModel);
             }
         });
 
@@ -73,6 +79,9 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
 
     public interface OnItemClickListener {
         void onItemClicked(ProductDescriptionModel categoryModel);
+
+        void onCartClicked(View addToCart, ProductDescriptionModel productDescriptionModel);
+
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
@@ -82,6 +91,8 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
         TextView productTitle;
         @BindView(R.id.price)
         TextView productPrice;
+        @BindView(R.id.add_to_cart)
+        View addToCart;
 
         ProductViewHolder(View itemView) {
             super(itemView);
