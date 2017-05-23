@@ -9,14 +9,45 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/title_toolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/action_shopping_cart"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_shopping_cart_white_24dp"/>
+
+            <TextView
+                android:id="@+id/counter"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-10dp"
+                android:textStyle="bold"
+                tools:text="2"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-
 
         <Button
             android:id="@+id/add_to_cart"

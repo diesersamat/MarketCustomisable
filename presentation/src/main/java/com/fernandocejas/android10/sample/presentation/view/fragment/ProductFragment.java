@@ -1,14 +1,12 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
+import android.animation.Animator;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +18,7 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerProductComponent;
 import com.fernandocejas.android10.sample.presentation.model.ProductModel;
 import com.fernandocejas.android10.sample.presentation.presenter.ProductPresenter;
+import com.fernandocejas.android10.sample.presentation.view.CircleAnimationUtil;
 import com.fernandocejas.android10.sample.presentation.view.ProductView;
 import com.fernandocejas.android10.sample.presentation.view.activity.ProductActivity;
 
@@ -56,6 +55,12 @@ public class ProductFragment extends BaseFragment implements ProductView {
     CardView titleCard;
     @BindView(R.id.desc_card)
     CardView descCard;
+    @BindView(R.id.title_toolbar)
+    TextView titleToolbar;
+    @BindView(R.id.action_shopping_cart)
+    ImageView actionShoppingCart;
+    @BindView(R.id.counter)
+    TextView counter;
     private ProductModel productInfo;
 
     public static ProductFragment newInstance(int productId) {
@@ -64,20 +69,6 @@ public class ProductFragment extends BaseFragment implements ProductView {
         bundle.putInt(ProductActivity.PRODUCT_ID, productId);
         productFragment.setArguments(bundle);
         return productFragment;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.product_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_shopping_cart) {
-            navigator.navigateToCart(getContext());
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -110,12 +101,13 @@ public class ProductFragment extends BaseFragment implements ProductView {
         presenter.resume();
         titleCard.setCardBackgroundColor(getAccentColor());
         descCard.setCardBackgroundColor(getAccentColor());
+        counter.setText("" + interactor.getItemsNumberFromCart());
     }
 
     @Override
     public void onLoaded(ProductModel productInfo) {
         this.productInfo = productInfo;
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(productInfo.getName());
+        titleToolbar.setText(productInfo.getName());
 //        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
         Glide.with(this).load("https://unsplash.it/200/").into(productImage);
         title.setText(productInfo.getName());
@@ -124,7 +116,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
         format.setCurrency(Currency.getInstance(productInfo.getCurrency()));
         String result = format.format(productInfo.getPrice());
         priceButton.setText(result);
-
+        counter.setTextColor(getTextColor());
         description.setText(productInfo.getDescription());
     }
 
@@ -146,11 +138,66 @@ public class ProductFragment extends BaseFragment implements ProductView {
     @OnClick(R.id.price_button)
     void priceClick() {
         interactor.addProductToCart(productInfo);
+        new CircleAnimationUtil().attachActivity(getActivity())
+                .setTargetView(priceButton)
+                .setMoveDuration(500)
+                .setDestView(counter)
+                .setAnimationListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        counter.setText("" + interactor.getItemsNumberFromCart());
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                }).startAnimation();
+    }
+
+    @OnClick(R.id.action_shopping_cart)
+    void shoppingCartClick() {
+        navigator.navigateToCart(getContext());
     }
 
     @OnClick(R.id.add_to_cart)
     void addToCartClick() {
         interactor.addProductToCart(productInfo);
+        new CircleAnimationUtil().attachActivity(getActivity())
+                .setTargetView(addToCart)
+                .setMoveDuration(500)
+                .setDestView(counter)
+                .setAnimationListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        counter.setText("" + interactor.getItemsNumberFromCart());
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                }).startAnimation();
     }
 
 }
