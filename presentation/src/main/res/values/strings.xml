@@ -22,4 +22,27 @@
     <string name="shopping_cart">Shopping cart</string>
     <string name="my_orders">My orders</string>
     <string name="search">Search</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="action_register">Register</string>
+    <string name="prompt_fname">First name</string>
+    <string name="prompt_sname">Last name</string>
+    <string name="prompt_phone">Phone</string>
+    <string name="please_sign_in">You have to register or log in to your existing account to make purchases in %1$s</string>
+    <string name="login_signup_title">Log in or Sign up</string>
+    <string name="sign_in_register">Sign In/Register</string>
+    <string name="sign_out">Sign out</string>
+    <string name="logged_in_as">Logged in as: %1$s%2$s</string>
 </resources>

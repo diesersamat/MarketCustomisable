@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.LoginActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.ProductActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.ShopActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,7 +41,14 @@ public class Navigator {
         //// TODO: 14/04/2017
     }
 
-    public void navigateToWishList(Context context) {
+    public void navigateToOrders(Context context) {
         // TODO: 14/04/2017
+    }
+
+    public void navigateToLogin(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = LoginActivity.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
     }
 }

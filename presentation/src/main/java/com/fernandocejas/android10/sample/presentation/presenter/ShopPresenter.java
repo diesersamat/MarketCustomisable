@@ -1,10 +1,8 @@
 package com.fernandocejas.android10.sample.presentation.presenter;
 
-import com.fernandocejas.android10.sample.presentation.BuildConfig;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
-import com.yandex.money.api.util.logging.Log;
 
 import javax.inject.Inject;
 
@@ -24,7 +22,7 @@ public class ShopPresenter extends BasePresenter {
 
     @Override
     public void resume() {
-        Observable.zip(getInteractor().getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID),
+        Observable.zip(getInteractor().getShopInfo(),
                 getInteractor().getCategoriesList(), (shopModel, categoryModels) -> {
                     shopModel.setCategoryModels(categoryModels);
                     return shopModel;

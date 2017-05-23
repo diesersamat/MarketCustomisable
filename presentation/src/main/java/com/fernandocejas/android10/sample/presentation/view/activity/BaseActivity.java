@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import com.fernandocejas.android10.sample.presentation.AndroidApplication;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
+import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.navigation.Navigator;
 
 import javax.inject.Inject;
@@ -28,6 +29,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final String TEXT_COLOR = "TEXT_COLOR";
     public static final String IS_DARK_ICONS = "IS_DARK_ICONS";
 
+    @Inject
+    Interactor interactor;
     @Inject
     Navigator navigator;
     private int primaryColor;

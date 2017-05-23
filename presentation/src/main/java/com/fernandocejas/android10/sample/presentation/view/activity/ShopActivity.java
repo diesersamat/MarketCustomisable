@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerShopActivityComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
+import com.fernandocejas.android10.sample.presentation.model.UserModel;
 import com.fernandocejas.android10.sample.presentation.presenter.ShopPresenter;
 import com.fernandocejas.android10.sample.presentation.view.ShopActivityView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.NavDrawerListAdapter;
@@ -50,6 +52,12 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     View titleBcg;
     @BindView(R.id.error_view)
     View errorView;
+    @BindView(R.id.sign_in_button)
+    Button signInButton;
+    @BindView(R.id.sign_out_button)
+    Button signOutButton;
+    @BindView(R.id.logged_in_as)
+    TextView loggedInAs;
     @Inject
     NavDrawerListAdapter navDrawerListAdapter;
     @Inject
@@ -74,7 +82,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
                 navigator.navigateToCart(this);
                 return true;
             case R.id.action_wish_list:
-                navigator.navigateToWishList(this);
+                navigator.navigateToOrders(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -94,6 +102,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
         title.setText(shopModel.getName());
         title.setTextColor(getTextColor());
+        loggedInAs.setTextColor(getTextColor());
         titleBcg.setBackgroundColor(getPrimaryColor());
     }
 
@@ -116,10 +125,12 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         navList.setAdapter(navDrawerListAdapter);
         navDrawerListAdapter.setOnItemClickListener(this::switchFragment);
         presenter.resume();
-
         content.setBackgroundColor(getBackgroundColor());
         toolbar.setBackgroundColor(getAccentColor());
+        signInButton.setBackgroundColor(getAccentColor());
+        signOutButton.setBackgroundColor(getAccentColor());
         toolbar.setTitleTextColor(getTextColor());
+        updateUserInfo();
     }
 
     @Override
@@ -133,6 +144,21 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);
+    }
+
+    private void updateUserInfo() {
+        UserModel userInfoSync = interactor.getUserInfoSync();
+        if (userInfoSync != null) {
+            signInButton.setVisibility(View.GONE);
+            loggedInAs.setVisibility(View.VISIBLE);
+            loggedInAs.setText(getString(R.string.logged_in_as,
+                    userInfoSync.getName(), userInfoSync.getSurame()));
+            signOutButton.setVisibility(View.VISIBLE);
+        } else {
+            signInButton.setVisibility(View.VISIBLE);
+            loggedInAs.setVisibility(View.GONE);
+            signOutButton.setVisibility(View.GONE);
+        }
     }
 
     private void switchFragment(CategoryModel categoryModel) {
@@ -149,9 +175,20 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         navDrawerListAdapter.setList(categoryModels);
     }
 
+    @OnClick(R.id.sign_out_button)
+    void onSignOutClick() {
+        interactor.signOut();
+        updateUserInfo();
+    }
+
     @OnClick(R.id.try_again_button)
     void onTryAgain() {
         errorView.setVisibility(View.GONE);
         presenter.resume();
+    }
+
+    @OnClick(R.id.sign_in_button)
+    void onSignInRegister() {
+        navigator.navigateToLogin(this);
     }
 }

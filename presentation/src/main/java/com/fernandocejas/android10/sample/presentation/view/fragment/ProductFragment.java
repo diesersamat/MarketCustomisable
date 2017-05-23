@@ -31,11 +31,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProductFragment extends BaseFragment implements ProductView {
 
-    @BindView(R.id.add_to_wishlist)
-    Button addToWishlist;
     @BindView(R.id.add_to_cart)
     Button addToCart;
     @BindView(R.id.toolbar)
@@ -51,14 +50,13 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @Inject
     ProductPresenter presenter;
-
-
     @BindView(R.id.background)
     View background;
     @BindView(R.id.title_card)
     CardView titleCard;
     @BindView(R.id.desc_card)
     CardView descCard;
+    private ProductModel productInfo;
 
     public static ProductFragment newInstance(int productId) {
         ProductFragment productFragment = new ProductFragment();
@@ -94,7 +92,6 @@ public class ProductFragment extends BaseFragment implements ProductView {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
         background.setBackgroundColor(getBackgroundColor());
-        addToWishlist.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         addToCart.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         priceButton.getBackground().setColorFilter(getPrimaryColor(), PorterDuff.Mode.MULTIPLY);
         toolbar.setBackgroundColor(getAccentColor());
@@ -103,7 +100,6 @@ public class ProductFragment extends BaseFragment implements ProductView {
         priceButton.setTextColor(getTextColor());
         description.setTextColor(getTextColor());
         addToCart.setTextColor(getTextColor());
-        addToWishlist.setTextColor(getTextColor());
 
         return view;
     }
@@ -118,6 +114,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @Override
     public void onLoaded(ProductModel productInfo) {
+        this.productInfo = productInfo;
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(productInfo.getName());
 //        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
         Glide.with(this).load("https://unsplash.it/200/").into(productImage);
@@ -133,7 +130,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @Override
     public void onError() {
-        //// TODO: 19/05/2017  
+        //// TODO: 19/05/2017
     }
 
     @Override
@@ -144,6 +141,16 @@ public class ProductFragment extends BaseFragment implements ProductView {
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);
+    }
+
+    @OnClick(R.id.price_button)
+    void priceClick() {
+        interactor.addProductToCart(productInfo);
+    }
+
+    @OnClick(R.id.add_to_cart)
+    void addToCartClick() {
+        interactor.addProductToCart(productInfo);
     }
 
 }

@@ -11,6 +11,7 @@ import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class AndroidApplication extends Application {
 
@@ -23,6 +24,10 @@ public class AndroidApplication extends Application {
         this.initializeInjector();
         this.initializeLeakDetection();
         Realm.init(this);
+        RealmConfiguration realmConfig = new RealmConfiguration
+                .Builder().deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(realmConfig);
+
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

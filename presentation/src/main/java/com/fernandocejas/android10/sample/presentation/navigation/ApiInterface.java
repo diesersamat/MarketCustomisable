@@ -11,6 +11,7 @@ import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -25,9 +26,12 @@ public interface ApiInterface {
     @GET("products/categories/{categoryId}")
     Observable<List<ProductDescriptionModel>> getProductsByCategory(@Path("categoryId") int categoryId);
 
-    @GET("Customers/Auth")
+    @POST("Customers/Auth")
     Observable<UserModel> auth(@Body HashMap<String, Object> body);
 
     @GET("Products/{productId}")
     Observable<ProductWrapperModel> getProductInfo(@Path("productId") int productId);
+
+    @POST("customers/new")
+    Observable<UserModel> registerUser(@Body HashMap<String, Object> body);
 }

@@ -7,7 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
+
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +19,7 @@ import javax.inject.Named;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHolder, ProductDescriptionModel> {
+public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHolder, CartItemModel> {
 
     private final int accentColor;
     private final int primaryColor;
@@ -33,19 +37,35 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, final int position) {
-        final ProductDescriptionModel productDescriptionModel = this.list.get(position);
-        holder.productPrice.setText(String.format("%s%s",
-                productDescriptionModel.getPrice(), productDescriptionModel.getCurrency()));
+        final CartItemModel productDescriptionModel = this.list.get(position);
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        format.setCurrency(Currency.getInstance("RUB"));
+        String result = format.format(productDescriptionModel.getPrice());
+        holder.productPrice.setText(result);
         holder.productTitle.setText(productDescriptionModel.getName());
-        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
+        requestManager.load(productDescriptionModel.getPhotos()).into(holder.photo);
         holder.itemView.setOnClickListener(v -> {
-            if (CartListAdapter.this.onItemClickListener != null) {
-                CartListAdapter.this.onItemClickListener.onItemClicked(productDescriptionModel);
+            if (this.onItemClickListener != null) {
+                this.onItemClickListener.onItemClicked(productDescriptionModel);
             }
         });
+
+        holder.addButton.setOnClickListener(v -> {
+            if (this.onItemClickListener != null) {
+                this.onItemClickListener.onItemAddClick(productDescriptionModel);
+            }
+        });
+        holder.removeButton.setOnClickListener(v -> {
+            if (this.onItemClickListener != null) {
+                this.onItemClickListener.onItemRemoveClick(productDescriptionModel);
+            }
+        });
+
         holder.itemView.setBackgroundColor(accentColor);
         holder.productPrice.setTextColor(textColor);
         holder.productTitle.setTextColor(textColor);
+        holder.count.setText(String.format("%d", productDescriptionModel.getCount()));
         holder.count.setTextColor(textColor);
     }
 
@@ -64,7 +84,11 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
     }
 
     public interface OnItemClickListener {
-        void onItemClicked(ProductDescriptionModel categoryModel);
+        void onItemClicked(CartItemModel categoryModel);
+
+        void onItemAddClick(CartItemModel productDescriptionModel);
+
+        void onItemRemoveClick(CartItemModel productDescriptionModel);
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
@@ -77,9 +101,10 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
         @BindView(R.id.count)
         TextView count;
         @BindView(R.id.remove_button)
-        ImageView addButton;
-        @BindView(R.id.add_button)
         ImageView removeButton;
+        @BindView(R.id.add_button)
+        ImageView addButton;
+
 
         ProductViewHolder(View itemView) {
             super(itemView);

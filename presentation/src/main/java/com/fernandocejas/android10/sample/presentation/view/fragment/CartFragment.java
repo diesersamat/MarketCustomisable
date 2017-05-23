@@ -12,19 +12,23 @@ import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerCartFragmentComponent;
-import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.CartFragmentView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.CartListAdapter;
 
-import java.util.ArrayList;
+import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 
 public class CartFragment extends BaseFragment implements CartFragmentView {
 
@@ -55,18 +59,24 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         ButterKnife.bind(this, view);
         cartRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         cartRecyclerview.setAdapter(productListAdapter);
-        productListAdapter.setOnItemClickListener(this::openProductDescription);
+        productListAdapter.setOnItemClickListener(new CartListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(CartItemModel categoryModel) {
+                openProductDescription(categoryModel);
+            }
 
-        //// TODO: 02/05/2017 демо значения
-        List<ProductDescriptionModel> productList = new ArrayList<>();
-        productList.add(new ProductDescriptionModel("Brand 1", "http://lorempixel.com/400/400/", 0, 1213, "HUF"));
-        productList.add(new ProductDescriptionModel("Brand 2", "http://lorempixel.com/400/400/", 1, 113, "HUF"));
-        productList.add(new ProductDescriptionModel("Brand 3", "http://lorempixel.com/400/400/", 2, 113.43, "HUF"));
-        productList.add(new ProductDescriptionModel("Brand 3", "http://lorempixel.com/400/400/", 2, 113.43, "HUF"));
-        productList.add(new ProductDescriptionModel("Brand 4", "http://lorempixel.com/400/400/", 3, 143.3, "HUF"));
-        productList.add(new ProductDescriptionModel("Brand 5", "http://lorempixel.com/400/400/", 4, 121.3, "HUF"));
-        setProductList(productList);
-        //// TODO: 02/05/2017 демо значения
+            @Override
+            public void onItemAddClick(CartItemModel productDescriptionModel) {
+                getInteractor().addProductToCart(productDescriptionModel);
+                updateList();
+            }
+
+            @Override
+            public void onItemRemoveClick(CartItemModel productDescriptionModel) {
+                getInteractor().removeProductFromCart(productDescriptionModel);
+                updateList();
+            }
+        });
 
         background.setBackgroundColor(getBackgroundColor());
         finalView.setBackgroundColor(getAccentColor());
@@ -82,6 +92,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.your_cart);
+        updateList();
     }
 
     @Override
@@ -97,11 +108,54 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
                 .inject(this);
     }
 
-    private void setProductList(List<ProductDescriptionModel> productList) {
+    private void updateList() {
+        getInteractor().getItemsFromCart()
+                .defaultIfEmpty(Collections.emptyList())
+                .subscribe(new Observer<List<CartItemModel>>() {
+                    @Override
+                    public void onNext(List<CartItemModel> shopModel) {
+                        setProductList(shopModel);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        onErrorShow();
+                    }
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                });
+    }
+
+    private void onErrorShow() {
+        //// TODO: 23/05/2017
+    }
+
+    private void setProductList(List<CartItemModel> productList) {
+        if (productList.isEmpty()) {
+            showEmpty();
+        }
+
+        int summ = 0;
+        for (CartItemModel itemModel : productList) {
+            summ += (itemModel.getPrice() * itemModel.getCount());
+        }
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        format.setCurrency(Currency.getInstance("RUB"));
+        String result = format.format(summ);
+        totalSum.setText(result);
         productListAdapter.setList(productList);
     }
 
-    private void openProductDescription(ProductDescriptionModel productDescriptionModel) {
+    private void showEmpty() {
+        //// TODO: 23/05/2017
+    }
+
+    private void openProductDescription(CartItemModel productDescriptionModel) {
         navigator.navigateToProductDescription(getContext(), productDescriptionModel.getId());
     }
 
