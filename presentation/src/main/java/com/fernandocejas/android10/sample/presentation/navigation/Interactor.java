@@ -3,6 +3,8 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 import com.fernandocejas.android10.sample.presentation.BuildConfig;
 import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.model.OrderItemModel;
+import com.fernandocejas.android10.sample.presentation.model.OrderModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
@@ -11,6 +13,7 @@ import com.fernandocejas.android10.sample.presentation.model.UserModel;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -113,15 +116,6 @@ public class Interactor {
         return Observable.defer(dataStoreCache::getItemsFromCart);
     }
 
-    public List<CartItemModel> getItemsFromCartSync() {
-        return dataStoreCache.getItemsFromCartSync();
-    }
-
-
-//
-//    public Observable<OrderModel> postOrder() {
-//
-//    }
 
     public Observable<UserModel> authUser(String email, String pass) {
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -164,6 +158,41 @@ public class Interactor {
         }
     }
 
+    public Observable<OrderModel> postOrder() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
+        List<CartItemModel> itemsFromCartSync = dataStoreCache.getItemsFromCartSync();
+        for (CartItemModel itemModel : itemsFromCartSync) {
+            orderItemModels.add(new OrderItemModel(String.valueOf(itemModel.getId()),
+                    String.valueOf(itemModel.getCount())));
+        }
+        hashMap.put("OrderItems", orderItemModels);
+        UserModel userInfoSync = dataStoreCache.getUserInfoSync();
+        return apiInterface
+                .sendOrder(userInfoSync == null ? "" : userInfoSync.getToken(), hashMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<OrderModel> postOrderStatusPaid(int orderId) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", orderId);
+        hashMap.put("status", 1);
+        UserModel userInfoSync = dataStoreCache.getUserInfoSync();
+        return apiInterface
+                .changeOrderStatus(userInfoSync == null ? "" : userInfoSync.getToken(), hashMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<List<OrderModel>> getAllOrders() {
+        UserModel userInfoSync = dataStoreCache.getUserInfoSync();
+        return apiInterface
+                .getAllOrders(userInfoSync == null ? "" : userInfoSync.getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     private String md5(String s) {
         try {
             // Create MD5 Hash
@@ -183,4 +212,5 @@ public class Interactor {
         }
         return "";
     }
+
 }

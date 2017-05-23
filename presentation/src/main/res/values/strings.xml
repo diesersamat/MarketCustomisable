@@ -45,4 +45,8 @@
     <string name="sign_in_register">Sign In/Register</string>
     <string name="sign_out">Sign out</string>
     <string name="logged_in_as">Logged in as: %1$s%2$s</string>
+    <string name="all_orders">All orders</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="my_cart">My cart</string>
+    <string name="go_to_website">Go to website</string>
 </resources>

@@ -115,6 +115,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     protected void onResume() {
         super.onResume();
         updateCartNumber();
+        updateUserInfo();
     }
 
     @Override
@@ -137,7 +138,6 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         signOutButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         titleToolbar.setTextColor(getTextColor());
         counter.setTextColor(getTextColor());
-        updateUserInfo();
     }
 
     @Override
@@ -180,6 +180,24 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     private void setCategoriesListToNavList(List<CategoryModel> categoryModels) {
         navDrawerListAdapter.setList(categoryModels);
+    }
+
+    @OnClick(R.id.cart_drawer)
+    void cartDrawer() {
+        navigator.navigateToCart(this);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.all_orders_drawer)
+    void allOrdersDrawer() {
+        navigator.navigateToOrders(this);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.website_drawer)
+    void websiteDrawer() {
+        navigator.navigateToWebsite(this);
+        drawerLayout.closeDrawers();
     }
 
     @OnClick(R.id.action_search)

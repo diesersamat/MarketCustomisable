@@ -22,28 +22,24 @@ public class ApiModule {
 
     private static final String API_ROOT = BuildConfig.API_URL;
 
-    private static OkHttpClient buildSslHttpClient(boolean addHeader) {
+    private static OkHttpClient buildSslHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(10, TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(chain -> {
+                    Request build = chain.request().newBuilder()
+                            .addHeader("applicationId", BuildConfig.CUSTOMISABLE_APPLICATION_ID)
+                            .build();
+                    return chain.proceed(build);
+                })
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
-
-        if (addHeader) {
-            builder.addInterceptor(chain -> {
-                Request build = chain.request().newBuilder()
-                        .addHeader("applicationId", BuildConfig.CUSTOMISABLE_APPLICATION_ID)
-                        .build();
-                return chain.proceed(build);
-            });
-        }
-
         return builder.build();
     }
 
     @Provides
     @Singleton
     ApiInterface provideApi(Gson gson) {
-        final OkHttpClient okHttpClient = buildSslHttpClient(true);
+        final OkHttpClient okHttpClient = buildSslHttpClient();
 
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
-import com.fernandocejas.android10.sample.presentation.view.fragment.CheckoutFragment;
+import com.fernandocejas.android10.sample.presentation.view.fragment.ContactDetailsFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PaymentFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseDoneFragment;
 
@@ -38,11 +38,11 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
     }
 
     @Override
-    public void navigateToCheckout() {
+    public void navigateToContactDetails() {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .replace(R.id.container, CheckoutFragment.newInstance(), CheckoutFragment.getFragmentTag())
-                .addToBackStack(CheckoutFragment.getFragmentTag())
+                .replace(R.id.container, ContactDetailsFragment.newInstance(), ContactDetailsFragment.getFragmentTag())
+                .addToBackStack(ContactDetailsFragment.getFragmentTag())
                 .commit();
     }
 

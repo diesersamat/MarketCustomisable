@@ -1,13 +1,13 @@
-
 package com.fernandocejas.android10.sample.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.LoginActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.OrdersActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.ProductActivity;
-import com.fernandocejas.android10.sample.presentation.view.activity.ShopActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -42,7 +42,10 @@ public class Navigator {
     }
 
     public void navigateToOrders(Context context) {
-        // TODO: 14/04/2017
+        if (context != null) {
+            Intent intentToLaunch = OrdersActivity.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
     }
 
     public void navigateToLogin(Context context) {
@@ -50,5 +53,11 @@ public class Navigator {
             Intent intentToLaunch = LoginActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
+    }
+
+    public void navigateToWebsite(Context context) {
+        //// TODO: 23/05/2017
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://webapplication120170408081622.azurewebsites.net/"));
+        context.startActivity(browserIntent);
     }
 }

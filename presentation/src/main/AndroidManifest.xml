@@ -36,6 +36,8 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
+        <activity android:name=".view.activity.OrdersActivity">
+        </activity>
     </application>
 
 </manifest>

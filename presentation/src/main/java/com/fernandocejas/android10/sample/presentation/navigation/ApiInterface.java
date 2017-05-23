@@ -1,6 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.navigation;
 
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.model.OrderModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -34,4 +36,18 @@ public interface ApiInterface {
 
     @POST("customers/new")
     Observable<UserModel> registerUser(@Body HashMap<String, Object> body);
+
+
+    @GET("Orders")
+    Observable<List<OrderModel>> getAllOrders(@Header("token") String token);
+
+    @POST("Orders")
+    Observable<OrderModel> sendOrder(@Header("token") String token,
+                                     @Body HashMap<String, Object> body);
+
+    @POST("Orders/ChangeStatus")
+    Observable<OrderModel> changeOrderStatus(@Header("token") String token,
+                                             @Body HashMap<String, Object> body);
+
+
 }

@@ -169,7 +169,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         if (userInfoSync == null) {
             navigator.navigateToLogin(getContext());
         } else {
-            ((CartAndCheckoutView) getActivity()).navigateToCheckout();
+            ((CartAndCheckoutView) getActivity()).navigateToContactDetails();
         }
     }
 }

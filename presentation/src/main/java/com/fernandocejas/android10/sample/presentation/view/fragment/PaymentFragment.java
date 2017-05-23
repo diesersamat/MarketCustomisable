@@ -51,7 +51,7 @@ public class PaymentFragment extends BaseFragment {
                     ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseDone();
                 }
                 if (url.contains("/error.xml?")) {
-                    ((CartAndCheckoutActivity) getActivity()).navigateToCheckout();
+                    ((CartAndCheckoutActivity) getActivity()).navigateToContactDetails();
                 }
             }
         });

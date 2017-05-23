@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.fernandocejas.android10.sample.presentation.R;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PurchaseDoneFragment extends BaseFragment {
 
@@ -31,5 +32,10 @@ public class PurchaseDoneFragment extends BaseFragment {
         // Set title
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.purchase_done);
+    }
+
+    @OnClick(R.id.all_orders)
+    void allOrderClick() {
+        navigator.navigateToOrders(getContext());
     }
 }
