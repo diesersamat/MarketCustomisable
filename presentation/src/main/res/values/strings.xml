@@ -49,4 +49,11 @@
     <string name="contact_details">Contact Details</string>
     <string name="my_cart">My cart</string>
     <string name="go_to_website">Go to website</string>
+    <string name="pay_now">Pay now</string>
+    <string name="total_2">Total:</string>
+    <string name="order_numb">Order #</string>
+    <string name="not_paid">Not paid</string>
+    <string name="paid">Paid</string>
+    <string name="closed">Closed</string>
+    <string name="you_ordered">You ordered:</string>
 </resources>

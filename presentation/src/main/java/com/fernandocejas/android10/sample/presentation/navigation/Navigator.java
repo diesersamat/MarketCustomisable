@@ -60,4 +60,8 @@ public class Navigator {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://webapplication120170408081622.azurewebsites.net/"));
         context.startActivity(browserIntent);
     }
+
+    public void navigateToPay(Context context, int orderId) {
+        //// TODO: 24/05/2017  
+    }
 }

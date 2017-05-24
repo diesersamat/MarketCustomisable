@@ -59,6 +59,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         return accentColor;
     }
 
+    /**
+     * Get the Main Application component for dependency injection.
+     */
+    public ApplicationComponent getApplicationComponent() {
+        return ((AndroidApplication) getApplication()).getApplicationComponent();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,13 +109,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         additionalCreateOperations();
 
-    }
-
-    /**
-     * Get the Main Application component for dependency injection.
-     */
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AndroidApplication) getApplication()).getApplicationComponent();
     }
 
     protected void additionalCreateOperations() {
