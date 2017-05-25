@@ -4,10 +4,20 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <Button
+        android:id="@+id/debug_skip_payment_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="debug_skip_payment_success"/>
+
+    <Button
+        android:id="@+id/debug_skip_payment_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="debug_skip_payment_error"/>
+
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </WebView>
+        android:layout_height="match_parent"/>
 </LinearLayout>

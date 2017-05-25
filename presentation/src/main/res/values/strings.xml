@@ -4,7 +4,7 @@
 
     <string name="checkout">Checkout</string>
     <string name="payment">Payment</string>
-    <string name="purchase_done">Purchase Done!</string>
+    <string name="purchase_done">Thanks for your purchase!</string>
     <string name="your_cart">Your Cart</string>
     <string name="shop">Shop</string>
     <string name="proceed_to_checkout">Proceed to checkout</string>
@@ -33,9 +33,6 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <string name="action_register">Register</string>
     <string name="prompt_fname">First name</string>
     <string name="prompt_sname">Last name</string>
@@ -56,4 +53,7 @@
     <string name="paid">Paid</string>
     <string name="closed">Closed</string>
     <string name="you_ordered">You ordered:</string>
+    <string name="back_to_shop">Back to shop</string>
+    <string name="purchase_error">Payment Unsuccessful.\n Go to All Orders to try again</string>
+    <string name="purchase_error_title">Payment unsuccessful</string>
 </resources>

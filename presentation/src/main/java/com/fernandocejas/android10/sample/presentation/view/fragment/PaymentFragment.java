@@ -15,6 +15,7 @@ import com.fernandocejas.android10.sample.presentation.view.activity.CartAndChec
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PaymentFragment extends BaseFragment {
 
@@ -29,7 +30,7 @@ public class PaymentFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         // Set title
-        ((AppCompatActivity)getActivity()).getSupportActionBar()
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.payment);
     }
 
@@ -71,5 +72,17 @@ public class PaymentFragment extends BaseFragment {
                 "&successURL=sdfskfldk.ru");
 
         return view;
+    }
+
+    @OnClick({R.id.debug_skip_payment_success, R.id.debug_skip_payment_error})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.debug_skip_payment_success:
+                ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseDone();
+                break;
+            case R.id.debug_skip_payment_error:
+                ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseError();
+                break;
+        }
     }
 }

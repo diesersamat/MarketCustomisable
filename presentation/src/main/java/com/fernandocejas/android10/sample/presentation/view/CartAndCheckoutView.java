@@ -11,4 +11,5 @@ public interface CartAndCheckoutView {
 
     int getPrimaryColor();
 
+    void navigateToPurchaseError();
 }

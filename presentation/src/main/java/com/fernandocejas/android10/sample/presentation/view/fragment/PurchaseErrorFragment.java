@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PurchaseDoneFragment extends BaseFragment {
+public class PurchaseErrorFragment extends BaseFragment {
 
 
     @BindView(R.id.webview)
@@ -27,14 +27,14 @@ public class PurchaseDoneFragment extends BaseFragment {
     @BindView(R.id.all_view)
     LinearLayout allView;
 
-    public static PurchaseDoneFragment newInstance() {
-        return new PurchaseDoneFragment();
+    public static PurchaseErrorFragment newInstance() {
+        return new PurchaseErrorFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_purchase_done, container, false);
+        View view = inflater.inflate(R.layout.fragment_purchase_error, container, false);
         ButterKnife.bind(this, view);
         allOrders.setTextColor(getTextColor());
         done.setTextColor(getTextColor());
@@ -49,7 +49,7 @@ public class PurchaseDoneFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         // Set title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.purchase_done);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.purchase_error_title);
     }
 
     @OnClick(R.id.all_orders)

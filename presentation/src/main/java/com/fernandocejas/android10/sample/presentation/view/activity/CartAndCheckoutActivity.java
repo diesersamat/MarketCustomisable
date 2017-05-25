@@ -13,6 +13,7 @@ import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragmen
 import com.fernandocejas.android10.sample.presentation.view.fragment.ContactDetailsFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PaymentFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseDoneFragment;
+import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseErrorFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +62,15 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(R.id.container, PurchaseDoneFragment.newInstance(), PurchaseDoneFragment.getFragmentTag())
+                .commit();
+    }
+
+    @Override
+    public void navigateToPurchaseError() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                .replace(R.id.container, PurchaseErrorFragment.newInstance(), PurchaseErrorFragment.getFragmentTag())
                 .commit();
     }
 

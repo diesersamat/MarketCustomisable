@@ -65,7 +65,7 @@ public class CartListAdapter extends BaseAdapter<CartListAdapter.ProductViewHold
         holder.itemView.setBackgroundColor(accentColor);
         holder.productPrice.setTextColor(textColor);
         holder.productTitle.setTextColor(textColor);
-        holder.count.setText(String.format("%dialog", productDescriptionModel.getCount()));
+        holder.count.setText(String.valueOf(productDescriptionModel.getCount()));
         holder.count.setTextColor(textColor);
     }
 

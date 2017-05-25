@@ -258,6 +258,7 @@ public class Interactor {
     }
 
     public Observable<OrderModel> postOrder() {
+        //// TODO: 25/05/2017  clear cart
         HashMap<String, Object> hashMap = new HashMap<>();
         ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
         List<CartItemModel> itemsFromCartSync = dataStoreCache.getItemsFromCartSync();
