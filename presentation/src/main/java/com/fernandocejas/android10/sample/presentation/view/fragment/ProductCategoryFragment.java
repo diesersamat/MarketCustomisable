@@ -123,9 +123,14 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        showError();
                     }
                 });
 
+    }
+
+    private void showError() {
+        //// TODO: 27/05/2017  
     }
 
     private void setProductList(List<ProductDescriptionModel> productList) {

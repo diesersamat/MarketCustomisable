@@ -8,6 +8,7 @@ import com.fernandocejas.android10.sample.presentation.view.activity.CartAndChec
 import com.fernandocejas.android10.sample.presentation.view.activity.LoginActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.OrdersActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.ProductActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.SearchActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -38,7 +39,10 @@ public class Navigator {
     }
 
     public void navigateToSearchProducts(Context context) {
-        //// TODO: 14/04/2017
+        if (context != null) {
+            Intent intentToLaunch = SearchActivity.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
     }
 
     public void navigateToOrders(Context context) {

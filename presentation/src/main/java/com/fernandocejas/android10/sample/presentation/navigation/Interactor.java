@@ -171,6 +171,13 @@ public class Interactor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<List<ProductDescriptionModel>> searchForItems(String searchString) {
+        //// TODO: 27/05/2017  
+        return apiInterface.getProductsByCategory(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public Observable<ProductWrapperModel> getProductInfo(int productId) {
         return Observable.defer(() -> dataStoreCache.getProductInfo(productId))
                 .switchIfEmpty(apiInterface.getProductInfo(productId)

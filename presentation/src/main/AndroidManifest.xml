@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".view.activity.OrdersActivity">
         </activity>
+        <activity android:name=".view.activity.SearchActivity">
+        </activity>
     </application>
 
 </manifest>
