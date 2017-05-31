@@ -7,14 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
+import com.fernandocejas.android10.sample.presentation.model.OrderModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 public class ContactDetailsFragment extends BaseFragment {
 
@@ -32,6 +34,8 @@ public class ContactDetailsFragment extends BaseFragment {
     TextView cartErrorTextView;
     @BindView(R.id.place_order)
     Button placeOrder;
+    @BindView(R.id.progress)
+    ProgressBar progress;
 
     public static ContactDetailsFragment newInstance() {
         return new ContactDetailsFragment();
@@ -56,7 +60,29 @@ public class ContactDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.place_order)
     void onPlaceOrderClick() {
-        ((CartAndCheckoutActivity) getActivity()).navigateToPayment();
+        progress.setVisibility(View.VISIBLE);
+        placeOrder.setVisibility(View.GONE);
+        interactor.postOrder().subscribe(new Subscriber<OrderModel>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                onErrorView();
+            }
+
+            @Override
+            public void onNext(OrderModel orderModel) {
+                navigator.navigateToPay(getContext(), orderModel.getId());
+                getActivity().finish();
+            }
+        });
     }
 
+    void onErrorView() {
+        progress.setVisibility(View.GONE);
+        placeOrder.setVisibility(View.VISIBLE);
+    }
 }

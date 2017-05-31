@@ -101,12 +101,22 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/place_order"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="@string/place_order"/>
+        android:layout_marginTop="16dp">
 
+        <Button
+            android:id="@+id/place_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_order"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 </LinearLayout>

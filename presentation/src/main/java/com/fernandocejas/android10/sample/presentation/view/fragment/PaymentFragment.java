@@ -11,28 +11,36 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
+import com.fernandocejas.android10.sample.presentation.model.OrderModel;
+import com.fernandocejas.android10.sample.presentation.view.activity.PaymentActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 public class PaymentFragment extends BaseFragment {
 
     @BindView(R.id.webview)
     WebView webView;
+    private int orderId;
 
-    public static PaymentFragment newInstance() {
-        return new PaymentFragment();
+    public static PaymentFragment newInstance(int orderId) {
+        PaymentFragment paymentFragment = new PaymentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PaymentActivity.ORDER_ID, orderId);
+        paymentFragment.setArguments(bundle);
+        return paymentFragment;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Set title
+        orderId = getArguments().getInt(PaymentActivity.ORDER_ID, Integer.MIN_VALUE);
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.payment);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,16 +57,17 @@ public class PaymentFragment extends BaseFragment {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 if (url.contains("//sdfskfldk.ru")) {
-                    ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseDone();
+                    paymentSuccess();
+                    getActivity().finish();
                 }
                 if (url.contains("/error.xml?")) {
-                    ((CartAndCheckoutActivity) getActivity()).navigateToContactDetails();
+                    navigator.navigateToOrderFinish(getContext(), false);
+                    getActivity().finish();
                 }
             }
         });
-
         String accNumber = "410011354575504";
-        String productName = "%D0%9D%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D0%B0";
+        String productName = "Order #" + orderId;
         int sum = 1;
         webView.loadUrl("https://money.yandex.ru/quickpay/button-widget?" +
                 "account=" + accNumber +
@@ -78,11 +87,38 @@ public class PaymentFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.debug_skip_payment_success:
-                ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseDone();
+                paymentSuccess();
                 break;
             case R.id.debug_skip_payment_error:
-                ((CartAndCheckoutActivity) getActivity()).navigateToPurchaseError();
+                navigator.navigateToOrderFinish(getContext(), false);
+                getActivity().finish();
                 break;
         }
     }
+
+    private void paymentSuccess() {
+        interactor.postOrderStatusPaid(orderId).subscribe(new Subscriber<OrderModel>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                onErrorView();
+            }
+
+            @Override
+            public void onNext(OrderModel orderModel) {
+                navigator.navigateToOrderFinish(getContext(), true);
+                getActivity().finish();
+            }
+        });
+    }
+
+    private void onErrorView() {
+//        // TODO: 30/05/2017
+    }
+
+
 }

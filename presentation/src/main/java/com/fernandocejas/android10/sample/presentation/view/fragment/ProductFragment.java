@@ -105,6 +105,12 @@ public class ProductFragment extends BaseFragment implements ProductView {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    @Override
     public void onLoaded(ProductModel productInfo) {
         this.productInfo = productInfo;
         titleToolbar.setText(productInfo.getName());

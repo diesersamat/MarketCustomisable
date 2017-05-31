@@ -3,16 +3,17 @@ package com.fernandocejas.android10.sample.presentation.presenter;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.navigation.Interactor;
 import com.fernandocejas.android10.sample.presentation.view.ProductView;
-import com.yandex.money.api.util.logging.Log;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Observer;
+import rx.Subscription;
 
 public class ProductPresenter extends BasePresenter {
     private final ProductView view;
     private final int productId;
+    private Subscription subscription;
 
     @Inject
     protected ProductPresenter(Interactor interactor, ProductView view,
@@ -24,7 +25,7 @@ public class ProductPresenter extends BasePresenter {
 
     @Override
     public void resume() {
-        getInteractor().getProductInfo(productId)
+        subscription = getInteractor().getProductInfo(productId)
                 .subscribe(new Observer<ProductWrapperModel>() {
                     @Override
                     public void onNext(ProductWrapperModel shopModel) {
@@ -51,6 +52,6 @@ public class ProductPresenter extends BasePresenter {
 
     @Override
     public void destroy() {
-
+        subscription.unsubscribe();
     }
 }

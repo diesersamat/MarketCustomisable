@@ -6,7 +6,9 @@ import android.net.Uri;
 
 import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.LoginActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.OrderFinishedActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.OrdersActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.PaymentActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.ProductActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.SearchActivity;
 
@@ -66,6 +68,16 @@ public class Navigator {
     }
 
     public void navigateToPay(Context context, int orderId) {
-        //// TODO: 24/05/2017  
+        if (context != null) {
+            Intent intentToLaunch = PaymentActivity.getCallingIntent(context, orderId);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    public void navigateToOrderFinish(Context context, boolean isSuccess) {
+        if (context != null) {
+            Intent intentToLaunch = OrderFinishedActivity.getCallingIntent(context, isSuccess);
+            context.startActivity(intentToLaunch);
+        }
     }
 }

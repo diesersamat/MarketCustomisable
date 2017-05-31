@@ -27,6 +27,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class Interactor {
+    private static final String ORDER_POST_TEST = "{ \"id\": 1002, \"status\": 0," +
+            " \"totalPrice\": 1446, \"date\": \"2017-05-23T00:13:47.6551045+03:00\" }";
 
     private static final String ALL_ORDERS_TEST = "[\n" +
             "  {\n" +
@@ -265,6 +267,8 @@ public class Interactor {
     }
 
     public Observable<OrderModel> postOrder() {
+        OrderModel orderModel = new Gson().fromJson(ORDER_POST_TEST, OrderModel.class);
+
         //// TODO: 25/05/2017  clear cart
         HashMap<String, Object> hashMap = new HashMap<>();
         ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
@@ -277,6 +281,7 @@ public class Interactor {
         UserModel userInfoSync = dataStoreCache.getUserInfoSync();
         return apiInterface
                 .sendOrder(userInfoSync == null ? "" : userInfoSync.getToken(), hashMap)
+                .onErrorReturn(throwable -> orderModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -3,7 +3,6 @@ package com.fernandocejas.android10.sample.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
@@ -11,9 +10,6 @@ import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.ContactDetailsFragment;
-import com.fernandocejas.android10.sample.presentation.view.fragment.PaymentFragment;
-import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseDoneFragment;
-import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseErrorFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,33 +40,6 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .replace(R.id.container, ContactDetailsFragment.newInstance(), ContactDetailsFragment.getFragmentTag())
                 .addToBackStack(ContactDetailsFragment.getFragmentTag())
-                .commit();
-    }
-
-    @Override
-    public void navigateToPayment() {
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .replace(R.id.container, PaymentFragment.newInstance(), PaymentFragment.getFragmentTag())
-                .addToBackStack(PaymentFragment.getFragmentTag())
-                .commit();
-    }
-
-    @Override
-    public void navigateToPurchaseDone() {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .replace(R.id.container, PurchaseDoneFragment.newInstance(), PurchaseDoneFragment.getFragmentTag())
-                .commit();
-    }
-
-    @Override
-    public void navigateToPurchaseError() {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .replace(R.id.container, PurchaseErrorFragment.newInstance(), PurchaseErrorFragment.getFragmentTag())
                 .commit();
     }
 
