@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
@@ -34,7 +36,6 @@ import rx.Observer;
 public class SearchActivity extends BaseActivity {
     private final static int COLUMN_COUNT = 2;
 
-
     @BindView(R.id.search_edit_text)
     EditText searchEditText;
     @BindView(R.id.toolbar)
@@ -43,6 +44,12 @@ public class SearchActivity extends BaseActivity {
     RecyclerView productsList;
     @BindView(R.id.counter)
     TextView counter;
+    @BindView(R.id.empty_view)
+    View emptyView;
+    @BindView(R.id.error_view)
+    View errorView;
+    @BindView(R.id.progress)
+    ProgressBar progress;
 
     @Inject
     ProductListAdapter productListAdapter;
@@ -82,6 +89,7 @@ public class SearchActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         productsList.setLayoutManager(new GridLayoutManager(this, COLUMN_COUNT));
         productsList.setAdapter(productListAdapter);
+        progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
         toolbar.setBackgroundColor(getAccentColor());
         productListAdapter.setOnItemClickListener(new ProductListAdapter.OnItemClickListener() {
             @Override
@@ -121,7 +129,13 @@ public class SearchActivity extends BaseActivity {
         });
 
         RxTextView.textChanges(searchEditText)
-                .filter(s -> s.length() > 2 || s.length() == 0)
+                .filter(s -> s.length() > 2)
+                .doOnEach(notification -> {
+                    emptyView.setVisibility(View.GONE);
+                    errorView.setVisibility(View.GONE);
+                    progress.setVisibility(View.VISIBLE);
+                    productsList.setVisibility(View.GONE);
+                })
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .switchMap(charSequence -> interactor.searchForItems(charSequence.toString()))
                 .subscribe(getObserver());
@@ -153,6 +167,7 @@ public class SearchActivity extends BaseActivity {
         return new Observer<List<ProductDescriptionModel>>() {
             @Override
             public void onNext(List<ProductDescriptionModel> value) {
+                progress.setVisibility(View.GONE);
                 setProductList(value);
             }
 
@@ -163,25 +178,43 @@ public class SearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                progress.setVisibility(View.GONE);
                 showError();
             }
         };
     }
 
     private void showError() {
-        //// TODO: 27/05/2017
+        errorView.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.VISIBLE);
     }
 
 
     private void showEmpty() {
-        //// TODO: 27/05/2017
+        errorView.setVisibility(View.GONE);
+        productsList.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
     private void setProductList(List<ProductDescriptionModel> productList) {
-        productListAdapter.setList(productList);
+        if (productList == null || productList.isEmpty()) {
+            showEmpty();
+        } else {
+            productsList.setVisibility(View.VISIBLE);
+            productListAdapter.setList(productList);
+        }
     }
 
     private void openProductDescription(ProductDescriptionModel productDescriptionModel) {
         navigator.navigateToProductDescription(this, productDescriptionModel.getId());
+    }
+
+
+    @OnClick(R.id.try_again_button)
+    void onTryAgain() {
+        errorView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        interactor.searchForItems(searchEditText.getText().toString())
+                .subscribe(getObserver());
     }
 }

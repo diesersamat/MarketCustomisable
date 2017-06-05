@@ -75,7 +75,11 @@ public class ContactDetailsFragment extends BaseFragment {
 
             @Override
             public void onNext(OrderModel orderModel) {
-                navigator.navigateToPay(getContext(), orderModel.getId());
+                if (interactor.getShopInfoSync().isPaymentEnabled()) {
+                    navigator.navigateToPay(getContext(), orderModel.getId(), orderModel.getTotalPrice());
+                } else {
+                    navigator.navigateToOrderFinish(getContext(), true);
+                }
                 getActivity().finish();
             }
         });

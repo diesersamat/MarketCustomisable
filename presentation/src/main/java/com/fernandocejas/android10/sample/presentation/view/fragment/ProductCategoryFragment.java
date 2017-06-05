@@ -1,6 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.animation.Animator;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerProductCategoryFragmentComponent;
@@ -24,14 +26,19 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observer;
 
 public class ProductCategoryFragment extends BaseFragment implements ProductCategoryView {
-    private final static String CATEGORY_MODEL = "CATEGORY_MODEL";
-    private final static int COLUMN_COUNT = 2;
+    private static final String CATEGORY_MODEL = "CATEGORY_MODEL";
+    private static final int COLUMN_COUNT = 2;
 
     @BindView(R.id.products_list)
     RecyclerView productsList;
+    @BindView(R.id.error_view)
+    View errorView;
+    @BindView(R.id.progress)
+    ProgressBar progress;
 
     @Inject
     ProductListAdapter productListAdapter;
@@ -89,6 +96,7 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
             }
         });
         categoryModel = getArguments().getParcelable(CATEGORY_MODEL);
+        progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
 
         load();
         return view;
@@ -108,11 +116,15 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
     }
 
     private void load() {
+        progress.setVisibility(View.VISIBLE);
+        productsList.setVisibility(View.GONE);
         getInteractor().getCategoryListOfProducts(categoryModel.getId())
                 .subscribe(new Observer<List<ProductDescriptionModel>>() {
                     @Override
                     public void onNext(List<ProductDescriptionModel> shopModel) {
                         setProductList(shopModel);
+                        progress.setVisibility(View.GONE);
+                        productsList.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -123,6 +135,7 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        progress.setVisibility(View.GONE);
                         showError();
                     }
                 });
@@ -130,7 +143,8 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
     }
 
     private void showError() {
-        //// TODO: 27/05/2017  
+        productsList.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
     }
 
     private void setProductList(List<ProductDescriptionModel> productList) {
@@ -139,5 +153,12 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
 
     private void openProductDescription(ProductDescriptionModel productDescriptionModel) {
         navigator.navigateToProductDescription(getContext(), productDescriptionModel.getId());
+    }
+
+    @OnClick(R.id.try_again_button)
+    void onTryAgain() {
+        productsList.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
+        load();
     }
 }

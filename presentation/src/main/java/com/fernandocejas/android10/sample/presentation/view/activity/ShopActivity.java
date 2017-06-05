@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
@@ -63,6 +64,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     Button signOutButton;
     @BindView(R.id.logged_in_as)
     TextView loggedInAs;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     @Inject
     NavDrawerListAdapter navDrawerListAdapter;
     @Inject
@@ -91,11 +94,13 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         title.setTextColor(getTextColor());
         loggedInAs.setTextColor(getTextColor());
         titleBcg.setBackgroundColor(getPrimaryColor());
+        progress.setVisibility(View.GONE);
     }
 
     @Override
     public void onError() {
         errorView.setVisibility(View.VISIBLE);
+        progress.setVisibility(View.GONE);
     }
 
     @Override
@@ -108,7 +113,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     }
 
     public void updateCartNumber() {
-        counter.setText("" + interactor.getItemsNumberFromCart());
+        counter.setText(Integer.toString(interactor.getItemsNumberFromCart()));
     }
 
     @Override
@@ -132,12 +137,14 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         navList.setAdapter(navDrawerListAdapter);
         navDrawerListAdapter.setOnItemClickListener(this::switchFragment);
         presenter.resume();
+        progress.setVisibility(View.VISIBLE);
         content.setBackgroundColor(getBackgroundColor());
         toolbar.setBackgroundColor(getAccentColor());
         signInButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         signOutButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         titleToolbar.setTextColor(getTextColor());
         counter.setTextColor(getTextColor());
+        progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
     }
 
     @Override
@@ -190,7 +197,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     @OnClick(R.id.all_orders_drawer)
     void allOrdersDrawer() {
-        navigator.navigateToOrders(this);
+        navigator.navigateToOrders(this, interactor.getShopInfoSync().isPaymentEnabled());
         drawerLayout.closeDrawers();
     }
 
@@ -212,7 +219,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     @OnClick(R.id.action_orders)
     void OnActionWishList() {
-        navigator.navigateToOrders(this);
+        navigator.navigateToOrders(this, interactor.getShopInfoSync().isPaymentEnabled());
     }
 
     @OnClick(R.id.sign_out_button)
@@ -224,6 +231,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
     @OnClick(R.id.try_again_button)
     void onTryAgain() {
         errorView.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
         presenter.resume();
     }
 

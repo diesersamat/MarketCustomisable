@@ -39,6 +39,12 @@ public class AndroidApplication extends Application {
         return this.applicationComponent;
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Realm.getDefaultInstance().close();
+    }
+
     private void initializeInjector() {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))

@@ -24,11 +24,13 @@ public class PaymentFragment extends BaseFragment {
     @BindView(R.id.webview)
     WebView webView;
     private int orderId;
+    private double orderTotal;
 
-    public static PaymentFragment newInstance(int orderId) {
+    public static PaymentFragment newInstance(int orderId, double orderTotal) {
         PaymentFragment paymentFragment = new PaymentFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PaymentActivity.ORDER_ID, orderId);
+        bundle.putDouble(PaymentActivity.ORDER_TOTAL, orderTotal);
         paymentFragment.setArguments(bundle);
         return paymentFragment;
     }
@@ -37,6 +39,9 @@ public class PaymentFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         orderId = getArguments().getInt(PaymentActivity.ORDER_ID, Integer.MIN_VALUE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(R.string.payment);
+        orderTotal = getArguments().getDouble(PaymentActivity.ORDER_ID, Double.MIN_VALUE);
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.payment);
     }
@@ -66,9 +71,9 @@ public class PaymentFragment extends BaseFragment {
                 }
             }
         });
-        String accNumber = "410011354575504";
+
+        String accNumber = interactor.getShopInfoSync().getYandexMoneyAccount();
         String productName = "Order #" + orderId;
-        int sum = 1;
         webView.loadUrl("https://money.yandex.ru/quickpay/button-widget?" +
                 "account=" + accNumber +
                 "&quickpay=small" +
@@ -77,7 +82,7 @@ public class PaymentFragment extends BaseFragment {
                 "&button-size=l" +
                 "&button-color=green" +
                 "&targets=" + productName +
-                "&default-sum=" + sum +
+                "&default-sum=" + orderTotal +
                 "&successURL=sdfskfldk.ru");
 
         return view;
@@ -117,8 +122,6 @@ public class PaymentFragment extends BaseFragment {
     }
 
     private void onErrorView() {
-//        // TODO: 30/05/2017
+        navigator.navigateToOrderFinish(getContext(), false);
     }
-
-
 }

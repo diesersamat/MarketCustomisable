@@ -29,6 +29,9 @@ public interface OrdersActivityComponent {
         @BindsInstance
         Builder accentColor(@Named("accentColor") int accentColor);
 
+        @BindsInstance
+        Builder isPaymentAvailable(boolean isPaymentAvailable);
+
         OrdersActivityComponent build();
     }
 }

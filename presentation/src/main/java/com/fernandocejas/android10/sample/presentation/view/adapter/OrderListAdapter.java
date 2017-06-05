@@ -34,11 +34,13 @@ public class OrderListAdapter extends BaseAdapter<OrderListAdapter.OrderViewHold
     private final String notPaid;
     private final String paid;
     private final String closed;
+    private final boolean isPaymentAvailable;
     private OrderListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
     OrderListAdapter(Context context, @Named("accentColor") int accentColor,
-                     @Named("primaryColor") int primaryColor, @Named("textColor") int textColor) {
+                     @Named("primaryColor") int primaryColor, @Named("textColor") int textColor,
+                     boolean isPaymentAvailable) {
         super(context);
         orderN = context.getResources().getString(R.string.order_numb);
         notPaid = context.getResources().getString(R.string.not_paid);
@@ -47,6 +49,7 @@ public class OrderListAdapter extends BaseAdapter<OrderListAdapter.OrderViewHold
         this.accentColor = accentColor;
         this.primaryColor = primaryColor;
         this.textColor = textColor;
+        this.isPaymentAvailable = isPaymentAvailable;
     }
 
     @Override
@@ -77,14 +80,16 @@ public class OrderListAdapter extends BaseAdapter<OrderListAdapter.OrderViewHold
                 break;
             case 1:
                 statusTxt = paid;
-                holder.payNowButton.setVisibility(View.INVISIBLE);
+                holder.payNowButton.setVisibility(View.GONE);
                 break;
             case 2:
                 statusTxt = closed;
-                holder.payNowButton.setVisibility(View.INVISIBLE);
+                holder.payNowButton.setVisibility(View.GONE);
                 break;
         }
-        //todo если отключена оплата
+        if (!isPaymentAvailable) {
+            holder.payNowButton.setVisibility(View.GONE);
+        }
         holder.statusText.setText(statusTxt);
         holder.bottom.setBackgroundColor(accentColor);
 
@@ -100,7 +105,7 @@ public class OrderListAdapter extends BaseAdapter<OrderListAdapter.OrderViewHold
         });
         holder.payNowButton.setOnClickListener(v -> {
             if (onItemClickListener != null) {
-                onItemClickListener.onPayClick(orderItemModel.getId());
+                onItemClickListener.onPayClick(orderItemModel.getId(), orderItemModel.getTotalPrice());
             }
         });
     }
@@ -123,7 +128,7 @@ public class OrderListAdapter extends BaseAdapter<OrderListAdapter.OrderViewHold
     public interface OnItemClickListener {
         void onItemClicked(List<OrderItemModel> models);
 
-        void onPayClick(int categoryId);
+        void onPayClick(int categoryId, double totalPrice);
     }
 
     class OrderViewHolder extends RecyclerView.ViewHolder {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -46,7 +47,10 @@ public class ProductFragment extends BaseFragment implements ProductView {
     Button priceButton;
     @BindView(R.id.description)
     TextView description;
-
+    @BindView(R.id.error_view)
+    View errorView;
+    @BindView(R.id.data_view)
+    View dataView;
     @Inject
     ProductPresenter presenter;
     @BindView(R.id.background)
@@ -61,6 +65,8 @@ public class ProductFragment extends BaseFragment implements ProductView {
     ImageView actionShoppingCart;
     @BindView(R.id.counter)
     TextView counter;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     private ProductModel productInfo;
 
     public static ProductFragment newInstance(int productId) {
@@ -86,7 +92,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
         addToCart.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         priceButton.getBackground().setColorFilter(getPrimaryColor(), PorterDuff.Mode.MULTIPLY);
         toolbar.setBackgroundColor(getAccentColor());
-
+        progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
         title.setTextColor(getTextColor());
         priceButton.setTextColor(getTextColor());
         description.setTextColor(getTextColor());
@@ -98,10 +104,12 @@ public class ProductFragment extends BaseFragment implements ProductView {
     @Override
     public void onResume() {
         super.onResume();
+        progress.setVisibility(View.VISIBLE);
         presenter.resume();
+        dataView.setVisibility(View.GONE);
         titleCard.setCardBackgroundColor(getAccentColor());
         descCard.setCardBackgroundColor(getAccentColor());
-        counter.setText("" + interactor.getItemsNumberFromCart());
+        counter.setText(Integer.toString(interactor.getItemsNumberFromCart()));
     }
 
     @Override
@@ -117,7 +125,8 @@ public class ProductFragment extends BaseFragment implements ProductView {
 //        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
         Glide.with(this).load("https://unsplash.it/200/").into(productImage);
         title.setText(productInfo.getName());
-
+        progress.setVisibility(View.GONE);
+        dataView.setVisibility(View.VISIBLE);
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         format.setCurrency(Currency.getInstance(productInfo.getCurrency()));
         String result = format.format(productInfo.getPrice());
@@ -128,7 +137,9 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @Override
     public void onError() {
-        //// TODO: 19/05/2017
+        dataView.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
+        progress.setVisibility(View.GONE);
     }
 
     @Override
@@ -191,7 +202,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        counter.setText("" + interactor.getItemsNumberFromCart());
+                        counter.setText(String.valueOf(interactor.getItemsNumberFromCart()));
                     }
 
                     @Override
@@ -204,6 +215,14 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
                     }
                 }).startAnimation();
+    }
+
+    @OnClick(R.id.try_again_button)
+    void onTryAgain() {
+        dataView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+        presenter.resume();
     }
 
 }

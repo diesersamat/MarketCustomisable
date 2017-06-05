@@ -15,12 +15,14 @@ public class PaymentActivity extends BaseActivity {
 
 
     public static final String ORDER_ID = "ORDER_ID";
+    public static final String ORDER_TOTAL = "ORDER_TOTAL";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    public static Intent getCallingIntent(Context context, int productId) {
+    public static Intent getCallingIntent(Context context, int productId, double orderTotal) {
         Intent intent = new Intent(context, PaymentActivity.class);
         intent.putExtra(ORDER_ID, productId);
+        intent.putExtra(ORDER_TOTAL, orderTotal);
         return intent;
     }
 
@@ -35,7 +37,8 @@ public class PaymentActivity extends BaseActivity {
         toolbar.setBackgroundColor(getAccentColor());
 
         int orderId = getIntent().getIntExtra(ORDER_ID, Integer.MIN_VALUE);
+        double orderTotal = getIntent().getDoubleExtra(ORDER_TOTAL, Double.MIN_VALUE);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PaymentFragment.newInstance(orderId)).commit();
+                .replace(R.id.container, PaymentFragment.newInstance(orderId, orderTotal)).commit();
     }
 }

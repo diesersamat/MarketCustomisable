@@ -54,7 +54,7 @@ public class PurchaseErrorFragment extends BaseFragment {
 
     @OnClick(R.id.all_orders)
     void allOrderClick() {
-        navigator.navigateToOrders(getContext());
+        navigator.navigateToOrders(getContext(), interactor.getShopInfoSync().isPaymentEnabled());
     }
 
     @OnClick(R.id.done)

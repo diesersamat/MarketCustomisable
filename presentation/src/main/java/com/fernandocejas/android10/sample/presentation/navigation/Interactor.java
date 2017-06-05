@@ -19,6 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -176,6 +177,7 @@ public class Interactor {
     public Observable<List<ProductDescriptionModel>> searchForItems(String searchString) {
         //// TODO: 27/05/2017  
         return apiInterface.getProductsByCategory(1)
+                .delay(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -268,8 +270,6 @@ public class Interactor {
 
     public Observable<OrderModel> postOrder() {
         OrderModel orderModel = new Gson().fromJson(ORDER_POST_TEST, OrderModel.class);
-
-        //// TODO: 25/05/2017  clear cart
         HashMap<String, Object> hashMap = new HashMap<>();
         ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
         List<CartItemModel> itemsFromCartSync = dataStoreCache.getItemsFromCartSync();
@@ -282,6 +282,7 @@ public class Interactor {
         return apiInterface
                 .sendOrder(userInfoSync == null ? "" : userInfoSync.getToken(), hashMap)
                 .onErrorReturn(throwable -> orderModel)
+                .doOnCompleted(this::clearCart)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -309,6 +310,10 @@ public class Interactor {
                 .onErrorReturn(throwable -> yourClassList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void clearCart() {
+        dataStoreCache.clearCart();
     }
 
     private String md5(String s) {

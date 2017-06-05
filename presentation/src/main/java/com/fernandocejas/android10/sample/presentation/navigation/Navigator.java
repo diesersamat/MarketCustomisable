@@ -47,9 +47,9 @@ public class Navigator {
         }
     }
 
-    public void navigateToOrders(Context context) {
+    public void navigateToOrders(Context context, boolean isPaymentEnabled) {
         if (context != null) {
-            Intent intentToLaunch = OrdersActivity.getCallingIntent(context);
+            Intent intentToLaunch = OrdersActivity.getCallingIntent(context, isPaymentEnabled);
             context.startActivity(intentToLaunch);
         }
     }
@@ -67,9 +67,9 @@ public class Navigator {
         context.startActivity(browserIntent);
     }
 
-    public void navigateToPay(Context context, int orderId) {
+    public void navigateToPay(Context context, int orderId, double orderTotal) {
         if (context != null) {
-            Intent intentToLaunch = PaymentActivity.getCallingIntent(context, orderId);
+            Intent intentToLaunch = PaymentActivity.getCallingIntent(context, orderId, orderTotal);
             context.startActivity(intentToLaunch);
         }
     }

@@ -1,5 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.model;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 import io.realm.RealmList;
@@ -11,6 +13,7 @@ public class ShopModel extends RealmObject {
     RealmList<CategoryModel> categoryModels;
     String primaryColor;
     String accentColor;
+    String paymentKey;
     @PrimaryKey
     String id;
     int themeId;
@@ -20,6 +23,17 @@ public class ShopModel extends RealmObject {
     public ShopModel() {
     }
 
+    public boolean isPaymentEnabled() {
+        return !TextUtils.isEmpty(paymentKey);
+    }
+
+    public String getYandexMoneyAccount() {
+        return paymentKey;
+    }
+
+    public void setYandexMoneyAccount(String yandexMoneyAccount) {
+        this.paymentKey = yandexMoneyAccount;
+    }
 
     public String getName() {
         return name;

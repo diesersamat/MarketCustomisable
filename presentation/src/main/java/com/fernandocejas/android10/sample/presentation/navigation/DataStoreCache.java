@@ -25,6 +25,11 @@ public class DataStoreCache {
         return Realm.getDefaultInstance();
     }
 
+    void clearCart() {
+        RealmResults<CartItemModel> all = getRealm().where(CartItemModel.class).findAll();
+        getRealm().executeTransaction(realm -> all.deleteAllFromRealm());
+    }
+
     List<CartItemModel> getItemsFromCartSync() {
         RealmResults<CartItemModel> all = getRealm().where(CartItemModel.class).findAll();
         return getRealm().copyFromRealm(all);

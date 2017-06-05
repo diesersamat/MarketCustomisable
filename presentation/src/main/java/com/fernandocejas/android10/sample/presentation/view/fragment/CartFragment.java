@@ -132,7 +132,6 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     }
 
     private void onErrorShow() {
-        //// TODO: 23/05/2017
     }
 
     private void setProductList(List<CartItemModel> productList) {
@@ -156,7 +155,6 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     }
 
     private void showEmpty() {
-        //// TODO: 23/05/2017
     }
 
     private void openProductDescription(CartItemModel productDescriptionModel) {
