@@ -1,10 +1,8 @@
 package com.fernandocejas.android10.sample.presentation.view.adapter;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
@@ -20,14 +18,18 @@ public class AddressListAdapter extends BaseAdapter<AddressListAdapter.AddressVi
     private final int accentColor;
     private final int primaryColor;
     private final int textColor;
+    private final int backgroundColor;
     private OnItemClickListener onItemClickListener;
 
     @Inject
     AddressListAdapter(Context context, @Named("accentColor") int accentColor,
-                       @Named("primaryColor") int primaryColor, @Named("textColor") int textColor) {
+                       @Named("primaryColor") int primaryColor,
+                       @Named("backgroundColor") int backgroundColor,
+                       @Named("textColor") int textColor) {
         super(context);
         this.accentColor = accentColor;
         this.primaryColor = primaryColor;
+        this.backgroundColor = backgroundColor;
         this.textColor = textColor;
     }
 
@@ -41,8 +43,13 @@ public class AddressListAdapter extends BaseAdapter<AddressListAdapter.AddressVi
         holder.address.setTextColor(textColor);
         holder.name.setTextColor(textColor);
         holder.phone.setTextColor(textColor);
-        holder.isPrimary.getBackground().setColorFilter(primaryColor, PorterDuff.Mode.SRC_IN);
-        holder.isPrimary.setChecked(contactDetailModel.isDefault());
+
+        if (contactDetailModel.isDefault()) {
+            holder.itemView.setBackgroundColor(primaryColor);
+        } else {
+            holder.itemView.setBackgroundColor(backgroundColor);
+        }
+
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClicked(contactDetailModel.getId());
@@ -76,8 +83,6 @@ public class AddressListAdapter extends BaseAdapter<AddressListAdapter.AddressVi
         TextView address;
         @BindView(R.id.phone)
         TextView phone;
-        @BindView(R.id.is_primary)
-        CheckBox isPrimary;
 
         AddressViewHolder(View itemView) {
             super(itemView);

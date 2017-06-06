@@ -30,6 +30,9 @@ public interface DefaultContactComponent {
         @BindsInstance
         Builder accentColor(@Named("accentColor") int accentColor);
 
+        @BindsInstance
+        Builder backgroundColor(@Named("backgroundColor") int backgroundColor);
+
         DefaultContactComponent build();
     }
 }

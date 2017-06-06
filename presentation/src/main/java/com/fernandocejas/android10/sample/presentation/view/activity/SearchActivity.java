@@ -49,6 +49,8 @@ public class SearchActivity extends BaseActivity {
     View emptyView;
     @BindView(R.id.error_view)
     View errorView;
+    @BindView(R.id.bcg)
+    View bcg;
     @BindView(R.id.progress)
     ProgressBar progress;
 
@@ -101,6 +103,7 @@ public class SearchActivity extends BaseActivity {
         productsList.setAdapter(productListAdapter);
         progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
         toolbar.setBackgroundColor(getAccentColor());
+        bcg.setBackgroundColor(getBackgroundColor());
         productListAdapter.setOnItemClickListener(new ProductListAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(ProductDescriptionModel categoryModel) {

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseDoneFragment;
 import com.fernandocejas.android10.sample.presentation.view.fragment.PurchaseErrorFragment;
 
@@ -15,10 +14,9 @@ import butterknife.ButterKnife;
 
 public class OrderFinishedActivity extends BaseActivity {
 
+    public static final String IS_SUCCESS = "IS_SUCCESS";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    public static final String IS_SUCCESS = "IS_SUCCESS";
 
     public static Intent getCallingIntent(Context context, boolean isSuccess) {
         Intent intent = new Intent(context, OrderFinishedActivity.class);
@@ -35,6 +33,7 @@ public class OrderFinishedActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setBackgroundColor(getAccentColor());
+        toolbar.setTitleTextColor(getTextColor());
 
         boolean isSuccess = getIntent().getBooleanExtra(IS_SUCCESS, false);
         if (isSuccess) {

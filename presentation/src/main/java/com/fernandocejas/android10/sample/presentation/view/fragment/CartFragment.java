@@ -93,7 +93,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         });
 
         background.setBackgroundColor(getBackgroundColor());
-        finalView.setBackgroundColor(getAccentColor());
+//        finalView.setBackgroundColor(getAccentColor());
         proceedToCheckoutButton.setBackgroundColor(getPrimaryColor());
         proceedToCheckoutButton.setTextColor(getTextColor());
         changeDeliveryAddressButton.setBackgroundColor(getPrimaryColor());

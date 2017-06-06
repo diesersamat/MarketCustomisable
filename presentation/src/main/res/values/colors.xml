@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_default">#45b186</color>
-    <color name="accent_default">#f1f1c6</color>
+    <!--<color name="primary_default">#F1B5B5</color>-->
+    <!--<color name="accent_default">#C6D2C6</color>-->
+    <!--<color name="background_default">#f7f7f3</color>-->
+    <!--<color name="text_default">#000</color>-->
+
+    <color name="primary_default">#4D969A</color>
+    <color name="accent_default">#DEDA6F</color>
     <color name="background_default">#f7f7f3</color>
-    <color name="text_default">#000</color>
+    <!--<color name="text_default">#93939B</color>-->
+    <color name="text_default">#454D48</color>
 </resources>

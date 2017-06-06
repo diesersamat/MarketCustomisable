@@ -31,7 +31,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/ic_shopping_cart_white_24dp"/>
+                android:src="@drawable/ic_shopping_cart_black_24dp"/>
 
             <TextView
                 android:id="@+id/counter"

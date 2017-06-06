@@ -133,7 +133,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         setContentView(R.layout.activity_shop);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         titleToolbar.setText("");
 
@@ -146,6 +146,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         toolbar.setBackgroundColor(getAccentColor());
         signInButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         signOutButton.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
+        signOutButton.setTextColor(getTextColor());
+        signInButton.setTextColor(getTextColor());
         titleToolbar.setTextColor(getTextColor());
         counter.setTextColor(getTextColor());
         progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
@@ -213,7 +215,7 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
 
     @OnClick(R.id.all_contact_data)
     void allContactData() {
-        navigator.navigateToWebsite(this);
+        navigator.navigateToAddAddress(this);
         drawerLayout.closeDrawers();
     }
 

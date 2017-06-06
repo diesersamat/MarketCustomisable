@@ -34,19 +34,32 @@
         <activity
             android:name=".view.activity.LoginActivity"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
-        <activity android:name=".view.activity.OrdersActivity">
+        <activity
+            android:name=".view.activity.OrdersActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.SearchActivity">
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.PaymentActivity">
+        <activity
+            android:name=".view.activity.PaymentActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.OrderFinishedActivity">
+        <activity
+            android:name=".view.activity.OrderFinishedActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.DefaultContactDetailsSelectionActivity">
+        <activity
+            android:name=".view.activity.DefaultContactDetailsSelectionActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.AddAddressActivity">
+        <activity
+            android:name=".view.activity.AddAddressActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

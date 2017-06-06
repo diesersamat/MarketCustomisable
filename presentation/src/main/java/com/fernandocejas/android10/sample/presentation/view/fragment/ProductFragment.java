@@ -92,6 +92,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
         addToCart.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
         priceButton.getBackground().setColorFilter(getPrimaryColor(), PorterDuff.Mode.MULTIPLY);
         toolbar.setBackgroundColor(getAccentColor());
+        toolbar.setTitleTextColor(getTextColor());
         progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
         title.setTextColor(getTextColor());
         priceButton.setTextColor(getTextColor());

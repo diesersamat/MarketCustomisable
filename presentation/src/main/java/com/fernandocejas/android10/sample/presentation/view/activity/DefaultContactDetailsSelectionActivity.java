@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +48,8 @@ public class DefaultContactDetailsSelectionActivity extends BaseActivity {
     ProgressBar progress;
     @BindView(R.id.whole_layout)
     View wholeLayout;
+    @BindView(R.id.bcg)
+    View bcg;
 
     @Inject
     AddressListAdapter adapter;
@@ -64,6 +67,7 @@ public class DefaultContactDetailsSelectionActivity extends BaseActivity {
                 .accentColor(getAccentColor())
                 .primaryColor(getPrimaryColor())
                 .textColor(getTextColor())
+                .backgroundColor(getBackgroundColor())
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);
@@ -80,7 +84,9 @@ public class DefaultContactDetailsSelectionActivity extends BaseActivity {
         adapter.setOnItemClickListener(id -> {
             setDefAddress(id);
             startLoading();
+            finish();
         });
+        bcg.setBackgroundColor(getBackgroundColor());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.def_address_title);
@@ -88,7 +94,8 @@ public class DefaultContactDetailsSelectionActivity extends BaseActivity {
         toolbar.setTitleTextColor(getTextColor());
         progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
         newAddress.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
-
+        newAddress.setTextColor(getTextColor());
+        addressList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     @Override
@@ -109,26 +116,27 @@ public class DefaultContactDetailsSelectionActivity extends BaseActivity {
     }
 
     private void startLoading() {
+        wholeLayout.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
         interactor.getAllContactDetails(getDefaultSharedPreferences().getInt(DEF_CONTACT, Integer.MAX_VALUE))
                 .subscribe(new Observer<List<ContactDetailModel>>() {
-            @Override
-            public void onCompleted() {
-                progress.setVisibility(View.GONE);
-            }
+                    @Override
+                    public void onCompleted() {
+                        progress.setVisibility(View.GONE);
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                progress.setVisibility(View.GONE);
-                showError();
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        progress.setVisibility(View.GONE);
+                        showError();
+                    }
 
-            @Override
-            public void onNext(List<ContactDetailModel> orderModels) {
-                showAddressList(orderModels);
-            }
+                    @Override
+                    public void onNext(List<ContactDetailModel> orderModels) {
+                        showAddressList(orderModels);
+                    }
 
-        });
+                });
     }
 
     private void showAddressList(List<ContactDetailModel> addressModels) {

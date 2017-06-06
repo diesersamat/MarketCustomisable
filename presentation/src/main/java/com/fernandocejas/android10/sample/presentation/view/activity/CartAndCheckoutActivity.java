@@ -41,6 +41,7 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setBackgroundColor(getAccentColor());
+        toolbar.setTitleTextColor(getTextColor());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, CartFragment.newInstance(), CartFragment.getFragmentTag()).commit();
     }

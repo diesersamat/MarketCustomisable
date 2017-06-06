@@ -40,6 +40,8 @@ public class AddAddressActivity extends BaseActivity {
     ProgressBar progress;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.bcg)
+    View bcg;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, AddAddressActivity.class);
@@ -62,8 +64,10 @@ public class AddAddressActivity extends BaseActivity {
         getSupportActionBar().setTitle(R.string.add_address_title);
         toolbar.setBackgroundColor(getAccentColor());
         toolbar.setTitleTextColor(getTextColor());
+        bcg.setBackgroundColor(getBackgroundColor());
+        addAddress.getBackground().setColorFilter(getAccentColor(), PorterDuff.Mode.MULTIPLY);
+        addAddress.setTextColor(getTextColor());
         progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
-
     }
 
 
