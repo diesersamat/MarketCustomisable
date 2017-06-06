@@ -56,4 +56,16 @@
     <string name="back_to_shop">Back to shop</string>
     <string name="purchase_error">Payment Unsuccessful.\n Go to All Orders to try again</string>
     <string name="purchase_error_title">Payment unsuccessful</string>
+    <string name="my_addresses">My addresses</string>
+    <string name="selected_delivery_address">Selected delivery address:</string>
+    <string name="change_delivery_address">Select delivery address</string>
+    <string name="nothing_found_try_another_request">Nothing found. Try another request.</string>
+    <string name="search_request_here">Search request here...</string>
+    <string name="please_address">Please, select delivery address!</string>
+    <string name="def_address_title">Default address selection</string>
+    <string name="please_add_at_least_one_contact_address">Please, add at least one Contact Address</string>
+    <string name="add_address">Add address</string>
+    <string name="add_address_title">Add new address</string>
+    <string name="add_address_button">Add address</string>
+    <string name="new_address">New address</string>
 </resources>

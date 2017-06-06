@@ -2,6 +2,7 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 
 import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.model.ContactDetailModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
@@ -20,6 +21,23 @@ public class DataStoreCache {
     @Inject
     public DataStoreCache() {
     }
+
+    public ContactDetailModel getDefaultContactDetailsAsync(int id) {
+        RealmResults<ContactDetailModel> all = getRealm().where(ContactDetailModel.class)
+                .equalTo("id", id).findAll();
+        if (all.isEmpty()) {
+            return null;
+        }
+        return getRealm().copyFromRealm(all).get(0);
+    }
+
+    public void saveContactDetail(List<ContactDetailModel> contactDetailModels) {
+        RealmResults<ContactDetailModel> delete = getRealm().where(ContactDetailModel.class).findAll();
+        getRealm().executeTransaction(realm -> delete.deleteAllFromRealm());
+        getRealm().executeTransaction(realm ->
+                realm.insertOrUpdate(contactDetailModels));
+    }
+
 
     private Realm getRealm() {
         return Realm.getDefaultInstance();

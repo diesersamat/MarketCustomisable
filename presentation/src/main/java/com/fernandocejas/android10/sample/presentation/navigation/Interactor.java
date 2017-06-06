@@ -3,6 +3,7 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 import com.fernandocejas.android10.sample.presentation.BuildConfig;
 import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.model.ContactDetailModel;
 import com.fernandocejas.android10.sample.presentation.model.OrderItemModel;
 import com.fernandocejas.android10.sample.presentation.model.OrderModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
@@ -10,16 +11,12 @@ import com.fernandocejas.android10.sample.presentation.model.ProductModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.model.ShopModel;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -28,105 +25,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class Interactor {
-    private static final String ORDER_POST_TEST = "{ \"id\": 1002, \"status\": 0," +
-            " \"totalPrice\": 1446, \"date\": \"2017-05-23T00:13:47.6551045+03:00\" }";
-
-    private static final String ALL_ORDERS_TEST = "[\n" +
-            "  {\n" +
-            "    \"id\": 5,\n" +
-            "    \"status\": 0,\n" +
-            "    \"totalPrice\": 723,\n" +
-            "    \"date\": \"2017-05-22T21:15:04.513\",\n" +
-            "    \"orderItems\": [\n" +
-            "      {\n" +
-            "        \"id\": 4,\n" +
-            "        \"productId\": 4,\n" +
-            "        \"productName\": \"Green Day Disc\",\n" +
-            "        \"productPrice\": 300,\n" +
-            "        \"quantity\": 1\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"id\": 5,\n" +
-            "        \"productId\": 5,\n" +
-            "        \"productName\": \"LinkinPark\",\n" +
-            "        \"productPrice\": 423,\n" +
-            "        \"quantity\": 1\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": 6,\n" +
-            "    \"status\": 0,\n" +
-            "    \"totalPrice\": 1446,\n" +
-            "    \"date\": \"2017-05-22T21:33:59.643\",\n" +
-            "    \"orderItems\": [\n" +
-            "      {\n" +
-            "        \"id\": 6,\n" +
-            "        \"productId\": 4,\n" +
-            "        \"productName\": \"Green Day Disc\",\n" +
-            "        \"productPrice\": 300,\n" +
-            "        \"quantity\": 2\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"id\": 7,\n" +
-            "        \"productId\": 5,\n" +
-            "        \"productName\": \"LinkinPark\",\n" +
-            "        \"productPrice\": 423,\n" +
-            "        \"quantity\": 2\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": 1002,\n" +
-            "    \"status\": 1,\n" +
-            "    \"totalPrice\": 1446,\n" +
-            "    \"date\": \"2017-05-23T00:13:47.657\",\n" +
-            "    \"orderItems\": [\n" +
-            "      {\n" +
-            "        \"id\": 1002,\n" +
-            "        \"productId\": 4,\n" +
-            "        \"productName\": \"Green Day Disc\",\n" +
-            "        \"productPrice\": 300,\n" +
-            "        \"quantity\": 2\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"id\": 1003,\n" +
-            "        \"productId\": 5,\n" +
-            "        \"productName\": \"LinkinPark\",\n" +
-            "        \"productPrice\": 423,\n" +
-            "        \"quantity\": 2\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": 1003,\n" +
-            "    \"status\": 0,\n" +
-            "    \"totalPrice\": 1446,\n" +
-            "    \"date\": \"2017-05-23T00:16:01.14\",\n" +
-            "    \"orderItems\": [\n" +
-            "      {\n" +
-            "        \"id\": 1004,\n" +
-            "        \"productId\": 4,\n" +
-            "        \"productName\": \"Green Day Disc\",\n" +
-            "        \"productPrice\": 300,\n" +
-            "        \"quantity\": 2\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"id\": 1005,\n" +
-            "        \"productId\": 5,\n" +
-            "        \"productName\": \"LinkinPark\",\n" +
-            "        \"productPrice\": 423,\n" +
-            "        \"quantity\": 2\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"id\": 1004,\n" +
-            "    \"status\": 1,\n" +
-            "    \"totalPrice\": 1446,\n" +
-            "    \"date\": \"2017-05-23T00:13:47.657\"\n" +
-            "  }\n" +
-            "]";
     private final ApiInterface apiInterface;
     private final DataStoreCache dataStoreCache;
 
@@ -175,9 +73,7 @@ public class Interactor {
     }
 
     public Observable<List<ProductDescriptionModel>> searchForItems(String searchString) {
-        //// TODO: 27/05/2017  
-        return apiInterface.getProductsByCategory(1)
-                .delay(2, TimeUnit.SECONDS)
+        return apiInterface.searchProducts(searchString)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -268,8 +164,7 @@ public class Interactor {
         }
     }
 
-    public Observable<OrderModel> postOrder() {
-        OrderModel orderModel = new Gson().fromJson(ORDER_POST_TEST, OrderModel.class);
+    public Observable<OrderModel> postOrder(int contactDetailId) {
         HashMap<String, Object> hashMap = new HashMap<>();
         ArrayList<OrderItemModel> orderItemModels = new ArrayList<>();
         List<CartItemModel> itemsFromCartSync = dataStoreCache.getItemsFromCartSync();
@@ -278,10 +173,10 @@ public class Interactor {
                     itemModel.getCount()));
         }
         hashMap.put("OrderItems", orderItemModels);
+        hashMap.put("ContactDetailId", contactDetailId);
         UserModel userInfoSync = dataStoreCache.getUserInfoSync();
         return apiInterface
                 .sendOrder(userInfoSync == null ? "" : userInfoSync.getToken(), hashMap)
-                .onErrorReturn(throwable -> orderModel)
                 .doOnCompleted(this::clearCart)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -299,17 +194,47 @@ public class Interactor {
     }
 
     public Observable<List<OrderModel>> getAllOrders() {
-        Type listType = new TypeToken<ArrayList<OrderModel>>() {
-        }.getType();
-
-        List<OrderModel> yourClassList = new Gson().fromJson(ALL_ORDERS_TEST, listType);
-
         UserModel userInfoSync = dataStoreCache.getUserInfoSync();
         return apiInterface
                 .getAllOrders(userInfoSync == null ? "" : userInfoSync.getToken())
-                .onErrorReturn(throwable -> yourClassList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<List<ContactDetailModel>> getAllContactDetails(int id) {
+        UserModel userInfoSync = dataStoreCache.getUserInfoSync();
+        return apiInterface
+                .getAllContactDetails(userInfoSync == null ? "" : userInfoSync.getToken())
+                .map(contactDetailModels -> {
+                    for (ContactDetailModel cont :
+                            contactDetailModels) {
+                        if (cont.getId() == id) {
+                            cont.setDefault(true);
+                        } else {
+                            cont.setDefault(false);
+                        }
+                    }
+                    return contactDetailModels;
+                })
+                .doOnNext(dataStoreCache::saveContactDetail)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<ContactDetailModel> postContactDetail(String phone, String address) {
+        UserModel userInfoSync = dataStoreCache.getUserInfoSync();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("phone", phone);
+        hashMap.put("address", address);
+        return apiInterface
+                .postContactDetail(userInfoSync == null ? "" : userInfoSync.getToken(), hashMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public ContactDetailModel getDefaultContactDetailsAsync(int id) {
+        return dataStoreCache.getDefaultContactDetailsAsync(id);
     }
 
     private void clearCart() {

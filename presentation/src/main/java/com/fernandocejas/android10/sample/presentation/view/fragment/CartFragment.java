@@ -1,6 +1,8 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +15,9 @@ import android.widget.TextView;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerCartFragmentComponent;
 import com.fernandocejas.android10.sample.presentation.model.CartItemModel;
+import com.fernandocejas.android10.sample.presentation.model.ContactDetailModel;
+import com.fernandocejas.android10.sample.presentation.model.OrderModel;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
-import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.CartFragmentView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.CartListAdapter;
 
@@ -30,6 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
+import rx.Subscriber;
+
+import static com.fernandocejas.android10.sample.presentation.view.activity.DefaultContactDetailsSelectionActivity.DEF_CONTACT;
 
 public class CartFragment extends BaseFragment implements CartFragmentView {
 
@@ -42,12 +48,19 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     View background;
     @BindView(R.id.total_textview)
     TextView totalTextView;
+    @BindView(R.id.selected_textview)
+    TextView selectedTextView;
+    @BindView(R.id.selected_address)
+    TextView selectedAddress;
     @BindView(R.id.total_sum)
     TextView totalSum;
     @BindView(R.id.final_view)
     View finalView;
     @BindView(R.id.proceed_to_checkout_button)
     Button proceedToCheckoutButton;
+    @BindView(R.id.change_delivery_address)
+    Button changeDeliveryAddressButton;
+    boolean isAddress = false;
 
     public static CartFragment newInstance() {
         return new CartFragment();
@@ -83,7 +96,11 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         finalView.setBackgroundColor(getAccentColor());
         proceedToCheckoutButton.setBackgroundColor(getPrimaryColor());
         proceedToCheckoutButton.setTextColor(getTextColor());
+        changeDeliveryAddressButton.setBackgroundColor(getPrimaryColor());
+        changeDeliveryAddressButton.setTextColor(getTextColor());
         totalTextView.setTextColor(getTextColor());
+        selectedTextView.setTextColor(getTextColor());
+        selectedAddress.setTextColor(getTextColor());
         totalSum.setTextColor(getTextColor());
         return view;
     }
@@ -93,6 +110,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar()
                 .setTitle(R.string.your_cart);
+        updateDefaultAddress();
         updateList();
     }
 
@@ -107,6 +125,22 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
                 .appComponent(getApplicationComponent())
                 .build()
                 .inject(this);
+    }
+
+    private void updateDefaultAddress() {
+        ContactDetailModel defaultContactDetailsAsync = getInteractor()
+                .getDefaultContactDetailsAsync(getSharedPreferences().getInt(DEF_CONTACT, Integer.MAX_VALUE));
+        if (defaultContactDetailsAsync == null) {
+            selectedAddress.setText(R.string.please_address);
+            isAddress = false;
+        } else {
+            selectedAddress.setText(defaultContactDetailsAsync.getAddress());
+            isAddress = true;
+        }
+    }
+
+    private SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     private void updateList() {
@@ -135,12 +169,17 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     }
 
     private void setProductList(List<CartItemModel> productList) {
+
         if (productList.isEmpty()) {
             showEmpty();
+        }
+
+        if (productList.isEmpty() || !isAddress) {
             proceedToCheckoutButton.setVisibility(View.INVISIBLE);
         } else {
             proceedToCheckoutButton.setVisibility(View.VISIBLE);
         }
+
 
         int summ = 0;
         for (CartItemModel itemModel : productList) {
@@ -167,7 +206,40 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         if (userInfoSync == null) {
             navigator.navigateToLogin(getContext());
         } else {
-            ((CartAndCheckoutView) getActivity()).navigateToContactDetails();
+            interactor.postOrder(getInteractor().getDefaultContactDetailsAsync(getSharedPreferences()
+                    .getInt(DEF_CONTACT, Integer.MAX_VALUE)).getId())
+                    .subscribe(new Subscriber<OrderModel>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            onErrorShow();
+                        }
+
+                        @Override
+                        public void onNext(OrderModel orderModel) {
+                            if (interactor.getShopInfoSync().isPaymentEnabled()) {
+                                navigator.navigateToPay(getContext(), orderModel.getId(),
+                                        orderModel.getTotalPrice());
+                            } else {
+                                navigator.navigateToOrderFinish(getContext(), true);
+                            }
+                            getActivity().finish();
+                        }
+                    });
+        }
+    }
+
+    @OnClick(R.id.change_delivery_address)
+    void changeDeliveryAddress() {
+        UserModel userInfoSync = getInteractor().getUserInfoSync();
+        if (userInfoSync == null) {
+            navigator.navigateToLogin(getContext());
+        } else {
+            navigator.navigateToContactDetailsActivity(getActivity());
         }
     }
 }

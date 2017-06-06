@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.view.CartAndCheckoutView;
 import com.fernandocejas.android10.sample.presentation.view.fragment.CartFragment;
-import com.fernandocejas.android10.sample.presentation.view.fragment.ContactDetailsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,32 +26,12 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         return new Intent(context, CartAndCheckoutActivity.class);
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
-    @Override
-    public void navigateToContactDetails() {
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                .replace(R.id.container, ContactDetailsFragment.newInstance(), ContactDetailsFragment.getFragmentTag())
-                .addToBackStack(ContactDetailsFragment.getFragmentTag())
-                .commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager()
-                    .popBackStack();
-
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +43,6 @@ public class CartAndCheckoutActivity extends BaseActivity implements CartAndChec
         toolbar.setBackgroundColor(getAccentColor());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, CartFragment.newInstance(), CartFragment.getFragmentTag()).commit();
-
     }
 
     @Override

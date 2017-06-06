@@ -3,8 +3,11 @@ package com.fernandocejas.android10.sample.presentation.navigation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 
+import com.fernandocejas.android10.sample.presentation.view.activity.AddAddressActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.CartAndCheckoutActivity;
+import com.fernandocejas.android10.sample.presentation.view.activity.DefaultContactDetailsSelectionActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.LoginActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.OrderFinishedActivity;
 import com.fernandocejas.android10.sample.presentation.view.activity.OrdersActivity;
@@ -77,6 +80,20 @@ public class Navigator {
     public void navigateToOrderFinish(Context context, boolean isSuccess) {
         if (context != null) {
             Intent intentToLaunch = OrderFinishedActivity.getCallingIntent(context, isSuccess);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    public void navigateToContactDetailsActivity(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = DefaultContactDetailsSelectionActivity.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    public void navigateToAddAddress(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = AddAddressActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

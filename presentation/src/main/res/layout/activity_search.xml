@@ -23,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search request here..."
+                android:hint="@string/search_request_here"
                 android:lines="1"
                 android:maxLines="1"/>
 
@@ -71,13 +71,13 @@
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/receipt"/>
+            android:src="@drawable/search"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="There is no past orders"
+            android:text="@string/nothing_found_try_another_request"
             android:textSize="32sp"/>
 
     </LinearLayout>

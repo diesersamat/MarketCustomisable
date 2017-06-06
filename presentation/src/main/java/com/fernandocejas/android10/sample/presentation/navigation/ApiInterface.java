@@ -1,6 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.navigation;
 
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
+import com.fernandocejas.android10.sample.presentation.model.ContactDetailModel;
 import com.fernandocejas.android10.sample.presentation.model.OrderModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
 import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
@@ -28,6 +29,9 @@ public interface ApiInterface {
     @GET("products/categories/{categoryId}")
     Observable<List<ProductDescriptionModel>> getProductsByCategory(@Path("categoryId") int categoryId);
 
+    @GET("products/search/{string}")
+    Observable<List<ProductDescriptionModel>> searchProducts(@Path("string") String searchString);
+
     @POST("Customers/Auth")
     Observable<UserModel> auth(@Body HashMap<String, Object> body);
 
@@ -49,5 +53,10 @@ public interface ApiInterface {
     Observable<OrderModel> changeOrderStatus(@Header("token") String token,
                                              @Body HashMap<String, Object> body);
 
+    @GET("customers/GetContactDetails")
+    Observable<List<ContactDetailModel>> getAllContactDetails(@Header("token") String token);
 
+    @POST("customers/newContactDetail")
+    Observable<ContactDetailModel> postContactDetail(@Header("token") String token,
+                                                           @Body HashMap<String, Object> body);
 }

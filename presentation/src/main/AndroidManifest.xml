@@ -44,6 +44,10 @@
         </activity>
         <activity android:name=".view.activity.OrderFinishedActivity">
         </activity>
+        <activity android:name=".view.activity.DefaultContactDetailsSelectionActivity">
+        </activity>
+        <activity android:name=".view.activity.AddAddressActivity">
+        </activity>
     </application>
 
 </manifest>
