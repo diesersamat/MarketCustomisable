@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:background="@android:color/transparent"
-        android:text="error"/>
+        android:text="error"
+        android:textColor="#dcdcdc"/>
 
     <Button
         android:id="@+id/debug_skip_payment_success"
@@ -24,5 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
         android:background="@android:color/transparent"
-        android:text="success"/>
+        android:text="success"
+        android:textColor="#dcdcdc"/>
 </FrameLayout>

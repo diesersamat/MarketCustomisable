@@ -26,6 +26,12 @@ public class PaymentActivity extends BaseActivity {
         return intent;
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
