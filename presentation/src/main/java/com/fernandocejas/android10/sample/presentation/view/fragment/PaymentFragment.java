@@ -35,24 +35,18 @@ public class PaymentFragment extends BaseFragment {
         return paymentFragment;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        orderId = getArguments().getInt(PaymentActivity.ORDER_ID, Integer.MIN_VALUE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar()
-                .setTitle(R.string.payment);
-        orderTotal = getArguments().getDouble(PaymentActivity.ORDER_ID, Double.MIN_VALUE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar()
-                .setTitle(R.string.payment);
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
         ButterKnife.bind(this, view);
-
+        orderId = getArguments().getInt(PaymentActivity.ORDER_ID, Integer.MIN_VALUE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(R.string.payment);
+        orderTotal = getArguments().getDouble(PaymentActivity.ORDER_TOTAL, Double.MIN_VALUE);
+        ((AppCompatActivity) getActivity()).getSupportActionBar()
+                .setTitle(R.string.payment);
         //todo sort things out
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
@@ -73,7 +67,7 @@ public class PaymentFragment extends BaseFragment {
         });
 
         String accNumber = interactor.getShopInfoSync().getYandexMoneyAccount();
-        String productName = "Order #" + orderId;
+        String productName = "Order " + orderId;
         webView.loadUrl("https://money.yandex.ru/quickpay/button-widget?" +
                 "account=" + accNumber +
                 "&quickpay=small" +

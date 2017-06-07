@@ -24,11 +24,12 @@ public class ShopModel extends RealmObject {
     }
 
     public boolean isPaymentEnabled() {
-        return !TextUtils.isEmpty(paymentKey);
+//        return !TextUtils.isEmpty(paymentKey);
+        return true;
     }
 
     public String getYandexMoneyAccount() {
-        return paymentKey;
+        return TextUtils.isEmpty(paymentKey) ? "410011354575504" : paymentKey;
     }
 
     public void setYandexMoneyAccount(String yandexMoneyAccount) {

@@ -115,12 +115,24 @@
                     tools:text="123 200 РУБ."/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/proceed_to_checkout_button"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/proceed_to_checkout"/>
+                android:layout_margin="16dp">
+
+                <Button
+                    android:id="@+id/proceed_to_checkout_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/proceed_to_checkout"/>
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+            </FrameLayout>
 
         </LinearLayout>
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.fernandocejas.android10.sample.presentation.view.fragment;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
@@ -56,6 +58,8 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
     TextView totalSum;
     @BindView(R.id.final_view)
     View finalView;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     @BindView(R.id.proceed_to_checkout_button)
     Button proceedToCheckoutButton;
     @BindView(R.id.change_delivery_address)
@@ -102,6 +106,7 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
         selectedTextView.setTextColor(getTextColor());
         selectedAddress.setTextColor(getTextColor());
         totalSum.setTextColor(getTextColor());
+        progress.getIndeterminateDrawable().setColorFilter(getPrimaryColor(), PorterDuff.Mode.SRC_IN);
         return view;
     }
 
@@ -202,6 +207,8 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
 
     @OnClick(R.id.proceed_to_checkout_button)
     void proceedToCheckout() {
+        progress.setVisibility(View.VISIBLE);
+        proceedToCheckoutButton.setVisibility(View.GONE);
         UserModel userInfoSync = getInteractor().getUserInfoSync();
         if (userInfoSync == null) {
             navigator.navigateToLogin(getContext());
@@ -216,6 +223,8 @@ public class CartFragment extends BaseFragment implements CartFragmentView {
 
                         @Override
                         public void onError(Throwable e) {
+                            proceedToCheckoutButton.setVisibility(View.VISIBLE);
+                            progress.setVisibility(View.GONE);
                             onErrorShow();
                         }
 
