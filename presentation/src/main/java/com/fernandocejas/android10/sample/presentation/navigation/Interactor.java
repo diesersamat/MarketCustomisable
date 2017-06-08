@@ -35,9 +35,14 @@ public class Interactor {
     }
 
     public Observable<ShopModel> getShopInfo() {
-        return Observable.defer(() -> dataStoreCache.getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID))
-                .switchIfEmpty(apiInterface.getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID)
-                        .doOnNext(dataStoreCache::saveShopInfo))
+//        return Observable.defer(() -> dataStoreCache.getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID))
+//                .switchIfEmpty(apiInterface.getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID)
+//                        .doOnNext(dataStoreCache::saveShopInfo))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+        return apiInterface.getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID)
+                .doOnNext(dataStoreCache::saveShopInfo)
+                .onErrorResumeNext(Observable.defer(() -> dataStoreCache.getShopInfo(BuildConfig.CUSTOMISABLE_APPLICATION_ID)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -51,23 +56,39 @@ public class Interactor {
     }
 
     public Observable<List<CategoryModel>> getCategoriesList() {
-        return Observable.defer(dataStoreCache::getCategoriesList)
-                .switchIfEmpty(apiInterface.getCategoriesList()
-                        .doOnNext(dataStoreCache::saveCategoriesList))
+//        return Observable.defer(dataStoreCache::getCategoriesList)
+//                .switchIfEmpty(apiInterface.getCategoriesList()
+//                        .doOnNext(dataStoreCache::saveCategoriesList))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+        return apiInterface.getCategoriesList()
+                .doOnNext(dataStoreCache::saveCategoriesList)
+                .onErrorResumeNext(Observable.defer(dataStoreCache::getCategoriesList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
 
     public Observable<List<ProductDescriptionModel>> getCategoryListOfProducts(int categoryId) {
-        return Observable.defer(() -> dataStoreCache.getProductsByCategory(categoryId))
-                .switchIfEmpty(apiInterface.getProductsByCategory(categoryId).map(productDescriptionModels -> {
-                    for (ProductDescriptionModel mod : productDescriptionModels) {
-                        mod.setCategoryId(categoryId);
-                    }
-                    return productDescriptionModels;
-                })
-                        .doOnNext(dataStoreCache::saveProductsByCategory))
+//        return Observable.defer(() -> dataStoreCache.getProductsByCategory(categoryId))
+//                .switchIfEmpty(apiInterface.getProductsByCategory(categoryId).map(productDescriptionModels -> {
+//                    for (ProductDescriptionModel mod : productDescriptionModels) {
+//                        mod.setCategoryId(categoryId);
+//                    }
+//                    return productDescriptionModels;
+//                })
+//                        .doOnNext(dataStoreCache::saveProductsByCategory))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+
+        return apiInterface.getProductsByCategory(categoryId).map(productDescriptionModels -> {
+            for (ProductDescriptionModel mod : productDescriptionModels) {
+                mod.setCategoryId(categoryId);
+            }
+            return productDescriptionModels;
+        })
+                .doOnNext(dataStoreCache::saveProductsByCategory)
+                .onErrorResumeNext(Observable.defer(() -> dataStoreCache.getProductsByCategory(categoryId)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -79,13 +100,23 @@ public class Interactor {
     }
 
     public Observable<ProductWrapperModel> getProductInfo(int productId) {
-        return Observable.defer(() -> dataStoreCache.getProductInfo(productId))
-                .switchIfEmpty(apiInterface.getProductInfo(productId)
-                        .map(productWrapperModel -> {
-                            productWrapperModel.setId(productId);
-                            return productWrapperModel;
-                        })
-                        .doOnNext(dataStoreCache::saveProductInfo))
+//        return Observable.defer(() -> dataStoreCache.getProductInfo(productId))
+//                .switchIfEmpty(apiInterface.getProductInfo(productId)
+//                        .map(productWrapperModel -> {
+//                            productWrapperModel.setId(productId);
+//                            return productWrapperModel;
+//                        })
+//                        .doOnNext(dataStoreCache::saveProductInfo))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+
+        return apiInterface.getProductInfo(productId)
+                .map(productWrapperModel -> {
+                    productWrapperModel.setId(productId);
+                    return productWrapperModel;
+                })
+                .doOnNext(dataStoreCache::saveProductInfo)
+                .onErrorResumeNext(Observable.defer(() -> dataStoreCache.getProductInfo(productId)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
