@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
-import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -19,11 +19,12 @@ import javax.inject.Named;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductViewHolder, ProductDescriptionModel> {
+public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductViewHolder, ProductWrapperModel> {
 
     private final int accentColor;
     private final int primaryColor;
     private final int textColor;
+    private final Context context;
     private ProductListAdapter.OnItemClickListener onItemClickListener;
 
     @Inject
@@ -33,27 +34,18 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
         this.accentColor = accentColor;
         this.primaryColor = primaryColor;
         this.textColor = textColor;
+        this.context = context;
     }
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, final int position) {
-        final ProductDescriptionModel productDescriptionModel = this.list.get(position);
+        final ProductWrapperModel productDescriptionModel = this.list.get(position);
 
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        format.setCurrency(Currency.getInstance(productDescriptionModel.getCurrency()));
-        String result = format.format(productDescriptionModel.getPrice());
+        format.setCurrency(Currency.getInstance(productDescriptionModel.getProduct().getCurrency()));
+        String result = format.format(productDescriptionModel.getProduct().getPrice());
         holder.productPrice.setText(result);
-        holder.productTitle.setText(productDescriptionModel.getName());
-//        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
-//        requestManager.load("http://lorempixel.com/400/400/").into(holder.photo);
-
-        if (productDescriptionModel.getImages() != null) {
-            if (!productDescriptionModel.getImages().isEmpty()) {
-                if (productDescriptionModel.getImages().get(0) != null) {
-                    requestManager.load(productDescriptionModel.getImages().get(0).getUrl()).into(holder.photo);
-                }
-            }
-        }
+        holder.productTitle.setText(productDescriptionModel.getProduct().getName());
 
         if (productDescriptionModel.getImages() != null) {
             if (!productDescriptionModel.getImages().isEmpty()) {
@@ -95,9 +87,9 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
     }
 
     public interface OnItemClickListener {
-        void onItemClicked(ProductDescriptionModel categoryModel);
+        void onItemClicked(ProductWrapperModel categoryModel);
 
-        void onCartClicked(View addToCart, ProductDescriptionModel productDescriptionModel);
+        void onCartClicked(View addToCart, ProductWrapperModel productDescriptionModel);
 
     }
 

@@ -6,12 +6,18 @@ import com.facebook.stetho.Stetho;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.picasso.Picasso;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+
+import java.util.Collections;
 
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 
 public class AndroidApplication extends Application {
 
@@ -27,6 +33,16 @@ public class AndroidApplication extends Application {
         RealmConfiguration realmConfig = new RealmConfiguration
                 .Builder().deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfig);
+
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+                .build();
+
+        final Picasso picasso = new Picasso.Builder(this)
+                .downloader(new OkHttp3Downloader(client))
+                .build();
+
+        Picasso.setSingletonInstance(picasso);
 
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)

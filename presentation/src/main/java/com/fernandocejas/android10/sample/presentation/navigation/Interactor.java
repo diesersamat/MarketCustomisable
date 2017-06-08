@@ -69,7 +69,7 @@ public class Interactor {
     }
 
 
-    public Observable<List<ProductDescriptionModel>> getCategoryListOfProducts(int categoryId) {
+    public Observable<List<ProductWrapperModel>> getCategoryListOfProducts(int categoryId) {
 //        return Observable.defer(() -> dataStoreCache.getProductsByCategory(categoryId))
 //                .switchIfEmpty(apiInterface.getProductsByCategory(categoryId).map(productDescriptionModels -> {
 //                    for (ProductDescriptionModel mod : productDescriptionModels) {
@@ -82,7 +82,7 @@ public class Interactor {
 //                .observeOn(AndroidSchedulers.mainThread());
 
         return apiInterface.getProductsByCategory(categoryId).map(productDescriptionModels -> {
-            for (ProductDescriptionModel mod : productDescriptionModels) {
+            for (ProductWrapperModel mod : productDescriptionModels) {
                 mod.setCategoryId(categoryId);
             }
             return productDescriptionModels;
@@ -93,7 +93,7 @@ public class Interactor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<List<ProductDescriptionModel>> searchForItems(String searchString) {
+    public Observable<List<ProductWrapperModel>> searchForItems(String searchString) {
         return apiInterface.searchProducts(searchString)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

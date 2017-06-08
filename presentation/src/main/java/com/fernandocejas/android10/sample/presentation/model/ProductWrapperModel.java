@@ -8,8 +8,17 @@ public class ProductWrapperModel extends RealmObject {
     ProductModel product;
     RealmList<FieldModel> fields;
     RealmList<ImageModel> images;
+    private int categoryId;
     @PrimaryKey
     private int id;
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public RealmList<ImageModel> getImages() {
         return images;

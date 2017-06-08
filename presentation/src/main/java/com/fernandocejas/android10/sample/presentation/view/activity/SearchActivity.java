@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerSearchActivityComponent;
-import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.view.CircleAnimationUtil;
 import com.fernandocejas.android10.sample.presentation.view.adapter.ProductListAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -106,13 +106,22 @@ public class SearchActivity extends BaseActivity {
         bcg.setBackgroundColor(getBackgroundColor());
         productListAdapter.setOnItemClickListener(new ProductListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(ProductDescriptionModel categoryModel) {
+            public void onItemClicked(ProductWrapperModel categoryModel) {
                 openProductDescription(categoryModel);
             }
 
             @Override
-            public void onCartClicked(View addToCart, ProductDescriptionModel productDescriptionModel) {
-                interactor.addProductToCart(productDescriptionModel);
+            public void onCartClicked(View addToCart, ProductWrapperModel productDescriptionModel) {
+                String url = null;
+                if (productDescriptionModel.getImages() != null) {
+                    if (!productDescriptionModel.getImages().isEmpty()) {
+                        if (productDescriptionModel.getImages().get(0) != null) {
+                            url = productDescriptionModel.getImages().get(0).getUrl();
+                        }
+                    }
+                }
+
+                interactor.addProductToCart(productDescriptionModel.getProduct(), url);
                 new CircleAnimationUtil().attachActivity(getActivity())
                         .setTargetView(addToCart)
                         .setMoveDuration(500)
@@ -176,10 +185,10 @@ public class SearchActivity extends BaseActivity {
     }
 
     @NonNull
-    private Observer<List<ProductDescriptionModel>> getObserver() {
-        return new Observer<List<ProductDescriptionModel>>() {
+    private Observer<List<ProductWrapperModel>> getObserver() {
+        return new Observer<List<ProductWrapperModel>>() {
             @Override
-            public void onNext(List<ProductDescriptionModel> value) {
+            public void onNext(List<ProductWrapperModel> value) {
                 progress.setVisibility(View.GONE);
                 setProductList(value);
             }
@@ -209,7 +218,7 @@ public class SearchActivity extends BaseActivity {
         emptyView.setVisibility(View.VISIBLE);
     }
 
-    private void setProductList(List<ProductDescriptionModel> productList) {
+    private void setProductList(List<ProductWrapperModel> productList) {
         if (productList == null || productList.isEmpty()) {
             showEmpty();
         } else {
@@ -218,8 +227,8 @@ public class SearchActivity extends BaseActivity {
         }
     }
 
-    private void openProductDescription(ProductDescriptionModel productDescriptionModel) {
-        navigator.navigateToProductDescription(this, productDescriptionModel.getId());
+    private void openProductDescription(ProductWrapperModel productDescriptionModel) {
+        navigator.navigateToProductDescription(this, productDescriptionModel.getProduct().getId());
     }
 
 

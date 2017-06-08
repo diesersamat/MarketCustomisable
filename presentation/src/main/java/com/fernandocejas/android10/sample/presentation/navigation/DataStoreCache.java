@@ -129,16 +129,16 @@ public class DataStoreCache {
         }
     }
 
-    void saveProductsByCategory(List<ProductDescriptionModel> productDescriptionModels) {
+    void saveProductsByCategory(List<ProductWrapperModel> productDescriptionModels) {
         getRealm().executeTransaction(realm ->
                 realm.insertOrUpdate(productDescriptionModels));
     }
 
-    Observable<List<ProductDescriptionModel>> getProductsByCategory(int categoryId) {
-        RealmResults<ProductDescriptionModel> all = getRealm()
-                .where(ProductDescriptionModel.class)
+    Observable<List<ProductWrapperModel>> getProductsByCategory(int categoryId) {
+        RealmResults<ProductWrapperModel> all = getRealm()
+                .where(ProductWrapperModel.class)
                 .equalTo("categoryId", categoryId).findAll();
-        List<ProductDescriptionModel> arrayListOfUnmanagedObjects = getRealm().copyFromRealm(all);
+        List<ProductWrapperModel> arrayListOfUnmanagedObjects = getRealm().copyFromRealm(all);
 
         if (arrayListOfUnmanagedObjects == null || arrayListOfUnmanagedObjects.isEmpty()) {
             return Observable.empty();

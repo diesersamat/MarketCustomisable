@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerProductCategoryFragmentComponent;
 import com.fernandocejas.android10.sample.presentation.model.CategoryModel;
-import com.fernandocejas.android10.sample.presentation.model.ProductDescriptionModel;
+import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.view.CircleAnimationUtil;
 import com.fernandocejas.android10.sample.presentation.view.ProductCategoryView;
 import com.fernandocejas.android10.sample.presentation.view.activity.ShopActivity;
@@ -61,13 +61,22 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
         productsList.setAdapter(productListAdapter);
         productListAdapter.setOnItemClickListener(new ProductListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(ProductDescriptionModel categoryModel) {
+            public void onItemClicked(ProductWrapperModel categoryModel) {
                 openProductDescription(categoryModel);
             }
 
             @Override
-            public void onCartClicked(View addToCart, ProductDescriptionModel productDescriptionModel) {
-                interactor.addProductToCart(productDescriptionModel);
+            public void onCartClicked(View addToCart, ProductWrapperModel productDescriptionModel) {
+                String url = null;
+                if (productDescriptionModel.getImages() != null) {
+                    if (!productDescriptionModel.getImages().isEmpty()) {
+                        if (productDescriptionModel.getImages().get(0) != null) {
+                            url = productDescriptionModel.getImages().get(0).getUrl();
+                        }
+                    }
+                }
+
+                interactor.addProductToCart(productDescriptionModel.getProduct(), url);
                 new CircleAnimationUtil().attachActivity(getActivity())
                         .setTargetView(addToCart)
                         .setMoveDuration(500)
@@ -119,9 +128,9 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
         progress.setVisibility(View.VISIBLE);
         productsList.setVisibility(View.GONE);
         getInteractor().getCategoryListOfProducts(categoryModel.getId())
-                .subscribe(new Observer<List<ProductDescriptionModel>>() {
+                .subscribe(new Observer<List<ProductWrapperModel>>() {
                     @Override
-                    public void onNext(List<ProductDescriptionModel> shopModel) {
+                    public void onNext(List<ProductWrapperModel> shopModel) {
                         setProductList(shopModel);
                         progress.setVisibility(View.GONE);
                         productsList.setVisibility(View.VISIBLE);
@@ -147,12 +156,12 @@ public class ProductCategoryFragment extends BaseFragment implements ProductCate
         errorView.setVisibility(View.VISIBLE);
     }
 
-    private void setProductList(List<ProductDescriptionModel> productList) {
+    private void setProductList(List<ProductWrapperModel> productList) {
         productListAdapter.setList(productList);
     }
 
-    private void openProductDescription(ProductDescriptionModel productDescriptionModel) {
-        navigator.navigateToProductDescription(getContext(), productDescriptionModel.getId());
+    private void openProductDescription(ProductWrapperModel productDescriptionModel) {
+        navigator.navigateToProductDescription(getContext(), productDescriptionModel.getProduct().getId());
     }
 
     @OnClick(R.id.try_again_button)
