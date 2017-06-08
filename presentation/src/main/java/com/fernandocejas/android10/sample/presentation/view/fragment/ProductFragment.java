@@ -167,7 +167,16 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @OnClick(R.id.price_button)
     void priceClick() {
-        interactor.addProductToCart(productInfo.getProduct());
+        String url = null;
+        if (productInfo.getImages() != null) {
+            if (!productInfo.getImages().isEmpty()) {
+                if (productInfo.getImages().get(0) != null) {
+                    url = productInfo.getImages().get(0).getUrl();
+                }
+            }
+        }
+
+        interactor.addProductToCart(productInfo.getProduct(), url);
         new CircleAnimationUtil().attachActivity(getActivity())
                 .setTargetView(priceButton)
                 .setMoveDuration(500)
@@ -202,7 +211,16 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @OnClick(R.id.add_to_cart)
     void addToCartClick() {
-        interactor.addProductToCart(productInfo.getProduct());
+        String url = null;
+        if (productInfo.getImages() != null) {
+            if (!productInfo.getImages().isEmpty()) {
+                if (productInfo.getImages().get(0) != null) {
+                    url = productInfo.getImages().get(0).getUrl();
+                }
+            }
+        }
+
+        interactor.addProductToCart(productInfo.getProduct(), url);
         new CircleAnimationUtil().attachActivity(getActivity())
                 .setTargetView(addToCart)
                 .setMoveDuration(500)

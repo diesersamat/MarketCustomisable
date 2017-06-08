@@ -126,17 +126,25 @@ public class Interactor {
         itemModel.setId(product.getId());
         itemModel.setCount(1);
         itemModel.setName(product.getName());
-        itemModel.setPhotos(product.getLinkToImage());
         itemModel.setPrice(product.getPrice());
         dataStoreCache.addProductToCart(itemModel);
+
+
+        if (product.getImages() != null) {
+            if (!product.getImages().isEmpty()) {
+                if (product.getImages().get(0) != null) {
+                    itemModel.setPhotos(product.getImages().get(0).getUrl());
+                }
+            }
+        }
     }
 
-    public void addProductToCart(ProductModel product) {
+    public void addProductToCart(ProductModel product, String url) {
         CartItemModel itemModel = new CartItemModel();
         itemModel.setId(product.getId());
         itemModel.setCount(1);
         itemModel.setName(product.getName());
-        itemModel.setPhotos(product.getPhotos());
+        itemModel.setPhotos(url);
         itemModel.setPrice(product.getPrice());
         dataStoreCache.addProductToCart(itemModel);
     }

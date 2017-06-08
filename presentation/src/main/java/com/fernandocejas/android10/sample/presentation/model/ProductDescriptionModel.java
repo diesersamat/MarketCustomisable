@@ -3,6 +3,7 @@ package com.fernandocejas.android10.sample.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -28,6 +29,7 @@ public class ProductDescriptionModel extends RealmObject implements Parcelable {
     private String saleId;
     private String currency;
     private int categoryId;
+    private RealmList<ImageModel> images;
 
     public ProductDescriptionModel() {
     }
@@ -46,6 +48,14 @@ public class ProductDescriptionModel extends RealmObject implements Parcelable {
         this.id = in.readInt();
         this.price = in.readDouble();
         this.currency = in.readString();
+    }
+
+    public RealmList<ImageModel> getImages() {
+        return images;
+    }
+
+    public void setImages(RealmList<ImageModel> images) {
+        this.images = images;
     }
 
     public String getName() {
