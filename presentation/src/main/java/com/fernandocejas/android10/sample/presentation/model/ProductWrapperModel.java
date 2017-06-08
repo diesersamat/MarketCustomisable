@@ -1,13 +1,31 @@
 package com.fernandocejas.android10.sample.presentation.model;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class ProductWrapperModel extends RealmObject {
     ProductModel product;
+    RealmList<FieldModel> fields;
+    RealmList<ImageModel> images;
     @PrimaryKey
-
     private int id;
+
+    public RealmList<ImageModel> getImages() {
+        return images;
+    }
+
+    public void setImages(RealmList<ImageModel> images) {
+        this.images = images;
+    }
+
+    public RealmList<FieldModel> getFields() {
+        return fields;
+    }
+
+    public void setFields(RealmList<FieldModel> fields) {
+        this.fields = fields;
+    }
 
     public int getId() {
         return id;

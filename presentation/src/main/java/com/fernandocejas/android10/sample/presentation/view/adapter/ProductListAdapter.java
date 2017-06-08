@@ -44,8 +44,8 @@ public class ProductListAdapter extends BaseAdapter<ProductListAdapter.ProductVi
         String result = format.format(productDescriptionModel.getPrice());
         holder.productPrice.setText(result);
         holder.productTitle.setText(productDescriptionModel.getName());
-//        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
-        requestManager.load("http://lorempixel.com/400/400/").into(holder.photo);
+        requestManager.load(productDescriptionModel.getLinkToImage()).into(holder.photo);
+//        requestManager.load("http://lorempixel.com/400/400/").into(holder.photo);
         holder.itemView.setOnClickListener(v -> {
             if (this.onItemClickListener != null) {
                 this.onItemClickListener.onItemClicked(productDescriptionModel);

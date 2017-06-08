@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerProductComponent;
-import com.fernandocejas.android10.sample.presentation.model.ProductModel;
+import com.fernandocejas.android10.sample.presentation.model.ProductWrapperModel;
 import com.fernandocejas.android10.sample.presentation.presenter.ProductPresenter;
 import com.fernandocejas.android10.sample.presentation.view.CircleAnimationUtil;
 import com.fernandocejas.android10.sample.presentation.view.ProductView;
@@ -67,7 +67,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
     TextView counter;
     @BindView(R.id.progress)
     ProgressBar progress;
-    private ProductModel productInfo;
+    private ProductWrapperModel productInfo;
 
     public static ProductFragment newInstance(int productId) {
         ProductFragment productFragment = new ProductFragment();
@@ -120,20 +120,32 @@ public class ProductFragment extends BaseFragment implements ProductView {
     }
 
     @Override
-    public void onLoaded(ProductModel productInfo) {
+    public void onLoaded(ProductWrapperModel productInfo) {
         this.productInfo = productInfo;
-        titleToolbar.setText(productInfo.getName());
-//        Glide.with(this).load(productInfo.getPhotos()).into(productImage);
-        Glide.with(this).load("https://unsplash.it/200/").into(productImage);
-        title.setText(productInfo.getName());
+        titleToolbar.setText(productInfo.getProduct().getName());
+//        Glide.with(this).load("https://unsplash.it/200/").into(productImage);
+        title.setText(productInfo.getProduct().getName());
         progress.setVisibility(View.GONE);
         dataView.setVisibility(View.VISIBLE);
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        format.setCurrency(Currency.getInstance(productInfo.getCurrency()));
-        String result = format.format(productInfo.getPrice());
+        format.setCurrency(Currency.getInstance(productInfo.getProduct().getCurrency()));
+        String result = format.format(productInfo.getProduct().getPrice());
         priceButton.setText(result);
         counter.setTextColor(getTextColor());
-        description.setText(productInfo.getDescription());
+        if (productInfo.getFields() != null) {
+            if (!productInfo.getFields().isEmpty()) {
+                if (productInfo.getFields().get(0) != null) {
+                    description.setText(productInfo.getFields().get(0).getValue());
+                }
+            }
+        }
+        if (productInfo.getImages() != null) {
+            if (!productInfo.getImages().isEmpty()) {
+                if (productInfo.getImages().get(0) != null) {
+                    Glide.with(this).load(productInfo.getImages().get(0).getUrl()).into(productImage);
+                }
+            }
+        }
     }
 
     @Override
@@ -155,7 +167,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @OnClick(R.id.price_button)
     void priceClick() {
-        interactor.addProductToCart(productInfo);
+        interactor.addProductToCart(productInfo.getProduct());
         new CircleAnimationUtil().attachActivity(getActivity())
                 .setTargetView(priceButton)
                 .setMoveDuration(500)
@@ -190,7 +202,7 @@ public class ProductFragment extends BaseFragment implements ProductView {
 
     @OnClick(R.id.add_to_cart)
     void addToCartClick() {
-        interactor.addProductToCart(productInfo);
+        interactor.addProductToCart(productInfo.getProduct());
         new CircleAnimationUtil().attachActivity(getActivity())
                 .setTargetView(addToCart)
                 .setMoveDuration(500)

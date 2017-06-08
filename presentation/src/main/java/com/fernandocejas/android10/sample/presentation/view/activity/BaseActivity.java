@@ -88,13 +88,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             this.accentColor = getResources().getColor(R.color.accent_default);
         }
 
-        if (!TextUtils.isEmpty(accentColor)) {
+        if (!TextUtils.isEmpty(backgroundColor)) {
             this.backgroundColor = Color.parseColor(backgroundColor);
         } else {
             this.backgroundColor = getResources().getColor(R.color.background_default);
         }
 
-        if (!TextUtils.isEmpty(accentColor)) {
+        if (!TextUtils.isEmpty(textColor)) {
             this.textColor = Color.parseColor(textColor);
         } else {
             this.textColor = getResources().getColor(R.color.text_default);

@@ -29,7 +29,7 @@ public class ProductPresenter extends BasePresenter {
                 .subscribe(new Observer<ProductWrapperModel>() {
                     @Override
                     public void onNext(ProductWrapperModel shopModel) {
-                        view.onLoaded(shopModel.getProduct());
+                        view.onLoaded(shopModel);
                     }
 
                     @Override

@@ -13,6 +13,8 @@ public class ShopModel extends RealmObject {
     RealmList<CategoryModel> categoryModels;
     String primaryColor;
     String accentColor;
+    String backgroundColor;
+    String textColor;
     String paymentKey;
     @PrimaryKey
     String id;
@@ -21,6 +23,22 @@ public class ShopModel extends RealmObject {
     String name;
 
     public ShopModel() {
+    }
+
+    public String getBackgroundColor() {
+        return TextUtils.isEmpty(backgroundColor) ? "" : "#" + backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getTextColor() {
+        return TextUtils.isEmpty(textColor) ? "" : "#" + textColor;
+    }
+
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
     }
 
     public boolean isPaymentEnabled() {
@@ -54,7 +72,7 @@ public class ShopModel extends RealmObject {
     }
 
     public String getPrimaryColor() {
-        return primaryColor;
+        return TextUtils.isEmpty(primaryColor) ? "" : "#" + primaryColor;
     }
 
     public void setPrimaryColor(String primaryColor) {
@@ -62,7 +80,7 @@ public class ShopModel extends RealmObject {
     }
 
     public String getAccentColor() {
-        return accentColor;
+        return TextUtils.isEmpty(accentColor) ? "" : "#" + accentColor;
     }
 
     public void setAccentColor(String accentColor) {

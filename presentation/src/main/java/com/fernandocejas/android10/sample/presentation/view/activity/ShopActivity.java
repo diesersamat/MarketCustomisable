@@ -88,10 +88,8 @@ public class ShopActivity extends BaseActivity implements ShopActivityView {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(ACCENT_COLOR, shopModel.getAccentColor());
         editor.putString(PRIMARY_COLOR, shopModel.getPrimaryColor());
-        //// TODO: 06/06/2017
-//        editor.putString(IS_DARK_ICONS, shopModel.getPrimaryColor());
-//        editor.putString(BACKGROUND_COLOR, shopModel.getBackgroundColor());
-//        editor.putString(TEXT_COLOR, shopModel.getPrimaryColor());
+        editor.putString(BACKGROUND_COLOR, shopModel.getBackgroundColor());
+        editor.putString(TEXT_COLOR, shopModel.getTextColor());
         editor.apply();
 
         title.setText(shopModel.getName());
